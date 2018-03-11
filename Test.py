@@ -168,3 +168,25 @@ def refine_class_info(class_info_list: list, subject: str):
     class_info_frame["location"] = [
         class_info[4].contents[2].string.replace('\n', '')
         for class_info in class_basic_info]
+
+    # This section will set the instructor(s).
+    def _instructor_info_helper(class_info: list):
+        instructor_info = class_info[5].find("a")
+
+        return [ClassInstructor(name=info.contents,
+                                link=info['href'])
+                if info is not None else
+                ClassInstructor(name="DEPT",
+                                link="")
+                for info in instructor_info]
+
+    class_info_frame["instructor"] = [_instructor_info_helper(class_info)
+                                      for class_info in class_basic_info]
+    return class_info_frame
+
+
+class_infoss = extract_class_info(grub_web_content("BIO"))
+class_frame = refine_class_info(class_infoss, "BIO")
+class_exam = [CRN for CRN in class_frame['instructor']]
+print(class_exam)
+print("DONE")
