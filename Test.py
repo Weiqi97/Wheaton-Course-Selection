@@ -224,9 +224,6 @@ def refine_class_info(class_info_list: list, subject: str):
     class_seats_info = [class_info[-1].find_all("td")
                         for class_info in class_info_list]
 
-    for info in class_seats_info:
-        print(info[4].contents[0].string)
-
     class_info_frame["seats"] = [
         SeatInfo(max=info[1].contents[0].string,
                  taken=info[1].contents[0].string,
@@ -234,11 +231,11 @@ def refine_class_info(class_info_list: list, subject: str):
                  wait_list=info[1].contents[0].string)
         for info in class_seats_info]
 
+    # This part grab the special information
+    class_info_frame["special_info"] = [
+        class_info[1].find_all("td")[1].contents[0].string.replace("\n", "")
+        if len(class_info) > 2 else ""
+        for class_info in class_info_list
+    ]
+
     return class_info_frame
-
-
-class_infoss = extract_class_info(grub_web_content("BIO"))
-class_frame = refine_class_info(class_infoss, "BIO")
-class_exam = [CRN for CRN in class_frame['textbook']]
-# print(class_exam)
-# print("DONE")
