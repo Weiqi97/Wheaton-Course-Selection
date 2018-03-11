@@ -1,4 +1,6 @@
+
 # coding=utf-8
+# This file will fetch all needed information from Wheaton's website.
 
 import numpy as np
 import pandas as pd
