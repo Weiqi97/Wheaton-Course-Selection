@@ -30,23 +30,6 @@ class ClassConx(NamedTuple):
     link: str
 
 
-class ClassBasicInfo(NamedTuple):
-    """Struct for all class information."""
-    number: ClassNumber
-    exam: ClassExam
-    title: str
-    CRN: int
-    time: str
-    location: str
-    instructor: List[ClassInstructor]
-    foundation: str
-    division: str
-    area: str
-    connection: ClassConx
-    textbook: str
-    special_info: str
-
-
 # TODO: This function will have more parameters.
 def grub_web_content(subject: str) -> str:
     """
