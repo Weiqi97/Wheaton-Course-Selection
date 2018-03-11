@@ -1,9 +1,10 @@
 # coding=utf-8
 
-from typing import List, NamedTuple
-
 import mechanicalsoup
+import pandas as pd
+import numpy as np
 from bs4 import BeautifulSoup
+from typing import List, NamedTuple
 
 # Leave some constant here
 base_url = "https://weblprod1.wheatonma.edu"
@@ -34,7 +35,7 @@ class ClassConx(NamedTuple):
     link: str
 
 
-# TODO: This function will have more parameters.
+# TODO: This function will need semester parameter.
 def grub_web_content(subject: str) -> str:
     """
     This function submit a form to search based on users request.
@@ -48,21 +49,13 @@ def grub_web_content(subject: str) -> str:
     browser = mechanicalsoup.StatefulBrowser()
     web = browser.open(url)
 
-    # TODO: Think about if users need other type of submit
     # Remove all submit button but the one called "Search Schedule"
     for each_input in web.soup.find_all("input"):
         if each_input.get("value") != "Search Schedule":
             each_input.extract()
 
-    # TODO: Figure out if we really need this line or not.
-    # browser.get_current_page()
-
     # Fill out the desired information in the form.
     form = browser.select_form('form[action="bzcrschd.P_OpenDoor"]')
-
-    # TODO: Remove these, leaving here for testing purpose.
-    # form = browser.get_current_form()
-    # form.print_summary()
 
     # Fill out the form with user desired input.
     form.set("subject_sch", subject)
@@ -70,7 +63,7 @@ def grub_web_content(subject: str) -> str:
     # Submit form.
     response = browser.submit_selected()
 
-    # TODO: Remove these, leaving here for testing purpose.
+    # TODO: Remove this, leave here for testing purpose.
     # browser.launch_browser()
 
     return response.text
