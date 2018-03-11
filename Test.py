@@ -148,4 +148,10 @@ def refine_class_info(class_info_list: list, subject: str):
     class_info_frame["exam"] = [_exam_info_helper(class_info)
                                 for class_info in class_basic_info]
 
+    # This section will set the titles.
+    class_info_frame["title"] = [class_info[2].contents[0].string
+                                 for class_info in class_basic_info]
 
+    # This section will set the CRN.
+    class_info_frame["CRN"] = [class_info[3].contents[0].string
+                               for class_info in class_basic_info]
