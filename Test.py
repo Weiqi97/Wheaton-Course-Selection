@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from typing import List, NamedTuple
 
 # Leave some constant here
+url = "https://weblprod1.wheatonma.edu/PROD/bzcrschd.P_ListSection"
 base_url = "https://weblprod1.wheatonma.edu"
 
 
@@ -44,15 +45,12 @@ class SeatInfo(NamedTuple):
 
 
 # TODO: This function will need semester parameter.
-def grub_web_content(subject: str) -> str:
+def fetch_web_content(subject: str) -> str:
     """
     This function submit a form to search based on users request.
     :param subject: Desired subject users want to search for.
     :return: A string that contains web page information.
     """
-    # Set the course search web page.
-    url = "https://weblprod1.wheatonma.edu/PROD/bzcrschd.P_ListSection"
-
     # Set up the fake browser object and open the target website.
     browser = mechanicalsoup.StatefulBrowser()
     web = browser.open(url)
@@ -75,6 +73,18 @@ def grub_web_content(subject: str) -> str:
     # browser.launch_browser()
 
     return response.text
+
+
+def fetch_subjects() -> List[str]:
+    """
+    Fetch all the existing subject names.
+    :return: A list of subject names.
+    """
+    # Set up the fake browser object and open the target website.
+    browser = mechanicalsoup.StatefulBrowser()
+    web_soup = browser.open(url).soup
+    options = web_soup.find('select').find_all('option')
+    return [option.contents[0].string for option in options]
 
 
 def extract_class_info(web_content: str) -> List[list]:
