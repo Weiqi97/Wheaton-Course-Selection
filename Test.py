@@ -172,7 +172,6 @@ def refine_class_info(class_info_list: list, subject: str):
     # This section will set the instructor(s).
     def _instructor_info_helper(class_info: list):
         instructor_info = class_info[5].find_all("a")
-
         return [ClassInstructor(name=info.contents[0].string,
                                 link=info['href'])
                 if instructor_info else
@@ -183,11 +182,37 @@ def refine_class_info(class_info_list: list, subject: str):
     class_info_frame["instructor"] = [_instructor_info_helper(class_info)
                                       for class_info in class_basic_info]
 
+    # This section will set the foundation, division and area.
+    class_info_frame["foundation"] = \
+        [class_info[6].contents[0].string.replace('\n', '')
+         for class_info in class_basic_info]
+
+    # This section will set the titles.
+    class_info_frame["division"] = \
+        [class_info[7].contents[0].string.replace('\n', '')
+         for class_info in class_basic_info]
+
+    # This section will set the CRN.
+    class_info_frame["area"] = \
+        [class_info[8].contents[0].string.replace('\n', '')
+         for class_info in class_basic_info]
+    
+    # This section will set the connection information.
+    def _conx_info_helper(class_info: list):
+        connection_info = class_info[9].find_all("a")
+        return [ClassInstructor(name=info.contents[0].string,
+                                link=info['href'])
+                if connection_info else None
+                for info in connection_info]
+
+    class_info_frame["connection"] = [_conx_info_helper(class_info)
+                                      for class_info in class_basic_info]
+
     return class_info_frame
 
 
 class_infoss = extract_class_info(grub_web_content("BIO"))
 class_frame = refine_class_info(class_infoss, "BIO")
-class_exam = [CRN for CRN in class_frame['instructor']]
+class_exam = [CRN for CRN in class_frame['connection']]
 print(class_exam)
 print("DONE")
