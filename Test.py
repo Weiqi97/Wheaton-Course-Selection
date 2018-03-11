@@ -35,6 +35,7 @@ class ClassConx(NamedTuple):
     link: str
 
 
+# TODO: Think about if we want to make this a class object.
 # TODO: This function will need semester parameter.
 def grub_web_content(subject: str) -> str:
     """
@@ -100,6 +101,7 @@ def extract_class_info(web_content: str) -> List[list]:
 
     return combined_classes
 
+
 def refine_class_info(class_info_list: list, subject: str):
     class_basic_info = [class_info[0].find_all("td")
                         for class_info in class_info_list]
@@ -112,62 +114,17 @@ def refine_class_info(class_info_list: list, subject: str):
                  "connection", "textbook", "special_info"]
     )
 
+    # Set all the subject name
+    class_info_frame["Subject"] = subject
 
-class_list = extract_class_info(grub_web_content("BIO"))
+    # This section will set the numbers
+    def _number_info_helper(class_info: list):
+        number_info = class_info[0].find("a")
+        return ClassNumber(num=number_info.contents[0].string,
+                           link=base_url + number_info['href'])
 
-class_info = class_list[-1]
-class_basic_info = class_info[0].find_all("td")
+    number_infos = [_number_info_helper(class_info)
+                    for class_info in class_basic_info]
+    class_info_frame["number"] = number_infos
 
-base_url = "https://weblprod1.wheatonma.edu"
 
-number_info = class_basic_info[0].find("a")
-number = ClassNumber(num=number_info.contents[0].string,
-                     link=base_url + number_info['href'])
-
-exam_info = class_basic_info[1].find("a")
-exam = ClassExam(letter=exam_info.contents[0].string,
-                 link=base_url + exam_info['href'])
-
-title = class_basic_info[2].contents[0].string
-
-CRN = class_basic_info[3].contents[0].string
-
-time = class_basic_info[4].contents[0]
-
-location = class_basic_info[4].contents[2]
-
-instructors_info = class_basic_info[5].find_all("a")
-instructor = [ClassInstructor(name=info.contents[0].string,
-                              link=info['href'])
-              for info in instructors_info]
-
-foundation = class_basic_info[6].contents[0].string
-
-division = class_basic_info[7].contents[0].string
-
-area = class_basic_info[8].contents[0].string
-
-connection_info = class_basic_info[9].find("a")
-if connection_info:
-    connection = ClassConx(num=connection_info.contents[0].string,
-                           link=base_url + connection_info['href'])
-else:
-    connection = ClassConx(num="", link="")
-
-textbook = class_basic_info[10].find("a")['href']
-
-print(number.num, '\n', number.link)
-print(exam.letter, '\n', exam.link)
-print(title)
-print(CRN)
-print(time)
-print(location)
-print(instructor[0].name)
-print(instructor[0].link)
-print(foundation)
-print(division)
-print(area)
-print(connection.num, '\n', connection.link)
-print(textbook)
-
-# TODO: Careful about LAB. How to deal with them?
