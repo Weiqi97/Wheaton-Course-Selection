@@ -1,11 +1,15 @@
 # coding=utf-8
 
-import mechanicalsoup
-import pandas as pd
-from bs4 import BeautifulSoup
 from typing import List, NamedTuple
 
+import mechanicalsoup
+from bs4 import BeautifulSoup
 
+# Leave some constant here
+base_url = "https://weblprod1.wheatonma.edu"
+
+
+# TODO: Careful about LAB. How to deal with them?
 class ClassNumber(NamedTuple):
     """Struct for class number information."""
     num: str
