@@ -265,7 +265,7 @@ def get_final_frame():
 
     :return:
     """
-    final_frame = pd.DataFrame()
+    final_frame_list = []
     all_subjects = fetch_subjects()
     subjects = all_subjects[1:]
 
@@ -273,11 +273,11 @@ def get_final_frame():
         web_content = fetch_web_content(subject)
         class_info_list = extract_class_info(web_content)
         class_frame = refine_class_info(class_info_list, subject)
-        final_frame.append(class_frame)
+        final_frame_list.append(class_frame)
 
-    return final_frame
+    final_frame = pd.DataFrame(pd.concat(final_frame_list, ignore_index=True))
+    final_frame.to_csv("FINAL_FRAME.csv")
 
 
-final_frame = get_final_frame()
-final_frame_CRN = final_frame["CRN"]
+get_final_frame()
 print("DONE")
