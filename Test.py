@@ -104,6 +104,15 @@ def refine_class_info(class_info_list: list, subject: str):
     class_basic_info = [class_info[0].find_all("td")
                         for class_info in class_info_list]
 
+    class_info_frame = pd.DataFrame(
+        0,
+        index=np.arange(len(class_info_list)),
+        columns=["Subject", "number", "exam", "title", "CRN", "time",
+                 "location", "instructor", "foundation", "division", "area",
+                 "connection", "textbook", "special_info"]
+    )
+
+
 class_list = extract_class_info(grub_web_content("BIO"))
 
 class_info = class_list[-1]
