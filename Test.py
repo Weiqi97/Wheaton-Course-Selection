@@ -72,9 +72,11 @@ def grub_web_content(subject: str) -> str:
 
 def extract_class_info(web_content: str) -> List[list]:
     """
-    This function will extract class information from the given web page content.
+    This function will extract class information from the given web page
+    content.
     :param web_content: A string that contains web page information.
-    :return: A list of lists, where each list holds information for one class.
+    :return: A list of lists, where each list holds information
+    for one class.
     """
     # Get the web content in text and parse it to html.
     web_soup = BeautifulSoup(web_content, "html5lib")
@@ -93,7 +95,8 @@ def extract_class_info(web_content: str) -> List[list]:
     class_rows = [row for row in info_rows if len(row.find_all("td")) > 1]
 
     # Work on separating the class info.
-    class_index = [index for index, row in enumerate(class_rows) if row.find("a")]
+    class_index = [index for index, row in enumerate(class_rows)
+                   if row.find("a")]
 
     combined_classes = [class_rows[class_index[index]: class_index[index + 1]]
                         for index, _ in enumerate(class_index[:-1])]
@@ -103,6 +106,12 @@ def extract_class_info(web_content: str) -> List[list]:
 
 
 def refine_class_info(class_info_list: list, subject: str):
+    """
+    This function will refine class information from the web page.
+    :param class_info_list: A list that contains all class web pages.
+    :param subject: Name of the subject.
+    :return: A pandas data frame that has all class information.
+    """
     class_basic_info = [class_info[0].find_all("td")
                         for class_info in class_info_list]
 
