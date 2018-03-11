@@ -163,3 +163,8 @@ def refine_class_info(class_info_list: list, subject: str):
     # adjust time styles
     class_info_frame["time"] = [" ".join(time.split())
                                 for time in class_info_frame["time"]]
+
+    # This section will set the location.
+    class_info_frame["location"] = [
+        class_info[4].contents[2].string.replace('\n', '')
+        for class_info in class_basic_info]
