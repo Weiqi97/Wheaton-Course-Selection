@@ -1,4 +1,3 @@
-
 # coding=utf-8
 # This file will fetch all needed information from Wheaton's website.
 
@@ -86,7 +85,7 @@ def fetch_subjects() -> List[str]:
     browser = mechanicalsoup.StatefulBrowser()
     web_soup = browser.open(url).soup
     options = web_soup.find('select').find_all('option')
-    return [option.contents[0].string for option in options]
+    return [option["value"] for option in options]
 
 
 def extract_class_info(web_content: str) -> List[list]:
@@ -117,9 +116,17 @@ def extract_class_info(web_content: str) -> List[list]:
     class_index = [index for index, row in enumerate(class_rows)
                    if row.find("a")]
 
-    combined_classes = [class_rows[class_index[index]: class_index[index + 1]]
-                        for index, _ in enumerate(class_index[:-1])]
-    combined_classes.append(class_rows[class_index[-1]:])
+    if len(class_index) > 1:
+        combined_classes = \
+            [class_rows[class_index[index]: class_index[index + 1]]
+             for index, _ in enumerate(class_index[:-1])]
+        combined_classes.append(class_rows[class_index[-1]:])
+
+    elif len(class_index) == 1:
+        combined_classes = [class_rows]
+
+    else:
+        combined_classes = []
 
     return combined_classes
 
@@ -251,3 +258,26 @@ def refine_class_info(class_info_list: list, subject: str):
     ]
 
     return class_info_frame
+
+
+def get_final_frame():
+    """
+
+    :return:
+    """
+    final_frame = pd.DataFrame()
+    all_subjects = fetch_subjects()
+    subjects = all_subjects[1:]
+
+    for subject in subjects:
+        web_content = fetch_web_content(subject)
+        class_info_list = extract_class_info(web_content)
+        class_frame = refine_class_info(class_info_list, subject)
+        final_frame.append(class_frame)
+
+    return final_frame
+
+
+final_frame = get_final_frame()
+final_frame_CRN = final_frame["CRN"]
+print("DONE")
