@@ -1,8 +1,8 @@
 # coding=utf-8
 
-import mechanicalsoup
-import pandas as pd
 import numpy as np
+import pandas as pd
+import mechanicalsoup
 from bs4 import BeautifulSoup
 from typing import List, NamedTuple
 
@@ -35,7 +35,14 @@ class ClassConx(NamedTuple):
     link: str
 
 
-# TODO: Think about if we want to make this a class object.
+class SeatInfo(NamedTuple):
+    """Struct for seats information."""
+    max: int
+    taken: int
+    avail: int
+    wait_list: int
+
+
 # TODO: This function will need semester parameter.
 def grub_web_content(subject: str) -> str:
     """
@@ -120,7 +127,7 @@ def refine_class_info(class_info_list: list, subject: str):
         index=np.arange(len(class_info_list)),
         columns=["Subject", "number", "exam", "title", "CRN", "time",
                  "location", "instructor", "foundation", "division", "area",
-                 "connection", "textbook", "special_info"]
+                 "connection", "textbook", "seats", "special_info"]
     )
 
     # Set all the subject name
@@ -196,7 +203,7 @@ def refine_class_info(class_info_list: list, subject: str):
     class_info_frame["area"] = \
         [class_info[8].contents[0].string.replace('\n', '')
          for class_info in class_basic_info]
-    
+
     # This section will set the connection information.
     def _conx_info_helper(class_info: list):
         connection_info = class_info[9].find_all("a")
@@ -208,11 +215,30 @@ def refine_class_info(class_info_list: list, subject: str):
     class_info_frame["connection"] = [_conx_info_helper(class_info)
                                       for class_info in class_basic_info]
 
+    # This section will set the textbook link.
+    class_info_frame["textbook"] = \
+        [class_info[10].find("a")['href'] for class_info in class_basic_info]
+
+    # TODO: MOVE THIS SECTION TO SOMEWHERE ELSE
+    # This part grab the seats information
+    class_seats_info = [class_info[-1].find_all("td")
+                        for class_info in class_info_list]
+
+    for info in class_seats_info:
+        print(info[4].contents[0].string)
+
+    class_info_frame["seats"] = [
+        SeatInfo(max=info[1].contents[0].string,
+                 taken=info[1].contents[0].string,
+                 avail=info[1].contents[0].string,
+                 wait_list=info[1].contents[0].string)
+        for info in class_seats_info]
+
     return class_info_frame
 
 
 class_infoss = extract_class_info(grub_web_content("BIO"))
 class_frame = refine_class_info(class_infoss, "BIO")
-class_exam = [CRN for CRN in class_frame['connection']]
-print(class_exam)
-print("DONE")
+class_exam = [CRN for CRN in class_frame['textbook']]
+# print(class_exam)
+# print("DONE")
