@@ -263,7 +263,7 @@ def refine_class_info(class_info_list: list, subject: str):
 def get_final_frame():
     """
 
-    :return:
+    :return: A data frame that contains all class information.
     """
     final_frame_list = []
     all_subjects = fetch_subjects()
@@ -276,7 +276,7 @@ def get_final_frame():
         final_frame_list.append(class_frame)
 
     final_frame = pd.DataFrame(pd.concat(final_frame_list, ignore_index=True))
-    final_frame.to_csv("FINAL_FRAME.csv")
+    final_frame["instructor"].to_csv("Test.csv")
 
 
 get_final_frame()
