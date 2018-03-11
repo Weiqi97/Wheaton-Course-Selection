@@ -155,3 +155,11 @@ def refine_class_info(class_info_list: list, subject: str):
     # This section will set the CRN.
     class_info_frame["CRN"] = [class_info[3].contents[0].string
                                for class_info in class_basic_info]
+
+    # This section will set the time.
+    class_info_frame["time"] = [
+        class_info[4].contents[0].string.replace('\n', '')
+        for class_info in class_basic_info]
+    # adjust time styles
+    class_info_frame["time"] = [" ".join(time.split())
+                                for time in class_info_frame["time"]]
