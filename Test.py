@@ -136,4 +136,16 @@ def refine_class_info(class_info_list: list, subject: str):
                     for class_info in class_basic_info]
     class_info_frame["number"] = number_infos
 
+    # This section will set the exams.
+    def _exam_info_helper(class_info: list):
+        exam_info = class_info[1].find("a")
+        if exam_info.contents:
+            return ClassExam(letter=exam_info.contents[0].string,
+                             link=base_url + exam_info['href'])
+        else:
+            return ClassExam(letter="", link="")
+
+    class_info_frame["exam"] = [_exam_info_helper(class_info)
+                                for class_info in class_basic_info]
+
 
