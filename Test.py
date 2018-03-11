@@ -171,17 +171,18 @@ def refine_class_info(class_info_list: list, subject: str):
 
     # This section will set the instructor(s).
     def _instructor_info_helper(class_info: list):
-        instructor_info = class_info[5].find("a")
+        instructor_info = class_info[5].find_all("a")
 
-        return [ClassInstructor(name=info.contents,
+        return [ClassInstructor(name=info.contents[0].string,
                                 link=info['href'])
-                if info is not None else
-                ClassInstructor(name="DEPT",
-                                link="")
+                if instructor_info else
+                [ClassInstructor(name="DEPT",
+                                 link="")]
                 for info in instructor_info]
 
     class_info_frame["instructor"] = [_instructor_info_helper(class_info)
                                       for class_info in class_basic_info]
+
     return class_info_frame
 
 
