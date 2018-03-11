@@ -84,6 +84,7 @@ def extract_class_info(web_content: str) -> List[list]:
     # Get all rows of the table.
     table_rows = table.find_all("tr")
 
+    # TODO: think about a way to beautify this
     # Get rid of the first couple useless lines.
     info_rows = table_rows[3:]
 
@@ -99,6 +100,9 @@ def extract_class_info(web_content: str) -> List[list]:
 
     return combined_classes
 
+def refine_class_info(class_info_list: list, subject: str):
+    class_basic_info = [class_info[0].find_all("td")
+                        for class_info in class_info_list]
 
 class_list = extract_class_info(grub_web_content("BIO"))
 
