@@ -39,10 +39,10 @@ class ClassConx(NamedTuple):
 
 class SeatInfo(NamedTuple):
     """Struct for seats information."""
-    max: int
-    taken: int
-    avail: int
-    wait_list: int
+    max: str
+    taken: str
+    avail: str
+    wait_list: str
 
 
 # TODO: This function will need semester parameter.
@@ -144,18 +144,18 @@ def refine_class_info(class_info_list: list, subject: str):
     class_info_frame = pd.DataFrame(
         0,
         index=np.arange(len(class_info_list)),
-        columns=["Subject", "number", "exam", "title", "CRN", "time",
+        columns=["subject", "number", "exam", "title", "CRN", "time",
                  "location", "instructor", "foundation", "division", "area",
                  "connection", "textbook", "seats", "special_info"]
     )
 
     # Set all the subject name
-    class_info_frame["Subject"] = subject
+    class_info_frame["subject"] = subject
 
     # This section will set the numbers
     def _number_info_helper(class_info: list):
         number_info = class_info[0].find("a")
-        return ClassNumber(num=number_info.contents[0].string,
+        return ClassNumber(num=str(number_info.contents[0]),
                            link=base_url + number_info['href'])
 
     number_infos = [_number_info_helper(class_info)
@@ -166,7 +166,7 @@ def refine_class_info(class_info_list: list, subject: str):
     def _exam_info_helper(class_info: list):
         exam_info = class_info[1].find("a")
         if exam_info.contents:
-            return ClassExam(letter=exam_info.contents[0].string,
+            return ClassExam(letter=str(exam_info.contents[0]),
                              link=base_url + exam_info['href'])
         else:
             return ClassExam(letter="", link="")
@@ -175,16 +175,16 @@ def refine_class_info(class_info_list: list, subject: str):
                                 for class_info in class_basic_info]
 
     # This section will set the titles.
-    class_info_frame["title"] = [class_info[2].contents[0].string
+    class_info_frame["title"] = [str(class_info[2].contents[0])
                                  for class_info in class_basic_info]
 
     # This section will set the CRN.
-    class_info_frame["CRN"] = [class_info[3].contents[0].string
+    class_info_frame["CRN"] = [str(class_info[3].contents[0])
                                for class_info in class_basic_info]
 
     # This section will set the time.
     class_info_frame["time"] = [
-        class_info[4].contents[0].string.replace('\n', '')
+        class_info[4].contents[0].replace('\n', '')
         for class_info in class_basic_info]
     # adjust time styles
     class_info_frame["time"] = [" ".join(time.split())
@@ -192,13 +192,13 @@ def refine_class_info(class_info_list: list, subject: str):
 
     # This section will set the location.
     class_info_frame["location"] = [
-        class_info[4].contents[2].string.replace('\n', '')
+        class_info[4].contents[2].replace('\n', '')
         for class_info in class_basic_info]
 
     # This section will set the instructor(s).
     def _instructor_info_helper(class_info: list):
         instructor_info = class_info[5].find_all("a")
-        return [ClassInstructor(name=info.contents[0].string,
+        return [ClassInstructor(name=str(info.contents[0]),
                                 link=info['href'])
                 if instructor_info else
                 [ClassInstructor(name="DEPT",
@@ -210,23 +210,23 @@ def refine_class_info(class_info_list: list, subject: str):
 
     # This section will set the foundation, division and area.
     class_info_frame["foundation"] = \
-        [class_info[6].contents[0].string.replace('\n', '')
+        [class_info[6].contents[0].replace('\n', '')
          for class_info in class_basic_info]
 
     # This section will set the titles.
     class_info_frame["division"] = \
-        [class_info[7].contents[0].string.replace('\n', '')
+        [class_info[7].contents[0].replace('\n', '')
          for class_info in class_basic_info]
 
     # This section will set the CRN.
     class_info_frame["area"] = \
-        [class_info[8].contents[0].string.replace('\n', '')
+        [class_info[8].contents[0].replace('\n', '')
          for class_info in class_basic_info]
 
     # This section will set the connection information.
     def _conx_info_helper(class_info: list):
         connection_info = class_info[9].find_all("a")
-        return [ClassInstructor(name=info.contents[0].string,
+        return [ClassInstructor(name=str(info.contents[0]),
                                 link=info['href'])
                 if connection_info else None
                 for info in connection_info]
@@ -244,15 +244,15 @@ def refine_class_info(class_info_list: list, subject: str):
                         for class_info in class_info_list]
 
     class_info_frame["seats"] = [
-        SeatInfo(max=info[1].contents[0].string,
-                 taken=info[1].contents[0].string,
-                 avail=info[1].contents[0].string,
-                 wait_list=info[1].contents[0].string)
+        SeatInfo(max=str(info[1].contents[0]),
+                 taken=str(info[1].contents[0]),
+                 avail=str(info[1].contents[0]),
+                 wait_list=str(info[1].contents[0]))
         for info in class_seats_info]
 
     # This part grab the special information
     class_info_frame["special_info"] = [
-        class_info[1].find_all("td")[1].contents[0].string.replace("\n", "")
+        class_info[1].find_all("td")[1].contents[0].replace("\n", "")
         if len(class_info) > 2 else ""
         for class_info in class_info_list
     ]
@@ -265,19 +265,24 @@ def get_final_frame():
 
     :return: A data frame that contains all class information.
     """
+
+    """
     final_frame_list = []
     all_subjects = fetch_subjects()
     subjects = all_subjects[1:]
-
     for subject in subjects:
         web_content = fetch_web_content(subject)
         class_info_list = extract_class_info(web_content)
         class_frame = refine_class_info(class_info_list, subject)
         final_frame_list.append(class_frame)
-
+    
     final_frame = pd.DataFrame(pd.concat(final_frame_list, ignore_index=True))
-    final_frame["instructor"].to_csv("Test.csv")
+    final_frame["instructor"].("Test.csv")
+    """
+    web_content = fetch_web_content("BIO")
+    class_info_list = extract_class_info(web_content)
+    class_frame = refine_class_info(class_info_list, "BIO")
+    class_frame.to_pickle("Test.pkl")
 
 
 get_final_frame()
-print("DONE")

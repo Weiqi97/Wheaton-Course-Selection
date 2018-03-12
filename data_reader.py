@@ -3,6 +3,10 @@
 
 import pandas as pd
 
-final_frame = pd.read_csv("Test.csv")
+from data_fetcher import ClassNumber, ClassExam, ClassInstructor, ClassConx, \
+    SeatInfo
 
-print("DONE")
+
+final_frame = pd.read_pickle("Test.pkl")
+number = final_frame["number"][0]
+print(number.num)
