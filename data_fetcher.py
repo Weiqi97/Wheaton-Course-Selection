@@ -265,8 +265,6 @@ def get_final_frame():
 
     :return: A data frame that contains all class information.
     """
-
-    """
     final_frame_list = []
     all_subjects = fetch_subjects()
     subjects = all_subjects[1:]
@@ -277,12 +275,8 @@ def get_final_frame():
         final_frame_list.append(class_frame)
     
     final_frame = pd.DataFrame(pd.concat(final_frame_list, ignore_index=True))
-    final_frame["instructor"].("Test.csv")
-    """
-    web_content = fetch_web_content("BIO")
-    class_info_list = extract_class_info(web_content)
-    class_frame = refine_class_info(class_info_list, "BIO")
-    class_frame.to_pickle("Test.pkl")
+    final_frame.to_pickle("FINAL_FRAME.pkl")
 
 
 get_final_frame()
+print("DONE")
