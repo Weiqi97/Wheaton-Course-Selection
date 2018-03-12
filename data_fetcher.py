@@ -70,9 +70,6 @@ def fetch_web_content(subject: str) -> str:
     # Submit form.
     response = browser.submit_selected()
 
-    # TODO: Remove this, leave here for testing purpose.
-    # browser.launch_browser()
-
     return response.text
 
 
@@ -276,7 +273,3 @@ def get_final_frame():
     
     final_frame = pd.DataFrame(pd.concat(final_frame_list, ignore_index=True))
     final_frame.to_pickle("FINAL_FRAME.pkl")
-
-
-get_final_frame()
-print("DONE")
