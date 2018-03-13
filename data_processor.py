@@ -3,11 +3,11 @@
 
 import numpy as np
 import pandas as pd
-import mechanicalsoup
 from bs4 import BeautifulSoup
 from typing import List
-from constants import url, base_url, ClassConx, ClassExam, ClassNumber, \
+from constants import base_url, ClassConx, ClassExam, ClassNumber, \
     ClassInstructor, SeatInfo, SKIP_BEGINNING
+from data_fetcher import fetch_web_content, fetch_subjects, fetch_semesters
 
 
 def extract_class_info(web_content: str) -> List[list]:
@@ -160,7 +160,6 @@ def refine_class_info(class_info_list: list, subject: str):
     class_info_frame["textbook"] = \
         [class_info[10].find("a")['href'] for class_info in class_basic_info]
 
-    # TODO: MOVE THIS SECTION TO SOMEWHERE ELSE
     # This part grab the seats information
     class_seats_info = [class_info[-1].find_all("td")
                         for class_info in class_info_list]
@@ -182,18 +181,38 @@ def refine_class_info(class_info_list: list, subject: str):
     return class_info_frame
 
 
-def get_final_frame():
+def get_specific_class_info(subject: str, semester: str) -> pd.DataFrame:
     """
+    Return all class information for one subject within a semester.
+    :param subject: A subject from subjects fetched.
+    :param semester: A recent semester value from semesters fetched.
+    :return: A pandas data frame that contains class information.
+    """
+    # Grab web content from Wheaton's website.
+    web_content = fetch_web_content(subject=subject, semester=semester)
 
-    :return: A data frame that contains all class information.
+    # Find class information fromm the web content.
+    class_info_list = extract_class_info(web_content=web_content)
+
+    # Return refined class information.
+    return refine_class_info(class_info_list=class_info_list,
+                             subject=subject)
+
+
+def get_semester_class_info(semester: str):
     """
-    final_frame_list = []
+    This function will get all class information for one semester.
+    :param semester: A recent semester value from semesters fetched.
+    """
     subjects = fetch_subjects()
-    for subject in subjects:
-        web_content = fetch_web_content(subject)
-        class_info_list = extract_class_info(web_content)
-        class_frame = refine_class_info(class_info_list, subject)
-        final_frame_list.append(class_frame)
+    all_class = [get_specific_class_info(subject=subject, semester=semester)
+                 for subject in subjects]
+    semester = pd.DataFrame(pd.concat(all_class, ignore_index=True))
+    semester.to_pickle(semester + ".pkl")
 
-    final_frame = pd.DataFrame(pd.concat(final_frame_list, ignore_index=True))
-    final_frame.to_pickle("FINAL_FRAME.pkl")
+
+def save_all_info():
+    """This function will get all needed information."""
+    semesters = fetch_semesters()
+    for semester in semesters:
+        get_semester_class_info(semester=semester)
