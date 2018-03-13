@@ -4,7 +4,7 @@
 import pandas as pd
 import mechanicalsoup
 from typing import List
-from constants import url
+from constants import url, SEMESTER_NUMBER
 
 
 # TODO: Careful about LAB. How to deal with them? (This might take longer...)
@@ -76,5 +76,6 @@ def fetch_semesters() -> pd.Series:
     # Get values and names.
     option_values = [option["value"] for option in options]
     option_names = [str(option.contents[0]) for option in options]
+    option_series = pd.Series(data=option_values, index=option_names)
 
-    return pd.Series(data=option_values, index=option_names)
+    return option_series[:SEMESTER_NUMBER]
