@@ -199,20 +199,25 @@ def get_specific_class_info(subject: str, semester: str) -> pd.DataFrame:
                              subject=subject)
 
 
-def get_semester_class_info(semester: str):
+def get_semester_class_info(semester_name: str, semester_value: str):
     """
     This function will get all class information for one semester.
-    :param semester: A recent semester value from semesters fetched.
+    :param semester_name: A recent name value from semesters fetched.
+    :param semester_value: A recent semester value from semesters fetched.
     """
     subjects = fetch_subjects()
-    all_class = [get_specific_class_info(subject=subject, semester=semester)
-                 for subject in subjects]
-    semester = pd.DataFrame(pd.concat(all_class, ignore_index=True))
-    semester.to_pickle(semester + ".pkl")
+    all_class = \
+        [get_specific_class_info(subject=subject, semester=semester_value)
+         for subject in subjects]
+    semester_frame = pd.DataFrame(pd.concat(all_class, ignore_index=True))
+    semester_frame.to_pickle(f"{semester_name}.pkl")
+    semester_frame.to_csv(f"{semester_name}.csv")
 
 
 def save_all_info():
     """This function will get all needed information."""
     semesters = fetch_semesters()
-    for semester in semesters:
-        get_semester_class_info(semester=semester)
+
+
+
+get_semester_class_info("201820")
