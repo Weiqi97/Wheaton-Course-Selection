@@ -39,3 +39,7 @@ class SeatInfo(NamedTuple):
     taken: str
     avail: str
     wait_list: str
+
+
+# Integer constants
+SKIP_BEGINNING = 3

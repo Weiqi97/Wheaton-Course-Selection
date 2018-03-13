@@ -7,7 +7,7 @@ import mechanicalsoup
 from bs4 import BeautifulSoup
 from typing import List
 from constants import url, base_url, ClassConx, ClassExam, ClassNumber, \
-    ClassInstructor, SeatInfo
+    ClassInstructor, SeatInfo, SKIP_BEGINNING
 
 
 # TODO: Careful about LAB. How to deal with them? (This might take longer...)
@@ -42,7 +42,7 @@ def fetch_web_content(subject: str, semester: str) -> str:
 
 def fetch_subjects() -> List[str]:
     """
-    Fetch all the existing subject names.
+    Fetch all existing subject names.
     :return: A list of subject names.
     """
     # Set up the fake browser object and open the target website.
@@ -55,14 +55,14 @@ def fetch_subjects() -> List[str]:
     # Extract values from the tag.
     options = select_box.find_all("option")
 
-    # return the desired values. ('%' means all subject.)
+    # return the desired values. (Exclude: '%', it means all subject.)
     return [option["value"] for option in options if option != "%"]
 
 
 def fetch_semesters() -> List[str]:
     """
-
-    :return:
+    Fetch all existing semester values and names.
+    :return: Not sure yet.
     """
     browser = mechanicalsoup.StatefulBrowser()
     web_soup = browser.open(url).soup
@@ -74,11 +74,9 @@ def fetch_semesters() -> List[str]:
 
 def extract_class_info(web_content: str) -> List[list]:
     """
-    This function will extract class information from the given web page
-    content.
+    This function will extract class information from the given web page.
     :param web_content: A string that contains web page information.
-    :return: A list of lists, where each list holds information
-    for one class.
+    :return: A list of lists, where each list holds information for one class.
     """
     # Get the web content in text and parse it to html.
     web_soup = BeautifulSoup(web_content, "html5lib")
@@ -89,9 +87,8 @@ def extract_class_info(web_content: str) -> List[list]:
     # Get all rows of the table.
     table_rows = table.find_all("tr")
 
-    # TODO: think about a way to beautify this
     # Get rid of the first couple useless lines.
-    info_rows = table_rows[3:]
+    info_rows = table_rows[SKIP_BEGINNING:]
 
     # Eliminate all the empty rows.
     class_rows = [row for row in info_rows if len(row.find_all("td")) > 1]
@@ -250,8 +247,7 @@ def get_final_frame():
     :return: A data frame that contains all class information.
     """
     final_frame_list = []
-    all_subjects = fetch_subjects()
-    subjects = all_subjects[1:]
+    subjects = fetch_subjects()
     for subject in subjects:
         web_content = fetch_web_content(subject)
         class_info_list = extract_class_info(web_content)
