@@ -5,52 +5,17 @@ import numpy as np
 import pandas as pd
 import mechanicalsoup
 from bs4 import BeautifulSoup
-from typing import List, NamedTuple
-
-# Leave some constant here
-url = "https://weblprod1.wheatonma.edu/PROD/bzcrschd.P_ListSection"
-base_url = "https://weblprod1.wheatonma.edu"
+from typing import List
+from constants import url, base_url, ClassConx, ClassExam, ClassNumber, \
+    ClassInstructor, SeatInfo
 
 
-# TODO: Careful about LAB. How to deal with them? (This might be hard...)
-class ClassNumber(NamedTuple):
-    """Struct for class number information."""
-    num: str
-    link: str
-
-
-class ClassExam(NamedTuple):
-    """Struct for class exam information."""
-    letter: str
-    link: str
-
-
-class ClassInstructor(NamedTuple):
-    """Struct for class instructor information."""
-    name: str
-    link: str
-
-
-class ClassConx(NamedTuple):
-    """Struct for class connection information."""
-    num: str
-    link: str
-
-
-class SeatInfo(NamedTuple):
-    """Struct for seats information."""
-    max: str
-    taken: str
-    avail: str
-    wait_list: str
-
-
-# TODO: This function will need semester parameter.
+# TODO: Careful about LAB. How to deal with them? (This might take longer...)
 def fetch_web_content(subject: str, semester: str) -> str:
     """
-    This function submit a form to search based on users request.
+    This function will submit the form based on the two inputs.
     :param subject: Desired subject users want to search for.
-    :param semester:
+    :param semester: Desired semester users want to search for.
     :return: A string that contains web page information.
     """
     # Set up the fake browser object and open the target website.
@@ -67,6 +32,7 @@ def fetch_web_content(subject: str, semester: str) -> str:
 
     # Fill out the form with user desired input.
     form.set("subject_sch", subject)
+    form.set("schedule_beginterm", semester)
 
     # Submit form.
     response = browser.submit_selected()
@@ -244,8 +210,8 @@ def refine_class_info(class_info_list: list, subject: str):
     # This section will set the connection information.
     def _conx_info_helper(class_info: list):
         connection_info = class_info[9].find_all("a")
-        return [ClassInstructor(name=str(info.contents[0]),
-                                link=info['href'])
+        return [ClassConx(num=str(info.contents[0]),
+                          link=info['href'])
                 if connection_info else None
                 for info in connection_info]
 
