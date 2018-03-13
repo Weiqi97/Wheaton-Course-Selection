@@ -12,7 +12,7 @@ url = "https://weblprod1.wheatonma.edu/PROD/bzcrschd.P_ListSection"
 base_url = "https://weblprod1.wheatonma.edu"
 
 
-# TODO: Careful about LAB. How to deal with them?
+# TODO: Careful about LAB. How to deal with them? (This might be hard...)
 class ClassNumber(NamedTuple):
     """Struct for class number information."""
     num: str
@@ -46,10 +46,11 @@ class SeatInfo(NamedTuple):
 
 
 # TODO: This function will need semester parameter.
-def fetch_web_content(subject: str) -> str:
+def fetch_web_content(subject: str, semester: str) -> str:
     """
     This function submit a form to search based on users request.
     :param subject: Desired subject users want to search for.
+    :param semester:
     :return: A string that contains web page information.
     """
     # Set up the fake browser object and open the target website.
@@ -81,7 +82,27 @@ def fetch_subjects() -> List[str]:
     # Set up the fake browser object and open the target website.
     browser = mechanicalsoup.StatefulBrowser()
     web_soup = browser.open(url).soup
-    options = web_soup.find('select').find_all('option')
+
+    # Find the correct select tag.
+    select_box = web_soup.find("select", {"name": "subject_sch"})
+
+    # Extract values from the tag.
+    options = select_box.find_all("option")
+
+    # return the desired values. ('%' means all subject.)
+    return [option["value"] for option in options if option != "%"]
+
+
+def fetch_semesters() -> List[str]:
+    """
+
+    :return:
+    """
+    browser = mechanicalsoup.StatefulBrowser()
+    web_soup = browser.open(url).soup
+    select_box = web_soup.find("select", {"name": "schedule_beginterm"})
+    options = select_box.find_all("option")
+
     return [option["value"] for option in options]
 
 
@@ -270,6 +291,10 @@ def get_final_frame():
         class_info_list = extract_class_info(web_content)
         class_frame = refine_class_info(class_info_list, subject)
         final_frame_list.append(class_frame)
-    
+
     final_frame = pd.DataFrame(pd.concat(final_frame_list, ignore_index=True))
     final_frame.to_pickle("FINAL_FRAME.pkl")
+
+
+all_semesters = fetch_semesters()
+print("DONE")
