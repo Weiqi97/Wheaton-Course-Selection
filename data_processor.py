@@ -205,11 +205,18 @@ def get_semester_class_info(semester_name: str, semester_value: str):
     :param semester_name: A recent name value from semesters fetched.
     :param semester_value: A recent semester value from semesters fetched.
     """
+    # Fetch all subject names.
     subjects = fetch_subjects()
+
+    # Get information for all classes within the semester.
     all_class = \
         [get_specific_class_info(subject=subject, semester=semester_value)
          for subject in subjects]
+
+    # Concatenate all data frames together to one.
     semester_frame = pd.DataFrame(pd.concat(all_class, ignore_index=True))
+
+    # Save it as a pickle file.
     semester_frame.to_pickle(f"{semester_name}.pkl")
     semester_frame.to_csv(f"{semester_name}.csv")
 
