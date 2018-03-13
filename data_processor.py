@@ -195,8 +195,11 @@ def get_specific_class_info(subject: str, semester: str) -> pd.DataFrame:
     class_info_list = extract_class_info(web_content=web_content)
 
     # Return refined class information.
-    return refine_class_info(class_info_list=class_info_list,
-                             subject=subject)
+    if class_info_list is not None:
+        return refine_class_info(class_info_list=class_info_list,
+                                 subject=subject)
+    else:
+        return pd.DataFrame()
 
 
 def get_semester_class_info(semester_name: str, semester_value: str):
@@ -224,7 +227,11 @@ def get_semester_class_info(semester_name: str, semester_value: str):
 def save_all_info():
     """This function will get all needed information."""
     semesters = fetch_semesters()
+    for semester_name, semester_value in semesters.iteritems():
+        print("HERE")
+        print(semester_name)
+        get_semester_class_info(semester_name=semester_name,
+                                semester_value=semester_value)
 
 
-
-get_semester_class_info("201820")
+save_all_info()
