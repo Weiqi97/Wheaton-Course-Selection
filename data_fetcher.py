@@ -1,5 +1,5 @@
 # coding=utf-8
-"""This file will fetch all class information from Wheaton's website."""
+"""This file will fetch all needed information from Wheaton's website."""
 
 import numpy as np
 import pandas as pd
