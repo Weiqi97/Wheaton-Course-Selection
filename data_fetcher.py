@@ -59,17 +59,28 @@ def fetch_subjects() -> List[str]:
     return [option["value"] for option in options if option != "%"]
 
 
-def fetch_semesters() -> List[str]:
+def fetch_semesters() -> pd.Series:
     """
     Fetch all existing semester values and names.
-    :return: Not sure yet.
+    :return: A pandas series, where
+                - Index are semester names, ie "Spring 2018"
+                - Data are corresponding semester values, ie "201820"
     """
+    # Set up the fake browser object and open the target website.
     browser = mechanicalsoup.StatefulBrowser()
     web_soup = browser.open(url).soup
+
+    # Find the correct select tag.
     select_box = web_soup.find("select", {"name": "schedule_beginterm"})
+
+    # Extract values from the tag.
     options = select_box.find_all("option")
 
-    return [option["value"] for option in options]
+    # Get values and names.
+    option_values = [option["value"] for option in options]
+    option_names = [str(option.contents[0]) for option in options]
+
+    return pd.Series(data=option_values, index=option_names)
 
 
 def extract_class_info(web_content: str) -> List[list]:
@@ -97,15 +108,18 @@ def extract_class_info(web_content: str) -> List[list]:
     class_index = [index for index, row in enumerate(class_rows)
                    if row.find("a")]
 
+    # Check if exists more than one class.
     if len(class_index) > 1:
         combined_classes = \
             [class_rows[class_index[index]: class_index[index + 1]]
              for index, _ in enumerate(class_index[:-1])]
         combined_classes.append(class_rows[class_index[-1]:])
 
+    # Check if exists only one class.
     elif len(class_index) == 1:
         combined_classes = [class_rows]
 
+    # Check if nothing was found for one subject.
     else:
         combined_classes = []
 
