@@ -31,7 +31,7 @@ def extract_class_info(web_content: str) -> List[list]:
     # Eliminate all the empty rows.
     class_rows = [row for row in info_rows if len(row.find_all("td")) > 1]
 
-    # Work on separating the class info.
+    # Work on separating the class each_class_info.
     class_index = [index for index, row in enumerate(class_rows)
                    if row.find("a")]
 
@@ -53,6 +53,24 @@ def extract_class_info(web_content: str) -> List[list]:
     return combined_classes
 
 
+def get_number_info(class_basic_info: list):
+    """
+    Get class number information.
+    :param class_basic_info: A list of class basic information.
+    :return: A list of refined class number information.
+    """
+    def _number_info_helper(class_info: list):
+        """
+        Helper for getting the class number.
+        :return: a ClassNumber object.
+        """
+        number_info = class_info[0].find("a")
+        return ClassNumber(num=str(number_info.contents[0]),
+                           link=base_url + number_info['href'])
+
+    number_infos = [_number_info_helper(class_info)
+                    for class_info in class_basic_info]
+
 def refine_class_info(class_info_list: list, subject: str):
     """
     This function will refine class information from the web page.
@@ -60,28 +78,42 @@ def refine_class_info(class_info_list: list, subject: str):
     :param subject: Name of the subject.
     :return: A pandas data frame that has all class information.
     """
-    class_basic_info = [class_info[0].find_all("td")
-                        for class_info in class_info_list]
-
+    # Set data frame that holds all class information.
     class_info_frame = pd.DataFrame(
-        0,
+        data=0,
         index=np.arange(len(class_info_list)),
         columns=["subject", "number", "exam", "title", "CRN", "time",
                  "location", "instructor", "foundation", "division", "area",
                  "connection", "textbook", "seats", "special_info"]
     )
+    
+    # Get class seats information and store in the data frame..
+    class_seats_info = [each_class[-1].find_all("td")
+                        for each_class in class_info_list]
 
+    class_info_frame["seats"] = [
+        SeatInfo(max=str(each_class[1].contents[0]),
+                 taken=str(each_class[1].contents[0]),
+                 avail=str(each_class[1].contents[0]),
+                 wait_list=str(each_class[1].contents[0]))
+        for each_class in class_seats_info]
+    
+    # Get class special information, if any stores in the data frame.
+    class_info_frame["special_info"] = [
+        each_class[1].find_all("td")[1].contents[0].replace("\n", "")
+        if len(each_class) > 2 else ""
+        for each_class in class_info_list
+    ]
+
+    # Get class basic information.
+    class_basic_info = [class_info[0].find_all("td")
+                        for class_info in class_info_list]
+    
     # Set all the subject name
     class_info_frame["subject"] = subject
 
     # This section will set the numbers
-    def _number_info_helper(class_info: list):
-        number_info = class_info[0].find("a")
-        return ClassNumber(num=str(number_info.contents[0]),
-                           link=base_url + number_info['href'])
 
-    number_infos = [_number_info_helper(class_info)
-                    for class_info in class_basic_info]
     class_info_frame["number"] = number_infos
 
     # This section will set the exams.
@@ -120,12 +152,12 @@ def refine_class_info(class_info_list: list, subject: str):
     # This section will set the instructor(s).
     def _instructor_info_helper(class_info: list):
         instructor_info = class_info[5].find_all("a")
-        return [ClassInstructor(name=str(info.contents[0]),
-                                link=info['href'])
+        return [ClassInstructor(name=str(each_class_info.contents[0]),
+                                link=each_class_info['href'])
                 if instructor_info else
                 [ClassInstructor(name="DEPT",
                                  link="")]
-                for info in instructor_info]
+                for each_class_info in instructor_info]
 
     class_info_frame["instructor"] = [_instructor_info_helper(class_info)
                                       for class_info in class_basic_info]
@@ -148,10 +180,10 @@ def refine_class_info(class_info_list: list, subject: str):
     # This section will set the connection information.
     def _conx_info_helper(class_info: list):
         connection_info = class_info[9].find_all("a")
-        return [ClassConx(num=str(info.contents[0]),
-                          link=info['href'])
+        return [ClassConx(num=str(each_class_info.contents[0]),
+                          link=each_class_info['href'])
                 if connection_info else None
-                for info in connection_info]
+                for each_class_info in connection_info]
 
     class_info_frame["connection"] = [_conx_info_helper(class_info)
                                       for class_info in class_basic_info]
@@ -159,24 +191,6 @@ def refine_class_info(class_info_list: list, subject: str):
     # This section will set the textbook link.
     class_info_frame["textbook"] = \
         [class_info[10].find("a")['href'] for class_info in class_basic_info]
-
-    # This part grab the seats information
-    class_seats_info = [class_info[-1].find_all("td")
-                        for class_info in class_info_list]
-
-    class_info_frame["seats"] = [
-        SeatInfo(max=str(info[1].contents[0]),
-                 taken=str(info[1].contents[0]),
-                 avail=str(info[1].contents[0]),
-                 wait_list=str(info[1].contents[0]))
-        for info in class_seats_info]
-
-    # This part grab the special information
-    class_info_frame["special_info"] = [
-        class_info[1].find_all("td")[1].contents[0].replace("\n", "")
-        if len(class_info) > 2 else ""
-        for class_info in class_info_list
-    ]
 
     return class_info_frame
 
