@@ -53,23 +53,46 @@ def extract_class_info(web_content: str) -> List[list]:
     return combined_classes
 
 
-def get_number_info(class_basic_info: list):
+def get_number_info(class_basic_info: list) -> List[ClassNumber]:
     """
     Get class number information.
     :param class_basic_info: A list of class basic information.
     :return: A list of refined class number information.
     """
-    def _number_info_helper(class_info: list):
+
+    def _number_info_helper(each_class: list) -> ClassNumber:
         """
         Helper for getting the class number.
         :return: a ClassNumber object.
         """
-        number_info = class_info[0].find("a")
+        number_info = each_class[0].find("a")
         return ClassNumber(num=str(number_info.contents[0]),
                            link=base_url + number_info['href'])
 
-    number_infos = [_number_info_helper(class_info)
-                    for class_info in class_basic_info]
+    return [_number_info_helper(each_class)
+            for each_class in class_basic_info]
+
+
+def get_exam_info(class_basic_info: list) -> List[ClassExam]:
+    """
+    Get class exam information.
+    :param class_basic_info: A list of class basic information.
+    :return: A list of refined class exam information.
+    """
+
+    def _exam_info_helper(each_class: list):
+        exam_info = each_class[1].find("a")
+
+        # Error checking.
+        if exam_info.contents:
+            return ClassExam(letter=str(exam_info.contents[0]),
+                             link=base_url + exam_info['href'])
+        else:
+            return ClassExam(letter="", link="")
+
+    return [_exam_info_helper(each_class)
+            for each_class in class_basic_info]
+
 
 def refine_class_info(class_info_list: list, subject: str):
     """
@@ -86,7 +109,7 @@ def refine_class_info(class_info_list: list, subject: str):
                  "location", "instructor", "foundation", "division", "area",
                  "connection", "textbook", "seats", "special_info"]
     )
-    
+
     # Get class seats information and store in the data frame..
     class_seats_info = [each_class[-1].find_all("td")
                         for each_class in class_info_list]
@@ -97,7 +120,7 @@ def refine_class_info(class_info_list: list, subject: str):
                  avail=str(each_class[1].contents[0]),
                  wait_list=str(each_class[1].contents[0]))
         for each_class in class_seats_info]
-    
+
     # Get class special information, if any stores in the data frame.
     class_info_frame["special_info"] = [
         each_class[1].find_all("td")[1].contents[0].replace("\n", "")
@@ -106,52 +129,40 @@ def refine_class_info(class_info_list: list, subject: str):
     ]
 
     # Get class basic information.
-    class_basic_info = [class_info[0].find_all("td")
-                        for class_info in class_info_list]
-    
-    # Set all the subject name
+    class_basic_info = [each_class[0].find_all("td")
+                        for each_class in class_info_list]
+
+    # Set all basic information.
     class_info_frame["subject"] = subject
-
-    # This section will set the numbers
-
-    class_info_frame["number"] = number_infos
+    class_info_frame["number"] = \
+        get_number_info(class_basic_info=class_basic_info)
 
     # This section will set the exams.
-    def _exam_info_helper(class_info: list):
-        exam_info = class_info[1].find("a")
-        if exam_info.contents:
-            return ClassExam(letter=str(exam_info.contents[0]),
-                             link=base_url + exam_info['href'])
-        else:
-            return ClassExam(letter="", link="")
-
-    class_info_frame["exam"] = [_exam_info_helper(class_info)
-                                for class_info in class_basic_info]
 
     # This section will set the titles.
-    class_info_frame["title"] = [str(class_info[2].contents[0])
-                                 for class_info in class_basic_info]
+    class_info_frame["title"] = [str(each_class[2].contents[0])
+                                 for each_class in class_basic_info]
 
     # This section will set the CRN.
-    class_info_frame["CRN"] = [str(class_info[3].contents[0])
-                               for class_info in class_basic_info]
+    class_info_frame["CRN"] = [str(each_class[3].contents[0])
+                               for each_class in class_basic_info]
 
     # This section will set the time.
     class_info_frame["time"] = [
-        class_info[4].contents[0].replace('\n', '')
-        for class_info in class_basic_info]
+        each_class[4].contents[0].replace('\n', '')
+        for each_class in class_basic_info]
     # adjust time styles
     class_info_frame["time"] = [" ".join(time.split())
                                 for time in class_info_frame["time"]]
 
     # This section will set the location.
     class_info_frame["location"] = [
-        class_info[4].contents[2].replace('\n', '')
-        for class_info in class_basic_info]
+        each_class[4].contents[2].replace('\n', '')
+        for each_class in class_basic_info]
 
     # This section will set the instructor(s).
-    def _instructor_info_helper(class_info: list):
-        instructor_info = class_info[5].find_all("a")
+    def _instructor_info_helper(each_class: list):
+        instructor_info = each_class[5].find_all("a")
         return [ClassInstructor(name=str(each_class_info.contents[0]),
                                 link=each_class_info['href'])
                 if instructor_info else
@@ -159,38 +170,38 @@ def refine_class_info(class_info_list: list, subject: str):
                                  link="")]
                 for each_class_info in instructor_info]
 
-    class_info_frame["instructor"] = [_instructor_info_helper(class_info)
-                                      for class_info in class_basic_info]
+    class_info_frame["instructor"] = [_instructor_info_helper(each_class)
+                                      for each_class in class_basic_info]
 
     # This section will set the foundation, division and area.
     class_info_frame["foundation"] = \
-        [class_info[6].contents[0].replace('\n', '')
-         for class_info in class_basic_info]
+        [each_class[6].contents[0].replace('\n', '')
+         for each_class in class_basic_info]
 
     # This section will set the titles.
     class_info_frame["division"] = \
-        [class_info[7].contents[0].replace('\n', '')
-         for class_info in class_basic_info]
+        [each_class[7].contents[0].replace('\n', '')
+         for each_class in class_basic_info]
 
     # This section will set the CRN.
     class_info_frame["area"] = \
-        [class_info[8].contents[0].replace('\n', '')
-         for class_info in class_basic_info]
+        [each_class[8].contents[0].replace('\n', '')
+         for each_class in class_basic_info]
 
     # This section will set the connection information.
-    def _conx_info_helper(class_info: list):
-        connection_info = class_info[9].find_all("a")
+    def _conx_info_helper(each_class: list):
+        connection_info = each_class[9].find_all("a")
         return [ClassConx(num=str(each_class_info.contents[0]),
                           link=each_class_info['href'])
                 if connection_info else None
                 for each_class_info in connection_info]
 
-    class_info_frame["connection"] = [_conx_info_helper(class_info)
-                                      for class_info in class_basic_info]
+    class_info_frame["connection"] = [_conx_info_helper(each_class)
+                                      for each_class in class_basic_info]
 
     # This section will set the textbook link.
     class_info_frame["textbook"] = \
-        [class_info[10].find("a")['href'] for class_info in class_basic_info]
+        [each_class[10].find("a")['href'] for each_class in class_basic_info]
 
     return class_info_frame
 
