@@ -295,18 +295,15 @@ def get_semester_class_info(semester_name: str, semester_value: str):
     semester_frame = pd.DataFrame(pd.concat(all_class, ignore_index=True))
 
     # Save it as a pickle file.
-    semester_frame.to_pickle(f"{semester_name}.pkl")
-    semester_frame.to_csv(f"{semester_name}.csv")
+    semester_frame.to_pickle(f"pickle_data/{semester_name}.pkl")
+
+    # Save to CSV in order to easily compare with web page.
+    semester_frame.to_csv(f"csv_data/{semester_name}.csv")
 
 
 def save_all_info():
     """This function will get all needed information."""
     semesters = fetch_semesters()
     for semester_name, semester_value in semesters.iteritems():
-        print("HERE")
-        print(semester_name)
         get_semester_class_info(semester_name=semester_name,
                                 semester_value=semester_value)
-
-
-get_semester_class_info(semester_name="sth", semester_value="201820")
