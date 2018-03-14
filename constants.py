@@ -3,10 +3,6 @@
 
 from typing import NamedTuple
 
-# Web url constants
-url = "https://weblprod1.wheatonma.edu/PROD/bzcrschd.P_ListSection"
-base_url = "https://weblprod1.wheatonma.edu"
-
 
 # Struct constants
 class ClassNumber(NamedTuple):
@@ -40,6 +36,10 @@ class SeatInfo(NamedTuple):
     avail: str
     wait_list: str
 
+
+# Web url constants
+url = "https://weblprod1.wheatonma.edu/PROD/bzcrschd.P_ListSection"
+base_url = "https://weblprod1.wheatonma.edu"
 
 # Integer constants
 # This value used to skip first three useless rows in the web content.
