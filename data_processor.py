@@ -141,18 +141,36 @@ def get_location_info(class_basic_info: list) -> List[str]:
          for each_class in class_basic_info]
 
 
+def get_instructor_info(class_basic_info: list) -> List[List[ClassInstructor]]:
+    """
+    Get class instructor information.
+    :param class_basic_info: A list of class basic information.
+    :return: A list of list of class instructor(s) information.
+    """
 
     def _instructor_info_helper(each_class: list):
         instructor_info = each_class[5].find_all("a")
         return [ClassInstructor(name=str(each_class_info.contents[0]),
                                 link=each_class_info['href'])
                 if instructor_info else
-                [ClassInstructor(name="DEPT",
-                                 link="")]
+                ClassInstructor(name="DEPT", link="")
                 for each_class_info in instructor_info]
 
-    class_info_frame["instructor"] = [_instructor_info_helper(each_class)
-                                      for each_class in class_basic_info]
+    return [_instructor_info_helper(each_class)
+            for each_class in class_basic_info]
+
+
+def get_conx_info(each_class: BeautifulSoup) -> List[ClassConx]:
+    """
+    Get class connection information.
+    :param each_class: A beautiful soup object that contains class information.
+    :return: A list of class connection information.
+    """
+    connection_info = each_class[9].find_all("a")
+    return [ClassConx(num=str(each_class_info.contents[0]),
+                      link=each_class_info['href'])
+            if connection_info else None
+            for each_class_info in connection_info]
 
 
 def refine_class_info(class_info_list: list, subject: str):
@@ -214,17 +232,8 @@ def refine_class_info(class_info_list: list, subject: str):
     class_info_frame["location"] = \
         get_location_info(class_basic_info=class_basic_info)
 
-    def _instructor_info_helper(each_class: list):
-        instructor_info = each_class[5].find_all("a")
-        return [ClassInstructor(name=str(each_class_info.contents[0]),
-                                link=each_class_info['href'])
-                if instructor_info else
-                [ClassInstructor(name="DEPT",
-                                 link="")]
-                for each_class_info in instructor_info]
-
-    class_info_frame["instructor"] = [_instructor_info_helper(each_class)
-                                      for each_class in class_basic_info]
+    class_info_frame["instructor"] = \
+        get_instructor_info(class_basic_info=class_basic_info)
 
     class_info_frame["foundation"] = \
         [each_class[6].contents[0].replace("\n", "")
@@ -238,18 +247,9 @@ def refine_class_info(class_info_list: list, subject: str):
         [each_class[8].contents[0].replace("\n", "")
          for each_class in class_basic_info]
 
-    # This section will set the connection information.
-    def _conx_info_helper(each_class: list):
-        connection_info = each_class[9].find_all("a")
-        return [ClassConx(num=str(each_class_info.contents[0]),
-                          link=each_class_info['href'])
-                if connection_info else None
-                for each_class_info in connection_info]
-
-    class_info_frame["connection"] = [_conx_info_helper(each_class)
+    class_info_frame["connection"] = [get_conx_info(each_class=each_class)
                                       for each_class in class_basic_info]
 
-    # This section will set the textbook link.
     class_info_frame["textbook"] = \
         [each_class[10].find("a")['href'] for each_class in class_basic_info]
 
