@@ -62,12 +62,12 @@ def get_number_info(class_basic_info: list) -> List[ClassNumber]:
 
     def _number_info_helper(each_class: list) -> ClassNumber:
         """
-        Helper for getting the class number.
+        Helper function for getting the class number information.
         :return: a ClassNumber object.
         """
         number_info = each_class[0].find("a")
         return ClassNumber(num=str(number_info.contents[0]),
-                           link=base_url + number_info['href'])
+                           link=base_url + number_info["href"])
 
     return [_number_info_helper(each_class)
             for each_class in class_basic_info]
@@ -80,7 +80,11 @@ def get_exam_info(class_basic_info: list) -> List[ClassExam]:
     :return: A list of refined class exam information.
     """
 
-    def _exam_info_helper(each_class: list):
+    def _exam_info_helper(each_class: list) -> ClassExam:
+        """
+        Helper function for getting the class exam information.
+        :return: a ClassExam object.
+        """
         exam_info = each_class[1].find("a")
 
         # Error checking.
@@ -92,6 +96,49 @@ def get_exam_info(class_basic_info: list) -> List[ClassExam]:
 
     return [_exam_info_helper(each_class)
             for each_class in class_basic_info]
+
+
+def get_time_info(class_basic_info: list) -> List[str]:
+    """
+    Get class time information.
+    :param class_basic_info: A list of class basic information.
+    :return: A list of class time information.
+    """
+
+    def _time_info_helper(each_class: list) -> List[str]:
+        """
+        Helper function for getting the class time information.
+        :return: a list of class time information.
+        """
+        return [" ".join(content.replace("\n", "").split())
+                if index % 4 == 0 else None
+                for index, content in enumerate(each_class[4].contents)]
+
+    return ["!".join(filter(None,_time_info_helper(each_class=each_class)))
+            if _time_info_helper(each_class=each_class) is not None else ""
+            for each_class in class_basic_info]
+
+
+def get_location_info(class_basic_info: list) -> List[str]:
+    """
+    Get class location information.
+    :param class_basic_info: A list of class basic information.
+    :return: A list of class location information.
+    """
+
+    def _location_info_helper(each_class: list) -> List[str]:
+        """
+        Helper function for getting the class time information.
+        :return: a list of class time information.
+        """
+        return [" ".join(content.replace("\n", "").split())
+                if index % 4 != 0 and index % 2 == 0 else None
+                for index, content in enumerate(each_class[4].contents)]
+
+    return \
+        ["!".join(filter(None, _location_info_helper(each_class=each_class)))
+         if _location_info_helper(each_class=each_class) is not None else ""
+         for each_class in class_basic_info]
 
 
 def refine_class_info(class_info_list: list, subject: str):
@@ -134,31 +181,24 @@ def refine_class_info(class_info_list: list, subject: str):
 
     # Set all basic information.
     class_info_frame["subject"] = subject
+
     class_info_frame["number"] = \
         get_number_info(class_basic_info=class_basic_info)
 
-    # This section will set the exams.
+    class_info_frame["exam"] = \
+        get_exam_info(class_basic_info=class_basic_info)
 
-    # This section will set the titles.
     class_info_frame["title"] = [str(each_class[2].contents[0])
                                  for each_class in class_basic_info]
 
-    # This section will set the CRN.
     class_info_frame["CRN"] = [str(each_class[3].contents[0])
                                for each_class in class_basic_info]
 
-    # This section will set the time.
-    class_info_frame["time"] = [
-        each_class[4].contents[0].replace('\n', '')
-        for each_class in class_basic_info]
-    # adjust time styles
-    class_info_frame["time"] = [" ".join(time.split())
-                                for time in class_info_frame["time"]]
+    class_info_frame["time"] = \
+        get_time_info(class_basic_info=class_basic_info)
 
-    # This section will set the location.
-    class_info_frame["location"] = [
-        each_class[4].contents[2].replace('\n', '')
-        for each_class in class_basic_info]
+    class_info_frame["location"] = \
+        get_location_info(class_basic_info=class_basic_info)
 
     # This section will set the instructor(s).
     def _instructor_info_helper(each_class: list):
@@ -259,4 +299,4 @@ def save_all_info():
                                 semester_value=semester_value)
 
 
-save_all_info()
+get_semester_class_info(semester_name="sth", semester_value="201820")
