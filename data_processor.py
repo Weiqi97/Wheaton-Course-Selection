@@ -114,7 +114,7 @@ def get_time_info(class_basic_info: list) -> List[str]:
                 if index % 4 == 0 else None
                 for index, content in enumerate(each_class[4].contents)]
 
-    return ["!".join(filter(None,_time_info_helper(each_class=each_class)))
+    return ["!".join(filter(None, _time_info_helper(each_class=each_class)))
             if _time_info_helper(each_class=each_class) is not None else ""
             for each_class in class_basic_info]
 
@@ -139,6 +139,20 @@ def get_location_info(class_basic_info: list) -> List[str]:
         ["!".join(filter(None, _location_info_helper(each_class=each_class)))
          if _location_info_helper(each_class=each_class) is not None else ""
          for each_class in class_basic_info]
+
+
+
+    def _instructor_info_helper(each_class: list):
+        instructor_info = each_class[5].find_all("a")
+        return [ClassInstructor(name=str(each_class_info.contents[0]),
+                                link=each_class_info['href'])
+                if instructor_info else
+                [ClassInstructor(name="DEPT",
+                                 link="")]
+                for each_class_info in instructor_info]
+
+    class_info_frame["instructor"] = [_instructor_info_helper(each_class)
+                                      for each_class in class_basic_info]
 
 
 def refine_class_info(class_info_list: list, subject: str):
@@ -200,7 +214,6 @@ def refine_class_info(class_info_list: list, subject: str):
     class_info_frame["location"] = \
         get_location_info(class_basic_info=class_basic_info)
 
-    # This section will set the instructor(s).
     def _instructor_info_helper(each_class: list):
         instructor_info = each_class[5].find_all("a")
         return [ClassInstructor(name=str(each_class_info.contents[0]),
@@ -213,19 +226,16 @@ def refine_class_info(class_info_list: list, subject: str):
     class_info_frame["instructor"] = [_instructor_info_helper(each_class)
                                       for each_class in class_basic_info]
 
-    # This section will set the foundation, division and area.
     class_info_frame["foundation"] = \
-        [each_class[6].contents[0].replace('\n', '')
+        [each_class[6].contents[0].replace("\n", "")
          for each_class in class_basic_info]
 
-    # This section will set the titles.
     class_info_frame["division"] = \
-        [each_class[7].contents[0].replace('\n', '')
+        [each_class[7].contents[0].replace("\n", "")
          for each_class in class_basic_info]
 
-    # This section will set the CRN.
     class_info_frame["area"] = \
-        [each_class[8].contents[0].replace('\n', '')
+        [each_class[8].contents[0].replace("\n", "")
          for each_class in class_basic_info]
 
     # This section will set the connection information.
