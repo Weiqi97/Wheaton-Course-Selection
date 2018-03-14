@@ -53,7 +53,7 @@ def fetch_subjects() -> List[str]:
     options = select_box.find_all("option")
 
     # return the desired values. (Exclude: '%', it means all subject.)
-    return [option["value"] for option in options if option != "%"]
+    return [option["value"] for option in options if option["value"] != "%"]
 
 
 def fetch_semesters() -> pd.Series:
