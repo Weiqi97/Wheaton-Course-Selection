@@ -3,11 +3,13 @@
 
 import pandas as pd
 import mechanicalsoup
-from constants import url, SEMESTER_NUMBER
 
 
 # TODO: (HIGH PRIORITY!): FETCH Other needed information.
 # TODO: Careful about LAB. How to deal with them? (This might take longer...)
+from web_contents.data.constants import url, SEMESTER_NUMBER
+
+
 def fetch_web_content(subject: str, semester: str) -> str:
     """
     This function will submit the form based on the two inputs.
