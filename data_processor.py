@@ -288,8 +288,9 @@ def get_semester_class_info(semester_name: str, semester_value: str):
 
     # Get information for all classes within the semester.
     all_class = \
-        [get_specific_class_info(subject=subject, semester=semester_value)
-         for subject in subjects]
+        [get_specific_class_info(subject=subject_value,
+                                 semester=semester_value)
+         for subject_value in subjects.values]
 
     # Concatenate all data frames together to one.
     semester_frame = pd.DataFrame(pd.concat(all_class, ignore_index=True))
