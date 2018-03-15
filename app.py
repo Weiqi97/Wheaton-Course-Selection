@@ -17,7 +17,8 @@ def drop_down_selections():
 
 @app.route("/", methods=["POST"])
 def sth():
-    A = request.form["STH"]
+    semester = request.form["semesters"]
+    subjects = request.form.getlist("subjects")
     print("DONE")
 
 
