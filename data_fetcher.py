@@ -3,7 +3,6 @@
 
 import pandas as pd
 import mechanicalsoup
-from typing import List
 from constants import url, SEMESTER_NUMBER
 
 
