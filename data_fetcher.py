@@ -7,6 +7,7 @@ from typing import List
 from constants import url, SEMESTER_NUMBER
 
 
+# TODO: (HIGH PRIORITY!): FETCH Other needed information.
 # TODO: Careful about LAB. How to deal with them? (This might take longer...)
 def fetch_web_content(subject: str, semester: str) -> str:
     """
