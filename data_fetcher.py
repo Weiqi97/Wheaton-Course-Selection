@@ -38,7 +38,7 @@ def fetch_web_content(subject: str, semester: str) -> str:
     return response.text
 
 
-def fetch_subjects() -> List[str]:
+def fetch_subjects() -> pd.Series:
     """
     Fetch all existing subject names.
     :return: A list of subject names.
@@ -53,8 +53,12 @@ def fetch_subjects() -> List[str]:
     # Extract values from the tag.
     options = select_box.find_all("option")
 
+    # Get values and names.
+    option_values = [option["value"] for option in options]
+    option_names = [str(option.contents[0]) for option in options]
+
     # return the desired values. (Exclude: '%', it means all subject.)
-    return [option["value"] for option in options if option["value"] != "%"]
+    return pd.Series(data=option_values, index=option_names)
 
 
 def fetch_semesters() -> pd.Series:
