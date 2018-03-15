@@ -6,12 +6,20 @@
 </head>
 <body>
 
-<form method="post" action="/">
-    <select name="STH">
+<form name="User Selections" method="post" action="/">
+    <label for="semesters">Please select semester you want to search for: </label>
+    <select id="semesters" name="semesters">
         {% for name, value in semesters.iteritems() %}
         <option value= "{{value}}">{{name}}</option>"
         {% endfor %}
     </select>
+
+    <select multiple id="mymultiselect" name="mymultiselect[]">
+        <option value="1">this</option>
+        <option value="2">that</option>
+        <option value="3">other thing</option>
+    </select>
+
     <input type="submit" value="Submit">
 </form>
 </body>
