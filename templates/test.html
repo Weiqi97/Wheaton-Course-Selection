@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wheaton Course</title>
+</head>
+<body>
+
+<form method="post" action="/">
+    <select name="STH">
+        {% for name, value in semesters.iteritems() %}
+        <option value= "{{value}}">{{name}}</option>"
+        {% endfor %}
+    </select>
+    <input type="submit" value="Submit">
+</form>
+</body>
+</html>
