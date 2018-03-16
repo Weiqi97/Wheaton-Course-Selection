@@ -14,7 +14,7 @@ def drop_down_selections():
     fetched_foundations = fetch_foundations()
     fetched_divisions = fetch_divisions()
     fetched_areas = fetch_areas()
-    
+
     if request.method == "GET":
         return render_template("index.html",
                                data_generated=False,
