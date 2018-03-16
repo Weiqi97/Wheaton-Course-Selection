@@ -15,7 +15,7 @@ def drop_down_selections():
     areas = fetch_areas()
     intmajors = fetch_intmajors()
 
-    return render_template("test.html",
+    return render_template("index.html",
                            semesters=semesters,
                            subjects=subjects,
                            foundations=foundations,
