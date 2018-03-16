@@ -6,7 +6,7 @@ import pandas as pd
 
 # TODO: We should remove intmajor completely......
 def read_data(semester: str, subjects: list, foundation: str, division: str,
-              area: str, intmajor: str) -> pd.DataFrame:
+              area: str) -> pd.DataFrame:
     """
     This function will reads data from saved file and return proper values
     based on users request.
@@ -40,10 +40,5 @@ def read_data(semester: str, subjects: list, foundation: str, division: str,
         pass
     else:
         data_frame = data_frame.loc[data_frame["area"] == area]
-
-    if intmajor == "%":
-        pass
-    else:
-        data_frame = data_frame.loc[data_frame["intmajor"] == intmajor]
 
     return data_frame
