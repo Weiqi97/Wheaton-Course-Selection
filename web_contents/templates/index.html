@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Course Selection</title>
-    <script src="../static/node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-    <link href="../static/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <script src="../static/node_modules/sweetalert2/dist/sweetalert2.js"></script>
+    <link rel="stylesheet" href="../static/node_modules/sweetalert2/dist/sweetalert2.css">
     <style>
         .header{
             background-color: #0072bc;
@@ -18,61 +21,213 @@
         }
         .logo img{
             width:5.5vw;
-            border:1px solid grey;
+
         }
         .college_header{
             font-family: 'Questrial', sans-serif, serif;
             font-size: 3.5vw;
             color:white;
-            border:1px solid grey;
-            margin-left: 5%;
+            text-align: center;margin-bottom:5px;
         }
+        #add_button{
+            text-align: center;
+        }
+        .course-picker{
+            background-color: #0072bc;
+        }
+        /*this is for the slogan*/
+        sub{
+            font-size: 1vw;
+        }
+        .bootstrap-select {
+            max-width: 20%;
+        }
+        .bootstrap-select .btn {
+            background: transparent;
+            color: white;
+            -webkit-transition: ease-in-out 500ms;
+            -moz-transition: ease-in-out 500ms;
+            -ms-transition: ease-in-out 500ms;
+            -o-transition: ease-in-out 500ms;
+            transition: ease-in-out 500ms;
+            font-family:sans-serif,serif ;
+
+        }
+        .bootstrap-select .dropdown-menu {
+            margin: 0;
+            -webkit-transition: ease-in-out 500ms;
+            -moz-transition: ease-in-out 500ms;
+            -ms-transition: ease-in-out 500ms;
+            -o-transition: ease-in-out 500ms;
+            transition: ease-in-out 500ms;
+        }
+        table{
+            border: 2px solid black;
+        }
+
+        #submit{
+            width:7%;
+            padding-top:2px;
+            padding-bottom: 4px;
+            font-family:sans-serif,serif ;
+            text-align: center;
+            margin-left:5%;
+            color:white;
+            border: 0px;
+            height:38px;
+            background:transparent;
+            border: 1px solid white;
+            -webkit-transition: ease-in-out 500ms;
+            -moz-transition: ease-in-out 500ms;
+            -ms-transition: ease-in-out 500ms;
+            -o-transition: ease-in-out 500ms;
+            transition: ease-in-out 500ms;
+        }
+        .glyphicon-search{
+            background:transparent;
+            border: 0.5px solid white;
+            padding:10px;
+            padding-bottom:12px;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            perspective: 500px;
+            transform: rotateY(90deg);
+            transform-origin: left;
+            -webkit-transition: ease-in-out 400ms;
+            -moz-transition: ease-in-out 400ms;
+            -ms-transition: ease-in-out 400ms;
+            -o-transition: ease-in-out 400ms;
+            transition: ease-in-out 400ms;
+        }
+        #submit:hover ~.glyphicon-search{
+            transform: rotateY(0deg);
+            -webkit-transition: ease-in-out 400ms;
+            -moz-transition: ease-in-out 400ms;
+            -ms-transition: ease-in-out 400ms;
+            -o-transition: ease-in-out 400ms;
+            transition: ease-in-out 400ms;
+            border-left: 0;
+            opacity:0.7;
+        }
+        #submit:hover {
+            opacity: 0.7;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            -webkit-transition: ease-in-out 500ms;
+            -moz-transition: ease-in-out 500ms;
+            -ms-transition: ease-in-out 500ms;
+            -o-transition: ease-in-out 500ms;
+            transition: ease-in-out 500ms
+
+        }
+
     </style>
 </head>
+
 
 
 <body>
     <div class="container-fluid header">
         <div class="row">
-            <div class="col-lg-1 col-md-1 col-sm-1 logo"> <img src="../static/images/wheaton.jpg"> </div>
-            <div class="col-lg-6 col-md-5 col-sm-5 college_header">Wheaton College</div>
+           <!-- <div class="col-lg-1 col-md-1 col-sm-1 logo"> <img src="../static/images/wheaton.jpg"> </div>-->
+            <div class="col-lg-12 col-md-12 col-sm-12 college_header"><b>Wheaton College </b><sub>- The right tool to help you pick classes</sub></div>
         </div>
     </div>
-    <br>
-    <div>
-        <form name="Selections" method="post" action="/">
-            <select class="semester" name="semester" title="semester">
-                {% for name in semesters.index %}
+    <div class="container-fluid course-picker">
+        <form name="Selections" method="post">
+            <select class="selectpicker col-lg-2" name="semester" title="Semesters" id="semester">
+                {% for name in fetched_semesters.index %}
                     <option value= "{{name}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <select class="subjects" name="subjects" title="subjects" multiple>
-                {% for name, value in subjects.iteritems() %}
+            <select class="selectpicker col-lg-2" data-live-search="true" name="subjects" title="Subject(s)" multiple="multiple" id="subjects">
+                {% for name, value in fetched_subjects.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <select class="foundation" name="foundation" title="foundation">
-                {% for name, value in foundations.iteritems() %}
+            <select class="selectpicker col-lg-2" name="foundation">
+                {% for name, value in fetched_foundations.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <select class="division" name="division" title="division">
-                {% for name, value in divisions.iteritems() %}
+            <select class="selectpicker col-lg-2" name="division">
+                {% for name, value in fetched_divisions.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <select class="area" name="area" title="area">
-                {% for name, value in areas.iteritems() %}
+            <select class="selectpicker col-lg-2" name="area">
+                {% for name, value in fetched_areas.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <input type="submit" class="btn btn-dark" value="Search">
+            <button type="submit" id="submit" onclick="return checkField()">Search &nbsp</button><i class="glyphicon glyphicon-search"></i>
         </form>
     </div>
+    <br>
+    <div>
+        {% if data_generated %}
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Course Number</th>
+                    <th>Title</th>
+                    <th>Time</th>
+                    <th>Instructor</th>
+                    <th>CRN</th>
+                    <th id="add_button">To calendar</th>
+                </tr>
+                </thead>
+                <tbody>
+                {%  for _, row in selected_data.iterrows() %}
+                    <tr>
+                        <td><a href={{ row["number"].link }}>{{ row["number"].num }}</a></td>
+                        <td>{{ row["title"] }}</td>
+                        <td>{{ row["time"] }}</td>
+                        <td>
+                            {% for instructor in row["instructor"] %}
+                                <a href={{ instructor.link }}>{{ instructor.name }}</a>
+                            {% endfor %}
+                        </td>
+                        <td>{{ row["CRN"] }}</td>
+                        <td id="add_button"><button>+</button></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
 </body>
+
+
+<!-- This part checks if select has needed values. -->
+<script type="text/javascript">
+    function checkField() {
+        var subjects = document.getElementById("subjects").value;
+        var semester = document.getElementById("semester").value;
+        if (subjects === "") {
+            swal({
+                type: "warning",
+                title: "Please select subject(s)!",
+                confirmButtonText: "Got it!"
+            });
+            return false;
+        }
+        else if (semester === "") {
+            swal({
+                type: "warning",
+                title: "Please select a semester!",
+                confirmButtonText: "Got it!"
+            });
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+</script>
 </html>

@@ -4,17 +4,17 @@
 import pandas as pd
 
 
-# TODO: We should remove intmajor completely......
 def read_data(semester: str, subjects: list, foundation: str, division: str,
               area: str) -> pd.DataFrame:
     """
     This function will reads data from saved file and return proper values
     based on users request.
-    :param semester:
-    :param subjects:
-    :param foundation:
-    :param division:
-    :param area:
+    :param semester: User selected semester value.
+    :param subjects: User selected subject(s).
+    :param foundation: User selected foundation.
+    :param division: User selected division.
+    :param area: User selected area.
+    :return: A pandas data frame that contains desired information.
     """
     data_frame = pd.read_pickle(f"data/saved_data/pickle_data/{semester}.pkl")
 
