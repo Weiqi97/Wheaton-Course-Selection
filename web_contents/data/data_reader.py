@@ -15,7 +15,6 @@ def read_data(semester: str, subjects: list, foundation: str, division: str,
     :param foundation:
     :param division:
     :param area:
-    :param intmajor:
     """
     data_frame = pd.read_pickle(f"data/saved_data/pickle_data/{semester}.pkl")
 
