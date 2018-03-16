@@ -10,8 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <style>
         .header{
             background-color: #0072bc;
@@ -79,7 +78,7 @@
                 {% endfor %}
             </select>
 
-            <input type="submit" value="Search" id="submit" onclick="return checkField()">
+            <button type="submit" id="submit" onclick="return checkField()">Search</button>
         </form>
     </div>
     <div>
@@ -123,11 +122,17 @@
         var subjects = document.getElementById("subjects").value;
         var semester = document.getElementById("semester").value;
         if (subjects === "") {
-            alert("Please fill in subject(s).");
+            swal({
+                title: "Please select subject(s)!",
+                button: "Got it!"
+            });
             return false;
         }
         else if (semester === "") {
-            alert("Please fill in semester.")
+            swal({
+                text: "Please select a semester!",
+                button: "Got it!"
+            });
             return false;
         }
         else{
@@ -135,5 +140,4 @@
         }
     }
 </script>
-
 </html>
