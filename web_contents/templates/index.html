@@ -31,12 +31,8 @@
             border:1px solid grey;
             margin-left: 5%;
         }
-        table{
-            border: #0072bc 1px solid;
-        }
-        table th{
-            border: #0072bc 1px solid;
-            width: 20%;
+        #add_button{
+            text-align: center;
         }
     </style>
 </head>
@@ -88,14 +84,18 @@
     </div>
     <div>
         {% if data_generated %}
-            <table width="50%">
+            <table class="table table-striped">
+                <thead>
                 <tr>
                     <th>Course Number</th>
                     <th>Title</th>
                     <th>Time</th>
                     <th>Instructor</th>
                     <th>CRN</th>
+                    <th id="add_button">To calendar</th>
                 </tr>
+                </thead>
+                <tbody>
                 {%  for _, row in selected_data.iterrows() %}
                     <tr>
                         <td><a href={{ row["number"].link }}>{{ row["number"].num }}</a></td>
@@ -107,8 +107,10 @@
                             {% endfor %}
                         </td>
                         <td>{{ row["CRN"] }}</td>
+                        <td id="add_button"><button>+</button></td>
                     </tr>
                 {% endfor %}
+                </tbody>
             </table>
         {% endif %}
     </div>
