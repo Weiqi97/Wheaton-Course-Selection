@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
 from typing import List
-from web_contents.data.constants import base_url, ClassConx, \
+from web_contents.constants import base_url, ClassConx, \
     ClassExam, ClassNumber, ClassInstructor, SeatInfo, SKIP_BEGINNING
 from web_contents.data.data_fetcher import fetch_semesters, fetch_subjects, \
     fetch_web_content

@@ -6,7 +6,7 @@ import mechanicalsoup
 
 
 # TODO: Careful about LAB. How to deal with them? (This might take longer...)
-from web_contents.data.constants import url, SEMESTER_NUMBER
+from web_contents.constants import url, SEMESTER_NUMBER
 
 
 def fetch_web_content(subject: str, semester: str) -> str:
