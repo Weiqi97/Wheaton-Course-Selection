@@ -40,43 +40,45 @@
     </div>
     <br>
     <div>
-        <select class="semesters" name="semesters" title="semesters">
-            {% for name in semesters.index %}
-                <option value= "{{name}}">{{name}}</option>"
-            {% endfor %}
-        </select>
+        <form name="Selections" method="post" action="/">
+            <select class="semester" name="semester" title="semester">
+                {% for name in semesters.index %}
+                    <option value= "{{name}}">{{name}}</option>"
+                {% endfor %}
+            </select>
 
-        <select class="subjects" name="subjects" title="subjects" multiple>
-            {% for name, value in subjects.iteritems() %}
-                <option value= "{{value}}">{{name}}</option>"
-            {% endfor %}
-        </select>
+            <select class="subjects" name="subjects" title="subjects" multiple>
+                {% for name, value in subjects.iteritems() %}
+                    <option value= "{{value}}">{{name}}</option>"
+                {% endfor %}
+            </select>
 
-        <select class="foundations" name="foundations" title="foundations">
-            {% for name, value in foundations.iteritems() %}
-                <option value= "{{value}}">{{name}}</option>"
-            {% endfor %}
-        </select>
+            <select class="foundations" name="foundations" title="foundations">
+                {% for name, value in foundations.iteritems() %}
+                    <option value= "{{value}}">{{name}}</option>"
+                {% endfor %}
+            </select>
 
-        <select class="divisions" name="divisions" title="divisions">
-            {% for name, value in divisions.iteritems() %}
-                <option value= "{{value}}">{{name}}</option>"
-            {% endfor %}
-        </select>
+            <select class="divisions" name="divisions" title="divisions">
+                {% for name, value in divisions.iteritems() %}
+                    <option value= "{{value}}">{{name}}</option>"
+                {% endfor %}
+            </select>
 
-        <select class="areas" name="areas" title="areas">
-            {% for name, value in areas.iteritems() %}
-                <option value= "{{value}}">{{name}}</option>"
-            {% endfor %}
-        </select>
+            <select class="areas" name="areas" title="areas">
+                {% for name, value in areas.iteritems() %}
+                    <option value= "{{value}}">{{name}}</option>"
+                {% endfor %}
+            </select>
 
-        <select class="intmajors" name="intmajors" title="intmajors">
-            {% for name, value in divisions.iteritems() %}
-                <option value= "{{value}}">{{name}}</option>"
-            {% endfor %}
-        </select>
+            <select class="intmajors" name="intmajors" title="intmajors">
+                {% for name, value in divisions.iteritems() %}
+                    <option value= "{{value}}">{{name}}</option>"
+                {% endfor %}
+            </select>
 
-        <button type="button" class="btn btn-dark">Search</button>
+            <input type="submit" class="btn btn-dark" value="Search">
+        </form>
     </div>
 </body>
 </html>
