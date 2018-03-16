@@ -4,6 +4,7 @@
 import pandas as pd
 
 
+# TODO: We should remove intmajor completely......
 def read_data(semester: str, subjects: list, foundation: str, division: str,
               area: str, intmajor: str) -> pd.DataFrame:
     """
