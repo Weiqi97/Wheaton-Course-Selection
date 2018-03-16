@@ -53,31 +53,31 @@
     <br>
     <div>
         <form name="Selections" method="post">
-            <select class="selectpicker" name="semester" title="semester">
+            <select class="selectpicker" name="semester" title="Semesters">
                 {% for name in fetched_semesters.index %}
                     <option value= "{{name}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <select class="selectpicker" data-live-search="true" name="subjects" title="subjects" multiple="multiple">
+            <select class="selectpicker" data-live-search="true" name="subjects" title="Subject(s)" multiple="multiple">
                 {% for name, value in fetched_subjects.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <select class="selectpicker" name="foundation" title="foundation">
+            <select class="selectpicker" name="foundation">
                 {% for name, value in fetched_foundations.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <select class="selectpicker" name="division" title="division">
+            <select class="selectpicker" name="division">
                 {% for name, value in fetched_divisions.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <select class="selectpicker" name="area" title="area">
+            <select class="selectpicker" name="area">
                 {% for name, value in fetched_areas.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
