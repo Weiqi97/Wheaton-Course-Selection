@@ -21,17 +21,17 @@ $(function() {
     <label for="semesters">Please select semester you want to search for: </label>
     <select id="semesters" name="semesters">
         {% for name in semesters.index %}
-        <option value= "{{name}}">{{name}}</option>"
+            <option value= "{{name}}">{{name}}</option>"
         {% endfor %}
     </select>
     <br><br>
-    <label for="subjects">Please select subject(s) you want to search for: </label>
+    <!--<label for="subjects">Please select subject(s) you want to search for: </label>
     <select multiple id="subjects" name="subjects" class="subjects" style="width:200px">
         {% for subject in subjects %}
-        <option value= "{{subject}}">{{subject}}</option>"
+            <option value= "{{subject}}">{{subject}}</option>"
         {% endfor %}
     </select>
-
+        -->
     <input type="submit" value="Submit">
 </form>
 
