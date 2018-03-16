@@ -1,0 +1,13 @@
+{
+  "name": "install_static",
+  "version": "0.0.1",
+  "description": "",
+  "dependencies": {
+    "bootstrap": "^4.0.0",
+    "chosen": "^0.0.2",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.0"
+  },
+  "author": "Weiqi",
+  "license": "ISC"
+}

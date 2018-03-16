@@ -5,9 +5,10 @@ import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
 from typing import List
-from constants import base_url, ClassConx, ClassExam, ClassNumber, \
-    ClassInstructor, SeatInfo, SKIP_BEGINNING
-from data_fetcher import fetch_web_content, fetch_subjects, fetch_semesters
+from web_contents.data.constants import base_url, ClassConx, \
+    ClassExam, ClassNumber, ClassInstructor, SeatInfo, SKIP_BEGINNING
+from web_contents.data.data_fetcher import fetch_semesters, fetch_subjects, \
+    fetch_web_content
 
 
 def extract_class_info(web_content: str) -> List[list]:
@@ -288,17 +289,18 @@ def get_semester_class_info(semester_name: str, semester_value: str):
 
     # Get information for all classes within the semester.
     all_class = \
-        [get_specific_class_info(subject=subject, semester=semester_value)
-         for subject in subjects]
+        [get_specific_class_info(subject=subject_value,
+                                 semester=semester_value)
+         for subject_value in subjects.values]
 
     # Concatenate all data frames together to one.
     semester_frame = pd.DataFrame(pd.concat(all_class, ignore_index=True))
 
     # Save it as a pickle file.
-    semester_frame.to_pickle(f"pickle_data/{semester_name}.pkl")
+    semester_frame.to_pickle(f"saved_data/pickle_data/{semester_name}.pkl")
 
     # Save to CSV in order to easily compare with web page.
-    semester_frame.to_csv(f"csv_data/{semester_name}.csv")
+    semester_frame.to_csv(f"saved_data/csv_data/{semester_name}.csv")
 
 
 def save_all_info():
