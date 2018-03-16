@@ -4,15 +4,11 @@
 import pandas as pd
 
 
-# TODO: See if I want to create a fake function to get rid of stupid warnings
-# TODO: read documentation about queries
-# http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-query
-
-
 def read_data(semester: str, subjects: list, foundation: str, division: str,
               area: str, intmajor: str) -> pd.DataFrame:
     """
-
+    This function will reads data from saved file and return proper values
+    based on users request.
     :param semester:
     :param subjects:
     :param foundation:
@@ -29,15 +25,24 @@ def read_data(semester: str, subjects: list, foundation: str, division: str,
                        for subject in subjects]
         data_frame = pd.DataFrame(pd.concat(data_frames))
 
-    if foundation == ["%"]:
+    if foundation == "%":
         pass
     else:
         data_frame = data_frame.loc[data_frame["foundation"] == foundation]
 
-    if division == ["%"]:
+    if division == "%":
         pass
     else:
         data_frame = data_frame.loc[data_frame["division"] == division]
 
-    return data_frame
+    if area == "%":
+        pass
+    else:
+        data_frame = data_frame.loc[data_frame["area"] == area]
 
+    if intmajor == "%":
+        pass
+    else:
+        data_frame = data_frame.loc[data_frame["intmajor"] == intmajor]
+
+    return data_frame
