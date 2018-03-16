@@ -94,7 +94,15 @@
                 </tr>
                 {%  for _, row in selected_data.iterrows() %}
                     <tr>
-                        <td><a href={{ row["number"].link }}>{{ row["number"].num }}</a> </td>
+                        <td><a href={{ row["number"].link }}>{{ row["number"].num }}</a></td>
+                        <td>{{ row["title"] }}</td>
+                        <td>{{ row["time"] }}</td>
+                        <td>
+                            {% for instructor in row["instructor"] %}
+                                <a href={{ instructor.link }}>{{ instructor.name }}</a>
+                            {% endfor %}
+                        </td>
+                        <td>{{ row["CRN"] }}</td>
                     </tr>
                 {% endfor %}
             </table>
