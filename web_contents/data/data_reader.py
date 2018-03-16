@@ -20,12 +20,24 @@ def read_data(semester: str, subjects: list, foundation: str, division: str,
     :param area:
     :param intmajor:
     """
-    data = pd.read_pickle(f"data/saved_data/pickle_data/{semester}.pkl")
+    data_frame = pd.read_pickle(f"data/saved_data/pickle_data/{semester}.pkl")
 
     if subjects == ["%"]:
         pass
     else:
-        data = data.loc[subjects]
+        data_frames = [data_frame.loc[data_frame["subject"] == subject]
+                       for subject in subjects]
+        data_frame = pd.DataFrame(pd.concat(data_frames))
 
-    return data
+    if foundation == ["%"]:
+        pass
+    else:
+        data_frame = data_frame.loc[data_frame["foundation"] == foundation]
+
+    if division == ["%"]:
+        pass
+    else:
+        data_frame = data_frame.loc[data_frame["division"] == division]
+
+    return data_frame
 
