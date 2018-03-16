@@ -41,8 +41,6 @@ def sth():
                               area=area,
                               intmajor=intmajor)
 
-    selected_subjects = selected_data["subject"].values
-
     return render_template("index.html",
                            selected_data=selected_data)
 
