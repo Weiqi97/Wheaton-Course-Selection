@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from web_contents.data.data_fetcher import fetch_semesters, fetch_subjects, \
     fetch_foundations, fetch_divisions, fetch_areas, fetch_intmajors
+from web_contents.data.data_reader import read_data
 
 app = Flask(__name__)
 app.debug = True
@@ -33,8 +34,17 @@ def sth():
     area = request.form["area"]
     intmajor = request.form["intmajor"]
 
-    print(semester, subjects)
-    return render_template("index.html")
+    selected_data = read_data(semester=semester,
+                              subjects=subjects,
+                              foundation=foundation,
+                              division=division,
+                              area=area,
+                              intmajor=intmajor)
+
+    selected_subjects = selected_data["subject"]
+
+    return render_template("index.html",
+                           selected_data=selected_data)
 
 
 if __name__ == "__main__":
