@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Course Selection</title>
-    <script src="../static/node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-    <link href="../static/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
     <style>
         .header{
             background-color: #0072bc;
@@ -38,6 +42,7 @@
 </head>
 
 
+
 <body>
     <div class="container-fluid header">
         <div class="row">
@@ -47,39 +52,38 @@
     </div>
     <br>
     <div>
-
         <form name="Selections" method="post">
-            <select class="semester" name="semester" title="semester">
+            <select class="selectpicker" name="semester" title="semester">
                 {% for name in fetched_semesters.index %}
                     <option value= "{{name}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <select class="subjects" name="subjects" title="subjects" multiple>
+            <select class="selectpicker" data-live-search="true" name="subjects" title="subjects" multiple="multiple">
                 {% for name, value in fetched_subjects.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <select class="foundation" name="foundation" title="foundation">
+            <select class="selectpicker" name="foundation" title="foundation">
                 {% for name, value in fetched_foundations.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <select class="division" name="division" title="division">
+            <select class="selectpicker" name="division" title="division">
                 {% for name, value in fetched_divisions.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <select class="area" name="area" title="area">
+            <select class="selectpicker" name="area" title="area">
                 {% for name, value in fetched_areas.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <input type="submit" class="btn btn-dark" value="Search">
+            <input type="submit" value="Search">
         </form>
     </div>
     <div>
