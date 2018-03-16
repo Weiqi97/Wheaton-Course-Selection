@@ -14,32 +14,28 @@ def drop_down_selections():
     foundations = fetch_foundations()
     divisions = fetch_divisions()
     areas = fetch_areas()
-    intmajors = fetch_intmajors()
 
     return render_template("index.html",
                            semesters=semesters,
                            subjects=subjects,
                            foundations=foundations,
                            divisions=divisions,
-                           areas=areas,
-                           intmajors=intmajors)
+                           areas=areas)
 
 
 @app.route("/", methods=["POST"])
-def sth():
+def return_table_values():
     semester = request.form["semester"]
     subjects = request.form.getlist("subjects")
     foundation = request.form["foundation"]
     division = request.form["division"]
     area = request.form["area"]
-    intmajor = request.form["intmajor"]
 
     selected_data = read_data(semester=semester,
                               subjects=subjects,
                               foundation=foundation,
                               division=division,
-                              area=area,
-                              intmajor=intmajor)
+                              area=area)
 
     return render_template("index.html",
                            selected_data=selected_data)
