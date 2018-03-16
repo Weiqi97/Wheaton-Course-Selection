@@ -5,7 +5,6 @@ import pandas as pd
 import mechanicalsoup
 
 
-# TODO: (HIGH PRIORITY!): FETCH Other needed information.
 # TODO: Careful about LAB. How to deal with them? (This might take longer...)
 from web_contents.data.constants import url, SEMESTER_NUMBER
 
