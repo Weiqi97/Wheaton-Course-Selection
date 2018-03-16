@@ -83,9 +83,9 @@ def fetch_subjects() -> pd.Series:
     # Get values and names.
     option_values = [option["value"] for option in options]
     option_names = [str(option.contents[0]) for option in options]
-    series = pd.Series(data=option_values, index=option_names)
+    option_series = pd.Series(data=option_values, index=option_names)
 
-    return pd.Series(series.drop(["CONNECTIONS"]))
+    return pd.Series(option_series.drop(["CONNECTIONS"]))
 
 
 def fetch_foundations() -> pd.Series:
