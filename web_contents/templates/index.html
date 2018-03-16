@@ -9,8 +9,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../static/node_modules/sweetalert2/dist/sweetalert2.js"></script>
+    <link rel="stylesheet" href="../static/node_modules/sweetalert2/dist/sweetalert2.css">
     <style>
         .header{
             background-color: #0072bc;
@@ -123,15 +123,17 @@
         var semester = document.getElementById("semester").value;
         if (subjects === "") {
             swal({
+                type: "warning",
                 title: "Please select subject(s)!",
-                button: "Got it!"
+                confirmButtonText: "Got it!"
             });
             return false;
         }
         else if (semester === "") {
             swal({
-                text: "Please select a semester!",
-                button: "Got it!"
+                type: "warning",
+                title: "Please select a semester!",
+                confirmButtonText: "Got it!"
             });
             return false;
         }
