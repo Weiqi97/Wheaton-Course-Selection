@@ -84,7 +84,6 @@ def fetch_subjects() -> pd.Series:
     option_values = [option["value"] for option in options]
     option_names = [str(option.contents[0]) for option in options]
 
-    # return the desired values. (Exclude: '%', it means all subject.)
     return pd.Series(data=option_values, index=option_names)
 
 
@@ -107,9 +106,9 @@ def fetch_foundations() -> pd.Series:
 
     # Get values and names.
     option_values = [option["value"] for option in options]
-    option_names = [str(option.contents[0]) for option in options]
+    option_names = [str(option.contents[0]).replace("Found: ", "")
+                    for option in options]
 
-    # return the desired values. (Exclude: '%', it means all subject.)
     return pd.Series(data=option_values, index=option_names)
 
 
@@ -125,16 +124,16 @@ def fetch_divisions() -> pd.Series:
     web_soup = browser.open(url).soup
 
     # Find the correct select tag.
-    select_box = web_soup.find("select", {"name": "foundation_sch"})
+    select_box = web_soup.find("select", {"name": "division_sch"})
 
     # Extract values from the tag.
     options = select_box.find_all("option")
 
     # Get values and names.
     option_values = [option["value"] for option in options]
-    option_names = [str(option.contents[0]) for option in options]
+    option_names = [str(option.contents[0]).replace("Division: ", "")
+                    for option in options]
 
-    # return the desired values. (Exclude: '%', it means all subject.)
     return pd.Series(data=option_values, index=option_names)
 
 
@@ -157,13 +156,13 @@ def fetch_areas() -> pd.Series:
 
     # Get values and names.
     option_values = [option["value"] for option in options]
-    option_names = [str(option.contents[0]) for option in options]
+    option_names = [str(option.contents[0]).replace("Area: ", "")
+                    for option in options]
 
-    # return the desired values. (Exclude: '%', it means all subject.)
     return pd.Series(data=option_values, index=option_names)
 
 
-def fetch_intmajor() -> pd.Series:
+def fetch_intmajors() -> pd.Series:
     """
     Fetch all existing foundation names.
     :return: A pandas series, where
@@ -182,7 +181,7 @@ def fetch_intmajor() -> pd.Series:
 
     # Get values and names.
     option_values = [option["value"] for option in options]
-    option_names = [str(option.contents[0]) for option in options]
+    option_names = [str(option.contents[0]).replace("INT: ", "")
+                    for option in options]
 
-    # return the desired values. (Exclude: '%', it means all subject.)
     return pd.Series(data=option_values, index=option_names)

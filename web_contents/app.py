@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
-from web_contents.data.data_fetcher import fetch_semesters, fetch_subjects
+from web_contents.data.data_fetcher import fetch_semesters, fetch_subjects, \
+    fetch_foundations, fetch_divisions, fetch_areas, fetch_intmajors
 
 app = Flask(__name__)
 app.debug = True
@@ -7,11 +8,20 @@ app.debug = True
 
 @app.route("/", methods=["GET"])
 def drop_down_selections():
-    subjects = fetch_subjects()
     semesters = fetch_semesters()
+    subjects = fetch_subjects()
+    foundations = fetch_foundations()
+    divisions = fetch_divisions()
+    areas = fetch_areas()
+    intmajors = fetch_intmajors()
+
     return render_template("test.html",
+                           semesters=semesters,
                            subjects=subjects,
-                           semesters=semesters)
+                           foundations=foundations,
+                           divisions=divisions,
+                           areas=areas,
+                           intmajors=intmajors)
 
 
 @app.route("/", methods=["POST"])
