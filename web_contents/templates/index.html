@@ -49,13 +49,13 @@
     <br>
     <div>
         <form name="Selections" method="post">
-            <select class="selectpicker" name="semester" title="Semesters">
+            <select class="selectpicker" name="semester" title="Semesters" id="semester">
                 {% for name in fetched_semesters.index %}
                     <option value= "{{name}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <select class="selectpicker" data-live-search="true" name="subjects" title="Subject(s)" multiple="multiple">
+            <select class="selectpicker" data-live-search="true" name="subjects" title="Subject(s)" multiple="multiple" id="subjects">
                 {% for name, value in fetched_subjects.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
@@ -79,7 +79,7 @@
                 {% endfor %}
             </select>
 
-            <input type="submit" value="Search">
+            <input type="submit" value="Search" id="submit" onclick="return checkField()">
         </form>
     </div>
     <div>
@@ -115,4 +115,25 @@
         {% endif %}
     </div>
 </body>
+
+
+<!-- This part checks if select has needed values. -->
+<script type="text/javascript">
+    function checkField() {
+        var subjects = document.getElementById("subjects").value;
+        var semester = document.getElementById("semester").value;
+        if (subjects === "") {
+            alert("Please fill in subject(s).");
+            return false;
+        }
+        else if (semester === "") {
+            alert("Please fill in semester.")
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+</script>
+
 </html>
