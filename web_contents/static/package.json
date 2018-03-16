@@ -4,7 +4,6 @@
   "description": "",
   "dependencies": {
     "bootstrap": "^4.0.0",
-    "chosen": "^0.0.2",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.0"
   },
