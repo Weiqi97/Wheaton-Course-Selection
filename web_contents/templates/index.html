@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>Course Selection</title>
     <script src="../static/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <link href="../static/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Questrial" rel="stylesheet">
-
-     <style>
-
+    <style>
         .header{
             background-color: #0072bc;
             padding: 5px;
@@ -21,25 +21,30 @@
             border:1px solid grey;
         }
         .college_header{
-            font-family: 'Questrial',Sans-Serif,Serif;
+            font-family: 'Questrial', sans-serif, serif;
             font-size: 3.5vw;
             color:white;
             border:1px solid grey;
             margin-left: 5%;
         }
     </style>
-
-
-
 </head>
+
+
 <body>
     <div class="container-fluid header">
         <div class="row">
-            <div class="col-lg-1 col-md-1 col-sm-1 logo"> <img src="images/wheaton.jpg"> </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 logo"> <img src="../static/images/wheaton.jpg"> </div>
             <div class="col-lg-6 col-md-5 col-sm-5 college_header"> Wheaton College</div>
         </div>
     </div>
     <br>
-
+    <div>
+        <select class="js-example-basic-single" name="semesters">
+            {% for name in semesters.index %}
+                <option value= "{{name}}">{{name}}</option>"
+            {% endfor %}
+        </select>
+    </div>
 </body>
 </html>
