@@ -89,3 +89,28 @@ def fetch_subjects() -> pd.Series:
     return pd.Series(data=option_values, index=option_names)
 
 
+def fetch_foundations() -> pd.Series:
+    """
+    Fetch all existing foundation names.
+    :return: A pandas series, where
+            - index are foundation names.
+            - Data are corresponding foundation values.
+    """
+    # Set up the fake browser object and open the target website.
+    browser = mechanicalsoup.StatefulBrowser()
+    web_soup = browser.open(url).soup
+
+    # Find the correct select tag.
+    select_box = web_soup.find("select", {"name": "foundation_sch"})
+
+    # Extract values from the tag.
+    options = select_box.find_all("option")
+
+    # Get values and names.
+    option_values = [option["value"] for option in options]
+    option_names = [str(option.contents[0]) for option in options]
+
+    # return the desired values. (Exclude: '%', it means all subject.)
+    return pd.Series(data=option_values, index=option_names)
+
+
