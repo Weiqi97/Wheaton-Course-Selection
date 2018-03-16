@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from web_contents.data.data_fetcher import fetch_semesters, fetch_subjects, \
-    fetch_foundations, fetch_divisions, fetch_areas, fetch_intmajors
+    fetch_foundations, fetch_divisions, fetch_areas
 from web_contents.data.data_reader import read_data
 
 app = Flask(__name__)
