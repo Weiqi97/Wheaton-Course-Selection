@@ -12,16 +12,10 @@
     <script src="../static/node_modules/sweetalert2/dist/sweetalert2.js"></script>
     <link rel="stylesheet" href="../static/node_modules/sweetalert2/dist/sweetalert2.css">
     <style>
+
         .header{
             background-color: #0072bc;
             padding: 5px;
-        }
-        .logo{
-            padding-left: 5%;
-        }
-        .logo img{
-            width:5.5vw;
-
         }
         .college_header{
             font-family: 'Questrial', sans-serif, serif;
@@ -39,6 +33,7 @@
         sub{
             font-size: 1vw;
         }
+
         .bootstrap-select {
             max-width: 20%;
         }
@@ -61,8 +56,12 @@
             -o-transition: ease-in-out 500ms;
             transition: ease-in-out 500ms;
         }
-        table{
-            border: 2px solid black;
+        /*Placeholder color to white*/
+        .bootstrap-select > .dropdown-toggle.bs-placeholder,
+        .bootstrap-select > .dropdown-toggle.bs-placeholder:active,
+        .bootstrap-select > .dropdown-toggle.bs-placeholder:focus,
+        .bootstrap-select > .dropdown-toggle.bs-placeholder:hover {
+            color: white;
         }
 
         #submit{
@@ -119,6 +118,19 @@
             -o-transition: ease-in-out 500ms;
             transition: ease-in-out 500ms
 
+        }
+        .weekly_schedule{
+            margin-left: 20px;
+            border: 1px solid black;
+            text-align: center;
+        }
+        th{
+            border: solid black 1px;
+            padding: 15px 25px;
+            text-align: center;
+        }
+        td{
+            padding: 5px;
         }
 
     </style>
@@ -201,6 +213,122 @@
             </table>
         {% endif %}
     </div>
+    <table class="weekly_schedule">
+    <thead>
+        <tr>
+            <th>
+                <span> Time/Days</span>
+            </th>
+            <th>
+                <span> Monday</span>
+            </th>
+            <th>
+                <span> Tuesday</span>
+            </th>
+            <th>
+                <span> Wednesday</span>
+            </th>
+            <th>
+                <span> Thursday</span>
+            </th>
+            <th>
+                <span> Friday</span>
+            </th>
+        </tr>
+    </thead>
+     <tbody>
+    <tr>
+        <td> 8:00 am </td>
+        <td> bio</td>
+        <td> chem </td>
+        <td> phy </td>
+        <td> Math </td>
+        <td>  </td>
+    </tr>
+    <tr>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+    </tr>
+     <tr>
+        <td> 9:30 am </td>
+        <td> bio</td>
+        <td> chem </td>
+        <td> phy </td>
+        <td> Math </td>
+        <td> Comp Sci </td>
+    </tr>
+       <tr>
+        <td> 9:30 am </td>
+        <td> bio</td>
+        <td> chem </td>
+        <td> phy </td>
+        <td> Math </td>
+        <td> Comp Sci </td>
+    </tr>
+       <tr>
+        <td> 10:30 am</td>
+        <td> bio</td>
+        <td> chem </td>
+        <td> phy </td>
+        <td> Math </td>
+        <td> Comp Sci </td>
+    </tr>
+       <tr>
+        <td> 11:30 am </td>
+        <td> bio</td>
+        <td> chem </td>
+        <td> phy </td>
+        <td> Math </td>
+        <td> Comp Sci </td>
+    </tr>
+       <tr>
+        <td> 12:30 pm </td>
+        <td> bio</td>
+        <td> chem </td>
+        <td> phy </td>
+        <td> Math </td>
+        <td> Comp Sci </td>
+    </tr>
+       <tr>
+        <td> 1:30 pm </td>
+        <td> bio</td>
+        <td> chem </td>
+        <td> phy </td>
+        <td> Math </td>
+        <td> Comp Sci </td>
+    </tr>
+       <tr>
+        <td> 2:30 pm </td>
+        <td> bio</td>
+        <td> chem </td>
+        <td> phy </td>
+        <td> Math </td>
+        <td> Comp Sci </td>
+    </tr>
+       <tr>
+        <td> 3:30 pm </td>
+        <td> bio</td>
+        <td> chem </td>
+        <td> phy </td>
+        <td> Math </td>
+        <td> Comp Sci </td>
+    </tr>
+       <tr>
+        <td> 4:30 pm </td>
+        <td> bio</td>
+        <td> chem </td>
+        <td> phy </td>
+        <td> Math </td>
+        <td> Comp Sci </td>
+    </tr>
+
+  </tbody>
+</table>
+
 </body>
 
 
