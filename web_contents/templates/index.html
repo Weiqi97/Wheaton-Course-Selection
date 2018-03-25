@@ -124,22 +124,47 @@
             margin-left: 20px;
             border: 1px solid black;
             text-align: center;
+            position: fixed;
         }
         th{
-            border: solid black 1px;
             padding: 15px 25px;
             text-align: center;
+        }
+        /*table header border black*/
+        .table > caption + thead > tr:first-child > td, .table > caption + thead > tr:first-child > th, .table > colgroup + thead > tr:first-child > td, .table > colgroup + thead > tr:first-child > th, .table > thead:first-child > tr:first-child > td, .table > thead:first-child > tr:first-child > th{
+            border: 1px solid black;
         }
         td{
             padding: 5px;
         }
+        tr{
+            -webkit-transition: ease-in-out 200ms;
+            -moz-transition: ease-in-out 200ms;
+            -ms-transition: ease-in-out 200ms;
+            -o-transition: ease-in-out 200ms;
+            transition: ease-in-out 200ms
+        }
+        tr:hover{
+
+            opacity:0.8;
+            -webkit-transition: ease-in-out 200ms;
+            -moz-transition: ease-in-out 200ms;
+            -ms-transition: ease-in-out 200ms;
+            -o-transition: ease-in-out 200ms;
+            transition: ease-in-out 200ms
+        }
+
         .schedule_table{
             width:50%;
             float: right;
             text-align: center;
+            border:1px solid black;
         }
         .instructor{
-            width:10%;
+            width:20%;
+        }
+        .time{
+            width:20%;
         }
 
     </style>
@@ -197,8 +222,8 @@
                 <tr>
                     <th>Course Number</th>
                     <th>Title</th>
-                    <th>Time</th>
-                    <th>Instructor</th>
+                    <th class="time">Time</th>
+                    <th class="instructor">Instructor</th>
                     <th>CRN</th>
                     <th id="add_button">To calendar</th>
                 </tr>
@@ -209,13 +234,17 @@
                         <td><a href={{ row["number"].link }}>{{ row["number"].num }}</a></td>
                         <td>{{ row["title"] }}</td>
                         <td>{{ row["time"] }}</td>
-                        <td class="instructor">
+                        <td>
                             {% for instructor in row["instructor"] %}
                                 <a href={{ instructor.link }}>{{ instructor.name }}</a>
                             {% endfor %}
                         </td>
                         <td>{{ row["CRN"] }}</td>
-                        <td id="add_button"><button>+</button></td>
+
+                        <td id="add_button"><button type="button" class="btn btn-primary btn-sm">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
