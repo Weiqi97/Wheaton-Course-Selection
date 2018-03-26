@@ -1,7 +1,7 @@
 {
-  "name": "install_static",
+  "name": "Dependencies",
   "version": "1.0.0",
-  "description": "Install all packages needed.",
+  "description": "Use npm install to install all needed denpendencies.",
   "dependencies": {
     "jquery": "^3.3.1",
     "bootstrap": "^3.3.7",
