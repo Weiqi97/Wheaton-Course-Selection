@@ -10,6 +10,7 @@
     <!-- Bootstrap -->
     <script src="../static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../static/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
     <!-- CSS and JS for sweet alert package. -->
     <script src="../static/node_modules/sweetalert2/dist/sweetalert2.js"></script>
     <link rel="stylesheet" href="../static/node_modules/sweetalert2/dist/sweetalert2.css">
@@ -22,13 +23,6 @@
         .header{
             background-color: #0072bc;
             padding: 5px;
-        }
-        .logo{
-            padding-left: 5%;
-        }
-        .logo img{
-            width:5.5vw;
-
         }
         .college_header{
             font-family: 'Questrial', sans-serif, serif;
@@ -80,7 +74,6 @@
             text-align: center;
             margin-left:5%;
             color:white;
-            border: 0px;
             height:38px;
             background:transparent;
             border: 1px solid white;
@@ -92,9 +85,8 @@
         }
         .glyphicon-search{
             background:transparent;
-            border: 0.5px solid white;
-            padding:10px;
-            padding-bottom:12px;
+            border: 1px solid white;
+            padding: 10px 10px 12px;
             border-top-right-radius: 5px;
             border-bottom-right-radius: 5px;
             perspective: 500px;
@@ -136,43 +128,47 @@
 <body>
     <div class="container-fluid header">
         <div class="row">
-           <!-- <div class="col-lg-1 col-md-1 col-sm-1 logo"> <img src="../static/images/wheaton.jpg"> </div>-->
             <div class="col-lg-12 col-md-12 col-sm-12 college_header"><b>Wheaton College </b><sub>- The right tool to help you pick classes</sub></div>
         </div>
     </div>
     <div class="container-fluid course-picker">
         <form name="Selections" method="post">
-            <select class="selectpicker col-lg-2" name="semester" title="Semesters" id="semester">
+            <select class="selectpicker col-lg-2" id="semester" name="semester" title="Semesters">
                 {% for name in fetched_semesters.index %}
                     <option value= "{{name}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <select class="selectpicker col-lg-2" data-live-search="true" name="subjects" title="Subject(s)" multiple="multiple" id="subjects">
+            <select class="selectpicker col-lg-2" data-live-search="true" id="subjects" name="subjects" title="Subject(s)" multiple="multiple">
                 {% for name, value in fetched_subjects.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <select class="selectpicker col-lg-2" name="foundation">
+            <label for="foundation"></label>
+            <select class="selectpicker col-lg-2" id="foundation" name="foundation">
                 {% for name, value in fetched_foundations.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <select class="selectpicker col-lg-2" name="division">
+            <label for="division"></label>
+            <select class="selectpicker col-lg-2" id="division" name="division">
                 {% for name, value in fetched_divisions.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <select class="selectpicker col-lg-2" name="area">
+            <label for="area"></label>
+            <select class="selectpicker col-lg-2" id="area" name="area">
                 {% for name, value in fetched_areas.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
             </select>
 
-            <button type="submit" id="submit" onclick="return checkField()">Search &nbsp</button><i class="glyphicon glyphicon-search"></i>
+            <button type="button" class="btn btn-info">
+                <span class="glyphicon glyphicon-search"></span> Search
+            </button>
         </form>
     </div>
     <br>
