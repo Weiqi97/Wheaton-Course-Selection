@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Course Selection</title>
+    <!-- Project javascript -->
+    <script src="../static/js/script_base.js"></script>
     <!-- Jquery JS -->
     <script src="../static/node_modules/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
@@ -207,32 +209,4 @@
         {% endif %}
     </div>
 </body>
-
-
-<!-- This part checks if select has needed values. -->
-<script type="text/javascript">
-    function checkField() {
-        var subjects = document.getElementById("subjects").value;
-        var semester = document.getElementById("semester").value;
-        if (subjects === "") {
-            swal({
-                type: "warning",
-                title: "Please select subject(s)!",
-                confirmButtonText: "Got it!"
-            });
-            return false;
-        }
-        else if (semester === "") {
-            swal({
-                type: "warning",
-                title: "Please select a semester!",
-                confirmButtonText: "Got it!"
-            });
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-</script>
 </html>
