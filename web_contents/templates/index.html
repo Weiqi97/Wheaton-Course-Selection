@@ -134,6 +134,7 @@
     <div class="container-fluid course-picker">
         <form name="Selections" method="post">
             <select class="selectpicker col-lg-2" id="semester" name="semester" title="Semesters">
+                <option value="" selected>Semesters</option>
                 {% for name in fetched_semesters.index %}
                     <option value= "{{name}}">{{name}}</option>"
                 {% endfor %}
@@ -152,8 +153,7 @@
                 {% endfor %}
             </select>
 
-            <label for="division"></label>
-            <select class="selectpicker col-lg-2" id="division" name="division">
+            <label for="division"></label><select class="selectpicker col-lg-2" id="division" name="division">
                 {% for name, value in fetched_divisions.iteritems() %}
                     <option value= "{{value}}">{{name}}</option>"
                 {% endfor %}
@@ -166,9 +166,9 @@
                 {% endfor %}
             </select>
 
-            <button type="button" class="btn btn-info">
-                <span class="glyphicon glyphicon-search"></span> Search
-            </button>
+            <button type="submit" id="submit" onclick="return checkField()">
+                Search &nbsp
+            </button><i class="glyphicon glyphicon-search"></i>
         </form>
     </div>
     <br>
