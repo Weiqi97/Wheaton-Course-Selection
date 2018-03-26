@@ -17,6 +17,9 @@
     <!-- Bootstrap Select -->
     <script src="../static/node_modules/bootstrap-select/dist/js/bootstrap-select.js"></script>
     <link rel="stylesheet" href="../static/node_modules/bootstrap-select/dist/css/bootstrap-select.css">
+    <!-- Data Table -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed" rel="stylesheet">
     <style>
@@ -123,7 +126,11 @@
     </style>
 </head>
 
-
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable();
+    });
+</script>
 
 <body>
     <div class="container-fluid header">
@@ -188,12 +195,19 @@
                 <tbody>
                 {%  for _, row in selected_data.iterrows() %}
                     <tr>
-                        <td><a href={{ row["number"].link }}>{{ row["number"].num }}</a></td>
+                        <td>
+                            <a target="_blank" href={{ row["number"].link }}>
+                                {{ row["number"].num }}
+                            </a>
+                        </td>
                         <td>{{ row["title"] }}</td>
                         <td>{{ row["time"] }}</td>
                         <td>
                             {% for instructor in row["instructor"] %}
-                                <a href={{ instructor.link }}>{{ instructor.name }}</a>
+                                <a target="_blank" href={{ instructor.link }}>
+                                    {{ instructor.name }}
+                                </a>
+                                <br>
                             {% endfor %}
                         </td>
                         <td>{{ row["CRN"] }}</td>
