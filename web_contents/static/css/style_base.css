@@ -18,9 +18,7 @@
 sub{
     font-size: 1vw;
 }
-.bootstrap-select {
-    max-width: 20%;
-}
+
 .bootstrap-select .btn {
     background: transparent;
     color: white;
@@ -39,9 +37,6 @@ sub{
     -ms-transition: ease-in-out 500ms;
     -o-transition: ease-in-out 500ms;
     transition: ease-in-out 500ms;
-}
-table{
-    border: 2px solid black;
 }
 
 #submit{

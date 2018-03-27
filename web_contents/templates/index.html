@@ -27,9 +27,16 @@
 
     <!-- Function call for data table -->
     <script>
-        $(document).ready( function() {$('#result_table').DataTable();} );
+        $(document).ready(function() {
+            $('#result_table').DataTable( {
+                "scrollY":        "200px",
+                "scrollCollapse": true,
+                "paging":         false
+            } );
+        } );
     </script>
 </head>
+
 
 <body>
     <div class="container-fluid header">
@@ -41,84 +48,92 @@
         </div>
     </div>
     <div class="container-fluid course-picker">
-        <form name="Selections" method="post">
-            <select class="selectpicker col-lg-2" id="semester" name="semester" title="Semesters">
-                <option value="" selected>Semesters</option>
-                {% for name in fetched_semesters.index %}
-                    <option value= "{{name}}">{{name}}</option>"
-                {% endfor %}
-            </select>
+        <div class="row">
+            <form name="Selections" method="post">
+                <select class="selectpicker col-lg-2" id="semester" name="semester" title="Semesters">
+                    <option value="" selected>Semesters</option>
+                    {% for name in fetched_semesters.index %}
+                        <option value= "{{name}}">{{name}}</option>"
+                    {% endfor %}
+                </select>
 
-            <select class="selectpicker col-lg-2" data-live-search="true" id="subjects" name="subjects" title="Subject(s)" multiple="multiple">
-                {% for name, value in fetched_subjects.iteritems() %}
-                    <option value= "{{value}}">{{name}}</option>"
-                {% endfor %}
-            </select>
+                <select class="selectpicker col-lg-2" data-live-search="true" id="subjects"
+                        name="subjects" title="Subject(s)" multiple="multiple">
+                    {% for name, value in fetched_subjects.iteritems() %}
+                        <option value= "{{value}}">{{name}}</option>"
+                    {% endfor %}
+                </select>
 
-            <label for="foundation"></label>
-            <select class="selectpicker col-lg-2" id="foundation" name="foundation">
-                {% for name, value in fetched_foundations.iteritems() %}
-                    <option value= "{{value}}">{{name}}</option>"
-                {% endfor %}
-            </select>
+                <label for="foundation"></label>
+                <select class="selectpicker col-lg-2" id="foundation" name="foundation">
+                    {% for name, value in fetched_foundations.iteritems() %}
+                        <option value= "{{value}}">{{name}}</option>"
+                    {% endfor %}
+                </select>
 
-            <label for="division"></label><select class="selectpicker col-lg-2" id="division" name="division">
-                {% for name, value in fetched_divisions.iteritems() %}
-                    <option value= "{{value}}">{{name}}</option>"
-                {% endfor %}
-            </select>
+                <label for="division"></label>
+                <select class="selectpicker col-lg-2" id="division" name="division">
+                    {% for name, value in fetched_divisions.iteritems() %}
+                        <option value= "{{value}}">{{name}}</option>"
+                    {% endfor %}
+                </select>
 
-            <label for="area"></label>
-            <select class="selectpicker col-lg-2" id="area" name="area">
-                {% for name, value in fetched_areas.iteritems() %}
-                    <option value= "{{value}}">{{name}}</option>"
-                {% endfor %}
-            </select>
+                <label for="area"></label>
+                <select class="selectpicker col-lg-2" id="area" name="area">
+                    {% for name, value in fetched_areas.iteritems() %}
+                        <option value= "{{value}}">{{name}}</option>"
+                    {% endfor %}
+                </select>
 
-            <button type="submit" id="submit" onclick="return checkField()">
-                Search &nbsp
-            </button><i class="glyphicon glyphicon-search"></i>
-        </form>
-    </div>
-    <br>
-    <div>
-        {% if data_generated %}
-            <table class="table table-striped" id="result_table">
-                <thead>
-                <tr>
-                    <th>Course Number</th>
-                    <th>Title</th>
-                    <th>Time</th>
-                    <th>Instructor</th>
-                    <th>CRN</th>
-                    <th id="add_button">To calendar</th>
-                </tr>
-                </thead>
-                <tbody>
-                {%  for _, row in selected_data.iterrows() %}
-                    <tr>
-                        <td>
-                            <a target="_blank" href={{ row["number"].link }}>
-                                {{ row["number"].num }}
-                            </a>
-                        </td>
-                        <td>{{ row["title"] }}</td>
-                        <td>{{ row["time"] }}</td>
-                        <td>
-                            {% for instructor in row["instructor"] %}
-                                <a target="_blank" href={{ instructor.link }}>
-                                    {{ instructor.name }}
-                                </a>
-                                <br>
-                            {% endfor %}
-                        </td>
-                        <td>{{ row["CRN"] }}</td>
-                        <td id="add_button"><button>+</button></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
+                <button type="submit" id="submit" onclick="return checkField()">
+                    Search &nbsp
+                </button><i class="glyphicon glyphicon-search"></i>
+            </form>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">STH</div>
+            <div class="col-lg-6">
+                {% if data_generated %}
+                    <table class="table table-striped" id="result_table" style="width: 50%;">
+                        <thead>
+                        <tr>
+                            <th>Course Number</th>
+                            <th>Title</th>
+                            <th>Time</th>
+                            <th>Instructor</th>
+                            <th>CRN</th>
+                            <th id="add_button">To calendar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {%  for _, row in selected_data.iterrows() %}
+                            <tr>
+                                <td>
+                                    <a target="_blank" href={{ row["number"].link }}>
+                                        {{ row["number"].num }}
+                                    </a>
+                                </td>
+                                <td>{{ row["title"] }}</td>
+                                <td>{{ row["time"] }}</td>
+                                <td>
+                                    {% for instructor in row["instructor"] %}
+                                        <a target="_blank" href={{ instructor.link }}>
+                                            {{ instructor.name }}
+                                        </a>
+                                        <br>
+                                    {% endfor %}
+                                </td>
+                                <td>{{ row["CRN"] }}</td>
+                                <td id="add_button"><button>+</button></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>  
+                {% endif %}
+            </div>
+
+        </div>
     </div>
 </body>
 </html>
