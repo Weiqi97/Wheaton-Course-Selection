@@ -176,25 +176,6 @@ def get_conx_info(each_class: BeautifulSoup) -> List[ClassConx]:
     :param each_class: A beautiful soup object that contains class information.
     :return: A list of class connection information.
     """
-
-
-    def _instructor_info_helper(each_class: list):
-        """
-        Helper function for getting the class instructor information.
-        :param each_class: information of one class.
-        :return: a list of class information.
-        """
-        instructor_info = each_class[5].find_all("a")
-        return [ClassInstructor(name=str(each_class_info.contents[0]),
-                                link=each_class_info['href'])
-                if instructor_info
-                else ClassInstructor(name="DEPT", link="")
-                for each_class_info in instructor_info]
-
-    return [_instructor_info_helper(each_class)
-            for each_class in class_basic_info]
-
-
     connection_info = each_class[9].find_all("a")
     return [ClassConx(num=str(each_class_info.contents[0]),
                       link=each_class_info['href'])
@@ -325,10 +306,10 @@ def save_semester_class_info(semester_name: str, semester_value: str):
     semester_frame = pd.DataFrame(pd.concat(all_class, ignore_index=True))
 
     # Save it as a pickle file.
-    semester_frame.to_pickle(f"saved_data/pickle_data/{semester_name}.pkl")
+    semester_frame.to_pickle(f"course_data/pickle_data/{semester_name}.pkl")
 
     # Save to CSV in order to easily compare with web page.
-    semester_frame.to_csv(f"saved_data/csv_data/{semester_name}.csv")
+    semester_frame.to_csv(f"course_data/csv_data/{semester_name}.csv")
 
 
 def save_all_info():
@@ -339,5 +320,4 @@ def save_all_info():
                                  semester_value=semester_value)
 
 
-save_semester_class_info(semester_name="Spring 2018",
-                         semester_value="201820")
+save_all_info()
