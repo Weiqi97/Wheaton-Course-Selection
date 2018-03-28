@@ -161,3 +161,15 @@ def fetch_areas() -> pd.Series:
                     for option in options]
 
     return pd.Series(data=option_values, index=option_names)
+
+
+def save_fetched_data():
+    """
+    This function fetches all the selection drop down data from the website
+    and save them.
+    """
+    fetch_semesters().to_pickle("web_data/semesters.pkl")
+    fetch_subjects().to_pickle("web_data/subjects.pkl")
+    fetch_foundations().to_pickle("web_data/foundations.pkl")
+    fetch_divisions().to_pickle("web_data/divisions.pkl")
+    fetch_areas().to_pickle("web_data/areas.pkl")
