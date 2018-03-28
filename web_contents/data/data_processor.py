@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
 from typing import List
-from web_contents.constants import base_url, ClassConx, \
-    ClassExam, ClassNumber, ClassInstructor, SeatInfo, SKIP_BEGINNING
+from web_contents.constants import base_url, ClassConx, ClassExam, \
+    ClassNumber, ClassInstructor, SeatInfo, SKIP_BEGINNING
 from web_contents.data.data_fetcher import fetch_semesters, fetch_subjects, \
     fetch_web_content
 
@@ -115,7 +115,7 @@ def get_time_info(class_basic_info: list) -> List[str]:
                 if index % 4 == 0 else None
                 for index, content in enumerate(each_class[4].contents)]
 
-    return ["!".join(filter(None, _time_info_helper(each_class=each_class)))
+    return [list(filter(None, _time_info_helper(each_class=each_class)))
             if _time_info_helper(each_class=each_class) is not None else ""
             for each_class in class_basic_info]
 
@@ -137,7 +137,7 @@ def get_location_info(class_basic_info: list) -> List[str]:
                 for index, content in enumerate(each_class[4].contents)]
 
     return \
-        ["\n".join(filter(None, _location_info_helper(each_class=each_class)))
+        [" ".join(filter(None, _location_info_helper(each_class=each_class)))
          if _location_info_helper(each_class=each_class) is not None else ""
          for each_class in class_basic_info]
 
@@ -278,7 +278,7 @@ def get_specific_class_info(subject: str, semester: str) -> pd.DataFrame:
         return pd.DataFrame()
 
 
-def get_semester_class_info(semester_name: str, semester_value: str):
+def save_semester_class_info(semester_name: str, semester_value: str):
     """
     This function will get all class information for one semester.
     :param semester_name: A recent name value from semesters fetched.
@@ -307,5 +307,9 @@ def save_all_info():
     """This function will get all needed information."""
     semesters = fetch_semesters()
     for semester_name, semester_value in semesters.iteritems():
-        get_semester_class_info(semester_name=semester_name,
-                                semester_value=semester_value)
+        save_semester_class_info(semester_name=semester_name,
+                                 semester_value=semester_value)
+
+
+save_semester_class_info(semester_name="Spring 2018",
+                         semester_value="201820")
