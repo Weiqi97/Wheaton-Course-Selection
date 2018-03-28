@@ -41,3 +41,28 @@ def read_data(semester: str, subjects: list, foundation: str, division: str,
         data_frame = data_frame.loc[data_frame["area"] == area]
 
     return data_frame
+
+
+def read_subjects() -> list:
+    """Reads data from saved pickle file."""
+    return pd.read_pickle("data/web_data/subjects.pkl")
+
+
+def read_semesters() -> list:
+    """Reads data from saved pickle file."""
+    return pd.read_pickle("data/web_data/semesters.pkl")
+
+
+def read_foundations() -> list:
+    """Reads data from saved pickle file."""
+    return pd.read_pickle("data/web_data/foundations.pkl")
+
+
+def read_divisions() -> list:
+    """Reads data from saved pickle file."""
+    return pd.read_pickle("data/web_data/divisions.pkl")
+
+
+def read_areas() -> list:
+    """Reads data from saved pickle file."""
+    return pd.read_pickle("data/web_data/areas.pkl")
