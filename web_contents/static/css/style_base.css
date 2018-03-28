@@ -1,3 +1,6 @@
+body{
+    background:blue;
+}
 .header{
     background-color: #0072bc;
     padding: 5px;
@@ -18,9 +21,7 @@
 sub{
     font-size: 1vw;
 }
-.bootstrap-select {
-    max-width: 20%;
-}
+
 .bootstrap-select .btn {
     background: transparent;
     color: white;
@@ -39,9 +40,6 @@ sub{
     -ms-transition: ease-in-out 500ms;
     -o-transition: ease-in-out 500ms;
     transition: ease-in-out 500ms;
-}
-table{
-    border: 2px solid black;
 }
 
 #submit{
@@ -95,5 +93,15 @@ table{
     -ms-transition: ease-in-out 500ms;
     -o-transition: ease-in-out 500ms;
     transition: ease-in-out 500ms
-
+}
+.result_table{
+    border: 1px solid black;
+}
+/*for the table header in result table*/
+.dataTables_scrollHead{
+    border: 1px solid black;
+}
+/*make the placeholder color for semesters and subjects white */
+.bootstrap-select.btn-group .dropdown-toggle .filter-option{
+    color:white;
 }

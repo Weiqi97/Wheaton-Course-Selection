@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request
-from web_contents.data.data_fetcher import fetch_semesters, fetch_subjects, \
-    fetch_foundations, fetch_divisions, fetch_areas
-from web_contents.data.data_reader import read_data
+from web_contents.data.data_reader import read_data, read_semesters, \
+    read_subjects, read_foundations, read_divisions, read_areas
 
 app = Flask(__name__)
 app.debug = True
@@ -9,11 +8,11 @@ app.debug = True
 
 @app.route("/", methods=["GET", "POST"])
 def drop_down_selections():
-    fetched_semesters = fetch_semesters()
-    fetched_subjects = fetch_subjects()
-    fetched_foundations = fetch_foundations()
-    fetched_divisions = fetch_divisions()
-    fetched_areas = fetch_areas()
+    fetched_semesters = read_semesters()
+    fetched_subjects = read_subjects()
+    fetched_foundations = read_foundations()
+    fetched_divisions = read_divisions()
+    fetched_areas = read_areas()
 
     if request.method == "GET":
         return render_template("index.html",

@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
 from typing import List
-from web_contents.constants import base_url, ClassConx, \
-    ClassExam, ClassNumber, ClassInstructor, SeatInfo, SKIP_BEGINNING
+from web_contents.constants import base_url, ClassConx, ClassExam, \
+    ClassNumber, ClassInstructor, SeatInfo, SKIP_BEGINNING
 from web_contents.data.data_fetcher import fetch_semesters, fetch_subjects, \
     fetch_web_content
 
@@ -64,6 +64,7 @@ def get_number_info(class_basic_info: list) -> List[ClassNumber]:
     def _number_info_helper(each_class: list) -> ClassNumber:
         """
         Helper function for getting the class number information.
+        :param each_class: information of one class.
         :return: a ClassNumber object.
         """
         number_info = each_class[0].find("a")
@@ -84,6 +85,7 @@ def get_exam_info(class_basic_info: list) -> List[ClassExam]:
     def _exam_info_helper(each_class: list) -> ClassExam:
         """
         Helper function for getting the class exam information.
+        :param each_class: information of one class.
         :return: a ClassExam object.
         """
         exam_info = each_class[1].find("a")
@@ -99,37 +101,39 @@ def get_exam_info(class_basic_info: list) -> List[ClassExam]:
             for each_class in class_basic_info]
 
 
-def get_time_info(class_basic_info: list) -> List[str]:
+def get_time_info(class_basic_info: list) -> List[List[str]]:
     """
     Get class time information.
     :param class_basic_info: A list of class basic information.
-    :return: A list of class time information.
+    :return: A list of lists, where each each contains class time information.
     """
 
     def _time_info_helper(each_class: list) -> List[str]:
         """
         Helper function for getting the class time information.
+        :param each_class: information of one class.
         :return: a list of class time information.
         """
         return [" ".join(content.replace("\n", "").split())
                 if index % 4 == 0 else None
                 for index, content in enumerate(each_class[4].contents)]
 
-    return ["!".join(filter(None, _time_info_helper(each_class=each_class)))
+    return [list(filter(None, _time_info_helper(each_class=each_class)))
             if _time_info_helper(each_class=each_class) is not None else ""
             for each_class in class_basic_info]
 
 
-def get_location_info(class_basic_info: list) -> List[str]:
+def get_location_info(class_basic_info: list) -> List[List[str]]:
     """
     Get class location information.
     :param class_basic_info: A list of class basic information.
-    :return: A list of class location information.
+    :return: A list of lists, where each each contains class loc information.
     """
 
     def _location_info_helper(each_class: list) -> List[str]:
         """
         Helper function for getting the class time information.
+        :param each_class: information of one class.
         :return: a list of class time information.
         """
         return [" ".join(content.replace("\n", "").split())
@@ -137,7 +141,7 @@ def get_location_info(class_basic_info: list) -> List[str]:
                 for index, content in enumerate(each_class[4].contents)]
 
     return \
-        ["\n".join(filter(None, _location_info_helper(each_class=each_class)))
+        [list(filter(None, _location_info_helper(each_class=each_class)))
          if _location_info_helper(each_class=each_class) is not None else ""
          for each_class in class_basic_info]
 
@@ -149,12 +153,17 @@ def get_instructor_info(class_basic_info: list) -> List[List[ClassInstructor]]:
     :return: A list of list of class instructor(s) information.
     """
 
-    def _instructor_info_helper(each_class: list):
+    def _instructor_info_helper(each_class: list) -> List[ClassInstructor]:
+        """
+        Helper function for getting the class instructor information.
+        :param each_class: information of one class.
+        :return: a list of class information.
+        """
         instructor_info = each_class[5].find_all("a")
         return [ClassInstructor(name=str(each_class_info.contents[0]),
                                 link=each_class_info['href'])
-                if instructor_info else
-                ClassInstructor(name="DEPT", link="")
+                if instructor_info
+                else ClassInstructor(name="DEPT", link="")
                 for each_class_info in instructor_info]
 
     return [_instructor_info_helper(each_class)
@@ -174,7 +183,7 @@ def get_conx_info(each_class: BeautifulSoup) -> List[ClassConx]:
             for each_class_info in connection_info]
 
 
-def refine_class_info(class_info_list: list, subject: str):
+def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
     """
     This function will refine class information from the web page.
     :param class_info_list: A list that contains all class web pages.
@@ -278,7 +287,7 @@ def get_specific_class_info(subject: str, semester: str) -> pd.DataFrame:
         return pd.DataFrame()
 
 
-def get_semester_class_info(semester_name: str, semester_value: str):
+def save_semester_class_info(semester_name: str, semester_value: str):
     """
     This function will get all class information for one semester.
     :param semester_name: A recent name value from semesters fetched.
@@ -297,15 +306,15 @@ def get_semester_class_info(semester_name: str, semester_value: str):
     semester_frame = pd.DataFrame(pd.concat(all_class, ignore_index=True))
 
     # Save it as a pickle file.
-    semester_frame.to_pickle(f"saved_data/pickle_data/{semester_name}.pkl")
+    semester_frame.to_pickle(f"course_data/pickle_data/{semester_name}.pkl")
 
     # Save to CSV in order to easily compare with web page.
-    semester_frame.to_csv(f"saved_data/csv_data/{semester_name}.csv")
+    semester_frame.to_csv(f"course_data/csv_data/{semester_name}.csv")
 
 
 def save_all_info():
     """This function will get all needed information."""
     semesters = fetch_semesters()
     for semester_name, semester_value in semesters.iteritems():
-        get_semester_class_info(semester_name=semester_name,
-                                semester_value=semester_value)
+        save_semester_class_info(semester_name=semester_name,
+                                 semester_value=semester_value)

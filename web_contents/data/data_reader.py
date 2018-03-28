@@ -16,7 +16,7 @@ def read_data(semester: str, subjects: list, foundation: str, division: str,
     :param area: User selected area.
     :return: A pandas data frame that contains desired information.
     """
-    data_frame = pd.read_pickle(f"data/saved_data/pickle_data/{semester}.pkl")
+    data_frame = pd.read_pickle(f"data/course_data/pickle_data/{semester}.pkl")
 
     if subjects == ["%"]:
         pass
@@ -41,3 +41,28 @@ def read_data(semester: str, subjects: list, foundation: str, division: str,
         data_frame = data_frame.loc[data_frame["area"] == area]
 
     return data_frame
+
+
+def read_subjects() -> list:
+    """Reads data from saved pickle file."""
+    return pd.read_pickle("data/web_data/subjects.pkl")
+
+
+def read_semesters() -> list:
+    """Reads data from saved pickle file."""
+    return pd.read_pickle("data/web_data/semesters.pkl")
+
+
+def read_foundations() -> list:
+    """Reads data from saved pickle file."""
+    return pd.read_pickle("data/web_data/foundations.pkl")
+
+
+def read_divisions() -> list:
+    """Reads data from saved pickle file."""
+    return pd.read_pickle("data/web_data/divisions.pkl")
+
+
+def read_areas() -> list:
+    """Reads data from saved pickle file."""
+    return pd.read_pickle("data/web_data/areas.pkl")
