@@ -16,7 +16,7 @@ def read_data(semester: str, subjects: list, foundation: str, division: str,
     :param area: User selected area.
     :return: A pandas data frame that contains desired information.
     """
-    data_frame = pd.read_pickle(f"data/saved_data/pickle_data/{semester}.pkl")
+    data_frame = pd.read_pickle(f"data/course_data/pickle_data/{semester}.pkl")
 
     if subjects == ["%"]:
         pass
