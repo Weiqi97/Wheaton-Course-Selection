@@ -99,11 +99,11 @@ def get_exam_info(class_basic_info: list) -> List[ClassExam]:
             for each_class in class_basic_info]
 
 
-def get_time_info(class_basic_info: list) -> List[str]:
+def get_time_info(class_basic_info: list) -> List[List[str]]:
     """
     Get class time information.
     :param class_basic_info: A list of class basic information.
-    :return: A list of class time information.
+    :return: A list of lists, where each each contains class time information.
     """
 
     def _time_info_helper(each_class: list) -> List[str]:
@@ -120,11 +120,11 @@ def get_time_info(class_basic_info: list) -> List[str]:
             for each_class in class_basic_info]
 
 
-def get_location_info(class_basic_info: list) -> List[str]:
+def get_location_info(class_basic_info: list) -> List[List[str]]:
     """
     Get class location information.
     :param class_basic_info: A list of class basic information.
-    :return: A list of class location information.
+    :return: A list of lists, where each each contains class loc information.
     """
 
     def _location_info_helper(each_class: list) -> List[str]:
@@ -137,7 +137,7 @@ def get_location_info(class_basic_info: list) -> List[str]:
                 for index, content in enumerate(each_class[4].contents)]
 
     return \
-        [" ".join(filter(None, _location_info_helper(each_class=each_class)))
+        [list(filter(None, _location_info_helper(each_class=each_class)))
          if _location_info_helper(each_class=each_class) is not None else ""
          for each_class in class_basic_info]
 
