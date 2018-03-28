@@ -44,7 +44,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 college_header">
                 <b>Wheaton College </b>
                 <sub>- The right tool to help you pick classes</sub>
-              </div>
+            </div>
         </div>
     </div>
     <div class="container-fluid course-picker">
@@ -92,9 +92,9 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-6">STH</div>
-            <div class="col-lg-6">
-                {% if data_generated %}
+            {% if data_generated %}
+                <div class="col-lg-6">STH</div>
+                <div class="col-lg-6">
                     <table class="table table-striped" id="result_table" style="width: 50%;">
                         <thead>
                         <tr>
@@ -115,13 +115,16 @@
                                     </a>
                                 </td>
                                 <td>{{ row["title"] }}</td>
-                                <td>{{ row["time"] }}</td>
+                                <td>
+                                    {% for time in row["time"] %}
+                                        {{ time }}<br>
+                                    {% endfor %}
+                                </td>
                                 <td>
                                     {% for instructor in row["instructor"] %}
                                         <a target="_blank" href={{ instructor.link }}>
                                             {{ instructor.name }}
-                                        </a>
-                                        <br>
+                                        </a><br>
                                     {% endfor %}
                                 </td>
                                 <td>{{ row["CRN"] }}</td>
@@ -129,10 +132,9 @@
                             </tr>
                         {% endfor %}
                         </tbody>
-                    </table>  
-                {% endif %}
-            </div>
-
+                    </table>
+                </div>
+            {% endif %}
         </div>
     </div>
 </body>
