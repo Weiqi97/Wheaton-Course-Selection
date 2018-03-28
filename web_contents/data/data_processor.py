@@ -64,6 +64,7 @@ def get_number_info(class_basic_info: list) -> List[ClassNumber]:
     def _number_info_helper(each_class: list) -> ClassNumber:
         """
         Helper function for getting the class number information.
+        :param each_class: information of one class.
         :return: a ClassNumber object.
         """
         number_info = each_class[0].find("a")
@@ -84,6 +85,7 @@ def get_exam_info(class_basic_info: list) -> List[ClassExam]:
     def _exam_info_helper(each_class: list) -> ClassExam:
         """
         Helper function for getting the class exam information.
+        :param each_class: information of one class.
         :return: a ClassExam object.
         """
         exam_info = each_class[1].find("a")
@@ -109,6 +111,7 @@ def get_time_info(class_basic_info: list) -> List[List[str]]:
     def _time_info_helper(each_class: list) -> List[str]:
         """
         Helper function for getting the class time information.
+        :param each_class: information of one class.
         :return: a list of class time information.
         """
         return [" ".join(content.replace("\n", "").split())
@@ -130,6 +133,7 @@ def get_location_info(class_basic_info: list) -> List[List[str]]:
     def _location_info_helper(each_class: list) -> List[str]:
         """
         Helper function for getting the class time information.
+        :param each_class: information of one class.
         :return: a list of class time information.
         """
         return [" ".join(content.replace("\n", "").split())
@@ -150,11 +154,16 @@ def get_instructor_info(class_basic_info: list) -> List[List[ClassInstructor]]:
     """
 
     def _instructor_info_helper(each_class: list):
+        """
+        Helper function for getting the class instructor information.
+        :param each_class: information of one class.
+        :return: a list of class information.
+        """
         instructor_info = each_class[5].find_all("a")
         return [ClassInstructor(name=str(each_class_info.contents[0]),
                                 link=each_class_info['href'])
-                if instructor_info else
-                ClassInstructor(name="DEPT", link="")
+                if instructor_info
+                else ClassInstructor(name="DEPT", link="")
                 for each_class_info in instructor_info]
 
     return [_instructor_info_helper(each_class)
@@ -167,6 +176,25 @@ def get_conx_info(each_class: BeautifulSoup) -> List[ClassConx]:
     :param each_class: A beautiful soup object that contains class information.
     :return: A list of class connection information.
     """
+
+
+    def _instructor_info_helper(each_class: list):
+        """
+        Helper function for getting the class instructor information.
+        :param each_class: information of one class.
+        :return: a list of class information.
+        """
+        instructor_info = each_class[5].find_all("a")
+        return [ClassInstructor(name=str(each_class_info.contents[0]),
+                                link=each_class_info['href'])
+                if instructor_info
+                else ClassInstructor(name="DEPT", link="")
+                for each_class_info in instructor_info]
+
+    return [_instructor_info_helper(each_class)
+            for each_class in class_basic_info]
+
+
     connection_info = each_class[9].find_all("a")
     return [ClassConx(num=str(each_class_info.contents[0]),
                       link=each_class_info['href'])
