@@ -27,13 +27,32 @@
 
     <!-- Function call for data table -->
     <script>
+
         $(document).ready(function() {
+            var window_height = window.innerHeight-350;
+            console.log(window_height);
             $('#result_table').DataTable( {
-                "scrollY":        "200px",
+                "scrollY": window_height,
                 "scrollCollapse": true,
                 "paging":         false
-            } );
-        } );
+            });
+        });
+
+        $(function(){
+           $(window).on('resize', resize_result_table);
+        });
+        function resize_result_table(){
+
+            var window_height = window.innerHeight-350;
+            console.log("the new height"+window_height);
+            $('#result_table').DataTable( {
+                "destroy": true,
+                "scrollY": window_height,
+                "scrollCollapse": true,
+                "paging":         false
+            });
+        }
+
     </script>
 </head>
 
@@ -90,13 +109,14 @@
                 </button><i class="glyphicon glyphicon-search"></i>
             </form>
         </div>
-
-        <div class="row">
-            <div class="col-lg-6">STH</div>
-            <div class="col-lg-6">
-                {% if data_generated %}
-                    <table class="table table-striped" id="result_table" style="width: 50%;">
-                        <thead>
+    </div>
+    <br>
+    <div class="container-fluid">
+        <div class="col-lg-6 col-md-6">STH</div>
+        <div class="col-lg-6 col-md-6 result_table">
+            {% if data_generated %}
+                <table class="table table-striped" id="result_table" style="width: 50%;">
+                    <thead>
                         <tr>
                             <th>Course Number</th>
                             <th>Title</th>
@@ -105,34 +125,41 @@
                             <th>CRN</th>
                             <th id="add_button">To calendar</th>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {%  for _, row in selected_data.iterrows() %}
-                            <tr>
-                                <td>
-                                    <a target="_blank" href={{ row["number"].link }}>
-                                        {{ row["number"].num }}
+                    </thead>
+                    <tbody>
+                    {%  for _, row in selected_data.iterrows() %}
+                        <tr>
+                            <td>
+                                <a target="_blank" href={{ row["number"].link }}>
+                                    {{ row["number"].num }}
+                                </a>
+                            </td>
+                            <td>{{ row["title"] }}</td>
+                            <td>{{ row["time"] }}</td>
+                            <td>
+                                {% for instructor in row["instructor"] %}
+                                    <a target="_blank" href={{ instructor.link }}>
+                                        {{ instructor.name }}
                                     </a>
-                                </td>
-                                <td>{{ row["title"] }}</td>
-                                <td>{{ row["time"] }}</td>
-                                <td>
-                                    {% for instructor in row["instructor"] %}
-                                        <a target="_blank" href={{ instructor.link }}>
-                                            {{ instructor.name }}
-                                        </a>
-                                        <br>
-                                    {% endfor %}
-                                </td>
-                                <td>{{ row["CRN"] }}</td>
-                                <td id="add_button"><button>+</button></td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>  
-                {% endif %}
-            </div>
-
+                                    <br>
+                                {% endfor %}
+                            </td>
+                            <td>{{ row["CRN"] }}</td>
+                            <td id="add_button"><button>+</button></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+<div class="container-fluid header">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 college_header">
+                <b>Wheaton College </b>
+                <sub>- The right tool to help you pick classes</sub>
+              </div>
         </div>
     </div>
 </body>
