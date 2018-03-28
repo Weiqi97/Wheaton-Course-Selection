@@ -153,7 +153,7 @@ def get_instructor_info(class_basic_info: list) -> List[List[ClassInstructor]]:
     :return: A list of list of class instructor(s) information.
     """
 
-    def _instructor_info_helper(each_class: list):
+    def _instructor_info_helper(each_class: list) -> List[ClassInstructor]:
         """
         Helper function for getting the class instructor information.
         :param each_class: information of one class.
@@ -183,7 +183,7 @@ def get_conx_info(each_class: BeautifulSoup) -> List[ClassConx]:
             for each_class_info in connection_info]
 
 
-def refine_class_info(class_info_list: list, subject: str):
+def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
     """
     This function will refine class information from the web page.
     :param class_info_list: A list that contains all class web pages.
@@ -318,6 +318,3 @@ def save_all_info():
     for semester_name, semester_value in semesters.iteritems():
         save_semester_class_info(semester_name=semester_name,
                                  semester_value=semester_value)
-
-
-save_all_info()
