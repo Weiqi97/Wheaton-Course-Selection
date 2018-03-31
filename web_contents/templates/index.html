@@ -135,7 +135,11 @@
                                 </a>
                             </td>
                             <td>{{ row["title"] }}</td>
-                            <td>{{ row["time"] }}</td>
+                            <td>
+                                {% for time in row["time"] %}
+                                    {{ time }}<br>
+                                {% endfor %}
+                            </td>
                             <td>
                                 {% for instructor in row["instructor"] %}
                                     <a target="_blank" href={{ instructor.link }}>
