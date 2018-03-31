@@ -105,3 +105,11 @@ sub{
 .bootstrap-select.btn-group .dropdown-toggle .filter-option{
     color:white;
 }
+/*this is to make the + icon rounded in the course page*/
+#add_button .glyphicon{
+    padding: 5px;
+    border-radius: 50%;
+    background: #316E95;
+    color: white;
+
+}

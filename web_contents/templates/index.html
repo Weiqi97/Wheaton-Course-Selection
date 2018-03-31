@@ -145,7 +145,7 @@
                                 {% endfor %}
                             </td>
                             <td>{{ row["CRN"] }}</td>
-                            <td id="add_button"><button>+</button></td>
+                            <td id="add_button"><button class="add_class glyphicon glyphicon-plus"</button></td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -163,4 +163,18 @@
         </div>
     </div>
 </body>
+
+<script>
+    $(".add_class" ).click(function() {
+        var $row = $(this).closest("tr");      // Finds the closest row <tr>
+        var $tds = $row.find("td");             // Finds all children <td> elements
+        $.each($tds, function() {               // Visits every single <td> element
+            console.log($(this).text());        // Prints out the text within the <td>
+        });
+
+
+
+    });
+
+</script>
 </html>

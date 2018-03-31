@@ -22,3 +22,5 @@ function checkField() {
         return true;
     }
 }
+// language=JQuery-CSS
+
