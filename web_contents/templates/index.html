@@ -53,7 +53,14 @@
             });
         }
 
+
     </script>
+    <style>
+        .home{
+            display:none;
+        }
+
+    </style>
 </head>
 
 
@@ -118,7 +125,7 @@
                 <table class="table table-striped" id="result_table" style="width: 50%;">
                     <thead>
                         <tr>
-                            <th>Course Number</th>
+                            <th class="courseNumber">Course Number</th>
                             <th>Title</th>
                             <th>Time</th>
                             <th>Instructor</th>
@@ -134,6 +141,7 @@
                                     {{ row["number"].num }}
                                 </a>
                             </td>
+
                             <td>{{ row["title"] }}</td>
                             <td>
                                 {% for time in row["time"] %}
@@ -151,7 +159,9 @@
                             <td>{{ row["CRN"] }}</td>
                             <td id="add_button"><button class="add_class glyphicon glyphicon-plus"</button></td>
                         </tr>
+
                     {% endfor %}
+
                     </tbody>
                 </table>
             {% endif %}
@@ -169,15 +179,49 @@
 </body>
 
 <script>
+    /*This function gets data from the row that has been clicked*/
     $(".add_class" ).click(function() {
         var $row = $(this).closest("tr");      // Finds the closest row <tr>
         var $tds = $row.find("td");             // Finds all children <td> elements
         $.each($tds, function() {               // Visits every single <td> element
-            console.log($(this).text());        // Prints out the text within the <td>
+           // console.log($(this).text());        // Prints out the text within the <td>
         });
+        //var name = ($tds[2].innerHTML).replace(/\s+/g, " ");
 
+        var name = $tds[2].innerHTML;
+        name = $.trim(name);
+        name = name.replace(/\s+/g, "");
+        name = name.split("<br>"); //deletes the <br>
+        //console.log("sdsd:" + name);
+       // console.log(name);
+        name = Array.from(name);
+        console.log(name);
+        var days=[];
+        var time =[];
+        var i = 0;
+        var k =0;
+        var j =0;
 
-
+        name = Array.from(name[0]);
+        $(name).each(function(){
+            if (name[i].charCodeAt(0) > 64 & name[i]!=='P' & name[i]!=='A' & name[i]!=='r'){
+                days[j] = name[i];
+                j++;
+                i++;
+            }
+            else if(name[i].charCodeAt(0) < 58){
+                time[k] = name[i];
+                k++;
+                i++;
+            }
+            else{
+                i++;
+            }
+        });
+        console.log(name);
+        days = days.slice(0,-2);
+        console.log("days: " + days);
+        console.log("time:" +time);
     });
 
 </script>
