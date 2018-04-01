@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="../static/node_modules/bootstrap-select/dist/css/bootstrap-select.css">
     <!-- Data Table -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed">
@@ -34,15 +35,40 @@
             $('#result_table').DataTable( {
                 "scrollY": window_height,
                 "scrollCollapse": true,
-                "paging":         false
+                "paging":         false,
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: 'tr'
+                    }
+                }
             });
         });
+
+        $('#result_table').find('tbody').on('click', 'td.glyphicon glyphicon-chevron-down', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row( tr );
+
+                if ( row.child.isShown() ) {
+                    $('div.slider', row.child()).slideUp( function () {
+                        row.child.hide();
+                        tr.removeClass('shown');
+                    } );
+                }
+                else {
+                    // Open this row
+                    row.child( format(tr.data("child-value")) ).show();
+                    tr.addClass('shown');
+                    $('div.slider', row.child()).slideDown();
+                }
+        } );
+
 
         $(function(){
            $(window).on('resize', resize_result_table);
         });
-        function resize_result_table(){
 
+        function resize_result_table(){
             var window_height = window.innerHeight-350;
             console.log("the new height"+window_height);
             $('#result_table').DataTable( {
@@ -50,7 +76,7 @@
                 "scrollY": window_height,
                 "scrollCollapse": true,
                 "paging":         false
-            });
+            } );
         }
 
     </script>
@@ -115,9 +141,10 @@
         <div class="col-lg-6 col-md-6">STH</div>
         <div class="col-lg-6 col-md-6 result_table">
             {% if data_generated %}
-                <table class="table table-striped" id="result_table" style="width: 50%;">
+                <table class="table table-striped nowrap" id="result_table" style="width: 50%;">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Course Number</th>
                             <th>Title</th>
                             <th>Time</th>
@@ -128,14 +155,19 @@
                     </thead>
                     <tbody>
                     {%  for _, row in selected_data.iterrows() %}
-                        <tr>
+                        <tr data-child-value="SAY">
+                            <td class="glyphicon glyphicon-chevron-down"></td>
                             <td>
                                 <a target="_blank" href={{ row["number"].link }}>
                                     {{ row["number"].num }}
                                 </a>
                             </td>
                             <td>{{ row["title"] }}</td>
-                            <td>{{ row["time"] }}</td>
+                            <td>
+                                {% for time in row["time"] %}
+                                    {{ time }}<br>
+                                {% endfor %}
+                            </td>
                             <td>
                                 {% for instructor in row["instructor"] %}
                                     <a target="_blank" href={{ instructor.link }}>
@@ -145,7 +177,10 @@
                                 {% endfor %}
                             </td>
                             <td>{{ row["CRN"] }}</td>
-                            <td id="add_button"><button>+</button></td>
+                            <td id="add_button">
+                                <div class="slider"><button>+</button></div>
+                            </td>
+                            <div class="slider">STH</div>
                         </tr>
                     {% endfor %}
                     </tbody>

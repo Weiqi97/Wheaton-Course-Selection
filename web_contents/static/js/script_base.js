@@ -22,3 +22,7 @@ function checkField() {
         return true;
     }
 }
+
+function format(value) {
+    return "<div>Hidden Value: " + value + "</div>";
+}
