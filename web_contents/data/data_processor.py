@@ -141,7 +141,7 @@ def get_location_info(class_basic_info: list) -> List[List[str]]:
                 for index, content in enumerate(each_class[4].contents)]
 
     return \
-        [list(filter(None, _location_info_helper(each_class=each_class)))
+        [list(set(filter(None, _location_info_helper(each_class=each_class))))
          if _location_info_helper(each_class=each_class) is not None else ""
          for each_class in class_basic_info]
 
