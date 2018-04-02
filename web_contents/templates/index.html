@@ -49,11 +49,7 @@
                 },
                 "columnDefs": [
                     {
-                        "targets": [ 6 ],
-                        "visible": false
-                    },
-                    {
-                        "targets": [ 7 ],
+                        "targets": [ 6, 7, 8 ],
                         "visible": false
                     }
                 ]
@@ -110,7 +106,7 @@
             <div class="col-lg-12 col-md-12 col-sm-12 college_header">
                 <b>Wheaton College </b>
                 <sub>- The right tool to help you pick classes</sub>
-              </div>
+            </div>
         </div>
     </div>
     <div class="container-fluid course-picker">
@@ -159,63 +155,71 @@
     </div>
     <br>
     <div class="container-fluid">
-        <div class="col-lg-6 col-md-6">STH</div>
+        <div class="col-lg-6 col-md-6">Calendar goes here!</div>
         <div class="col-lg-6 col-md-6 result_table">
             {% if data_generated %}
                 <table class="table table-striped" id="result_table" style="width: 50%;">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Number</th>
-                            <th>Title</th>
-                            <th>Time</th>
-                            <th>Instructor</th>
-                            <th id="add_button">To calendar</th>
-                            <th>CRN</th>
-                            <th>Location</th>
-                            <th>Connection</th>
-                        </tr>
-                    </thead>
+                    <thead><tr>
+                        <!-- Set up table headers -->
+                        <th></th>
+                        <th>Number</th>
+                        <th>Title</th>
+                        <th>Time</th>
+                        <th>Instructor</th>
+                        <th id="add_button">To calendar</th>
+                        <th>CRN</th>
+                        <th>Location</th>
+                        <th>Connection</th>
+                    </tr></thead>
                     <tbody>
-                    {%  for _, row in selected_data.iterrows() %}
-                        <tr>
-                            <td class="glyphicon glyphicon-chevron-down" id="show_detail"></td>
-                            <td>
-                                <a target="_blank" href={{ row["number"].link }}>
-                                    {{ row["number"].num }}
-                                </a>
-                            </td>
-                            <td>{{ row["title"] }}</td>
-                            <td>
-                                {% for time in row["time"] %}
-                                    {{ time }}<br>
-                                {% endfor %}
-                            </td>
-                            <td>
-                                {% for instructor in row["instructor"] %}
-                                    <a target="_blank" href={{ instructor.link }}>
-                                        {{ instructor.name }}
-                                    </a>
-                                    <br>
-                                {% endfor %}
-                            </td>
-                            <td>{{ row["CRN"] }}</td>
-                            <td id="location">
-                                {% for location in row["location"] %}
-                                    {{ location }} !
-                                {% endfor %}
-                            </td>
-                            <td>
-                                {% for connection in row["connection"] %}
-                                    <a target="_blank" href={{ connection.link }}>
-                                        {{ connection.num }}
-                                    </a>
-                                    <br>
-                                {% endfor %}
-                            </td>
-                            <td id="add_button"><button>+</button></td>
-                        </tr>
-                    {% endfor %}
+                    {%  for _, row in selected_data.iterrows() %}<tr>
+                        <!-- Column of show details button. -->
+                        <td class="glyphicon glyphicon-chevron-down" id="show_detail"></td>
+
+                        <!-- -->
+                        <td>
+                            <a target="_blank" href={{ row["number"].link }}>
+                                {{ row["number"].num }}</a>
+                        </td>
+
+                        <!-- -->
+                        <td>{{ row["title"] }}</td>
+
+                        <!-- -->
+                        <td>
+                            {% for time in row["time"] %}
+                                {{ time }}<br>
+                            {% endfor %}
+                        </td>
+
+                        <!-- -->
+                        <td>
+                            {% for instructor in row["instructor"] %}
+                                <a target="_blank" href={{ instructor.link }}>
+                                    {{ instructor.name }}</a><br>
+                            {% endfor %}
+                        </td>
+                        <!-- -->
+                        <td id="add_button"><button>+</button></td>
+                        <!-- -->
+                        <td>{{ row["CRN"] }}</td>
+
+                        <!-- -->
+                        <td>
+                            {% for location in row["location"] %}
+                                {{ location }} !
+                            {% endfor %}
+                        </td>
+
+                        <!-- -->
+                        <td>
+                            {% for connection in row["connection"] %}
+                                <a target="_blank" href={{ connection.link }}>
+                                    {{ connection.num }}</a><br>
+                            {% endfor %}
+                        </td>
+
+                    </tr>{% endfor %}
                     </tbody>
                 </table>
             {% endif %}
