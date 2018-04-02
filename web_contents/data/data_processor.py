@@ -178,7 +178,7 @@ def get_conx_info(each_class: BeautifulSoup) -> List[ClassConx]:
     """
     connection_info = each_class[9].find_all("a")
     return [ClassConx(num=str(each_class_info.contents[0]),
-                      link=each_class_info['href'])
+                      link=base_url + each_class_info['href'])
             if connection_info else None
             for each_class_info in connection_info]
 
