@@ -49,7 +49,7 @@
                 },
                 "columnDefs": [
                     {
-                        "targets": [ 6, 7, 8 ],
+                        "targets": [6, 7, 8, 9, 10, 11, 12],
                         "visible": false
                     }
                 ]
@@ -59,9 +59,6 @@
                 var tr = $(this).closest("tr");
                 var row = table.row(tr);
                 var location = table.row( this ).data()[7];
-                console.log(location);
-
-
 
 
                 if (row.child.isShown()) {
@@ -87,7 +84,19 @@
                 "destroy": true,
                 "scrollY": window_height,
                 "scrollCollapse": true,
-                "paging":         false
+                "paging":         false,
+                responsive: {
+                    details: {
+                        type: "column",
+                        target: "tr"
+                    }
+                },
+                "columnDefs": [
+                    {
+                        "targets": [6, 7, 8, 9, 10, 11, 12],
+                        "visible": false
+                    }
+                ]
             } );
         }
 
@@ -154,12 +163,15 @@
             </form>
         </div>
     </div>
+
     <br>
+
+    <!-- This part is for result table. -->
     <div class="container-fluid">
         <div class="col-lg-6 col-md-6">Calendar goes here!</div>
         <div class="col-lg-6 col-md-6 result_table">
             {% if data_generated %}
-                <table class="table table-striped" id="result_table" style="width: 50%;">
+                <table class="table table-striped nowrap" id="result_table" style="width: 50%;">
                     <thead><tr>
                         <!-- Set up table headers -->
                         <th></th>
@@ -167,52 +179,58 @@
                         <th>Title</th>
                         <th>Time</th>
                         <th>Instructor</th>
-                        <th id="add_button">To calendar</th>
+                        <th id="add_button">Add</th>
                         <th>CRN</th>
                         <th>Location</th>
                         <th>Connection</th>
+                        <th>Exam</th>
+                        <th>Foundation</th>
+                        <th>Division</th>
+                        <th>Area</th>
                     </tr></thead>
                     <tbody>
                     {%  for _, row in selected_data.iterrows() %}<tr>
                         <!-- Column of show details button. -->
                         <td class="glyphicon glyphicon-chevron-down" id="show_detail"></td>
 
-                        <!-- -->
+                        <!-- Column of class number. -->
                         <td>
                             <a target="_blank" href={{ row["number"].link }}>
                                 {{ row["number"].num }}</a>
                         </td>
 
-                        <!-- -->
+                        <!-- Column of class title. -->
                         <td>{{ row["title"] }}</td>
 
-                        <!-- -->
+                        <!-- Column of class time. -->
                         <td>
                             {% for time in row["time"] %}
                                 {{ time }}<br>
                             {% endfor %}
                         </td>
 
-                        <!-- -->
+                        <!-- Column of class instructor(s). -->
                         <td>
                             {% for instructor in row["instructor"] %}
                                 <a target="_blank" href={{ instructor.link }}>
                                     {{ instructor.name }}</a><br>
                             {% endfor %}
                         </td>
-                        <!-- -->
+
+                        <!-- Column of add class to calendar button. -->
                         <td id="add_button"><button>+</button></td>
-                        <!-- -->
+
+                        <!-- Column of class CRN. -->
                         <td>{{ row["CRN"] }}</td>
 
-                        <!-- -->
+                        <!-- Column of class location. -->
                         <td>
                             {% for location in row["location"] %}
                                 {{ location }} !
                             {% endfor %}
                         </td>
 
-                        <!-- -->
+                        <!-- Column of connection. -->
                         <td>
                             {% for connection in row["connection"] %}
                                 <a target="_blank" href={{ connection.link }}>
@@ -220,6 +238,20 @@
                             {% endfor %}
                         </td>
 
+                        <!-- Column of exam. -->
+                        <td>
+                            <a target="_blank" href={{ row["exam"].link }}>
+                                    {{ row["exam"].letter }}</a>
+                        </td>
+
+                        <!-- Column of class foundation. -->
+                        <td>{{ row["foundation"] }}</td>
+
+                        <!-- Column of class division. -->
+                        <td>{{ row["division"] }}</td>
+
+                        <!-- Column of class area. -->
+                        <td>{{ row["area"] }}</td>
                     </tr>{% endfor %}
                     </tbody>
                 </table>
