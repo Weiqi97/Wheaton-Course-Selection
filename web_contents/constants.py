@@ -45,4 +45,4 @@ base_url = "https://weblprod1.wheatonma.edu"
 # This value used to skip first three useless rows in the web content.
 SKIP_BEGINNING = 3
 # This value used to extract desired number of semester values.
-SEMESTER_NUMBER = 16
+SEMESTER_NUMBER = 18
