@@ -46,7 +46,13 @@
                         type: "column",
                         target: "tr"
                     }
-                }
+                },
+                "columnDefs": [
+                    {
+                        "targets": [ 6 ],
+                        "visible": false
+                    }
+                ]
             } );
 
             data_table.find("tbody").on("click", "#show_detail", function() {
@@ -156,6 +162,7 @@
                             <th>Time</th>
                             <th>Instructor</th>
                             <th>CRN</th>
+                            <th>Location</th>
                             <th id="add_button">To calendar</th>
                         </tr>
                     </thead>
@@ -180,6 +187,11 @@
                                         {{ instructor.name }}
                                     </a>
                                     <br>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% for location in row["location"] %}
+                                    {{ location }}<br>
                                 {% endfor %}
                             </td>
                             <td>{{ row["CRN"] }}</td>
