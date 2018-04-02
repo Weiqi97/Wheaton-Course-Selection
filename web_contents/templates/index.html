@@ -51,6 +51,10 @@
                     {
                         "targets": [ 6 ],
                         "visible": false
+                    },
+                    {
+                        "targets": [ 7 ],
+                        "visible": false
                     }
                 ]
             } );
@@ -58,7 +62,7 @@
             data_table.find("tbody").on("click", "#show_detail", function() {
                 var tr = $(this).closest("tr");
                 var row = table.row(tr);
-                var location = table.row( this ).data()[6];
+                var location = table.row( this ).data()[7];
                 console.log(location);
 
 
@@ -169,7 +173,7 @@
                             <th id="add_button">To calendar</th>
                             <th>CRN</th>
                             <th>Location</th>
-                            
+                            <th>Connection</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -200,9 +204,15 @@
                                 {% for location in row["location"] %}
                                     {{ location }} !
                                 {% endfor %}
-
                             </td>
-
+                            <td>
+                                {% for connection in row["connection"] %}
+                                    <a target="_blank" href={{ connection.link }}>
+                                        {{ connection.num }}
+                                    </a>
+                                    <br>
+                                {% endfor %}
+                            </td>
                             <td id="add_button"><button>+</button></td>
                         </tr>
                     {% endfor %}
