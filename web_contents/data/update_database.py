@@ -5,5 +5,5 @@ from web_contents.data.data_processor import save_all_info
 
 # This line will update selection drop downs.
 save_fetched_data()
+# This line will update class information.
 save_all_info()
-
