@@ -25,6 +25,11 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed">
 
+
+
+    <link rel='stylesheet' href='../static/node_modules/fullcalendar/dist/fullcalendar.css' />
+    <script src='../static/node_modules/moment/min/moment.min.js'></script>
+    <script src='../static/node_modules/fullcalendar/dist//fullcalendar.js'></script>
     <!-- Function call for data table -->
     <script>
 
@@ -52,15 +57,22 @@
                 "paging":         false
             });
         }
+        //----------------CALENDAR----------------------------
+        $(function() {
+            $('#calendar').fullCalendar({
+                // put your options and callbacks here
+                weekends: false,
+                defaultView:'agendaWeek',
+                header:{
+                    left: "title"
+                },
+                titleFormat: '[Hello]'
+            });
 
+        });
 
     </script>
-    <style>
-        .home{
-            display:none;
-        }
 
-    </style>
 </head>
 
 
@@ -119,7 +131,16 @@
     </div>
     <br>
     <div class="container-fluid">
-        <div class="col-lg-6 col-md-6">STH</div>
+
+        <div class="col-lg-6 col-md-6 calendar">
+            <h5 class="selected_semester">Semester</h5>
+            <div id="calendar"></div>
+        </div>
+
+
+    <!--This is for displaying the course schedule-->
+
+
         <div class="col-lg-6 col-md-6 result_table">
             {% if data_generated %}
                 <table class="table table-striped" id="result_table" style="width: 50%;">
@@ -168,12 +189,13 @@
         </div>
     </div>
     <br>
-<div class="container-fluid header">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 college_header">
-                <b>Wheaton College </b>
-                <sub>- The right tool to help you pick classes</sub>
-              </div>
+
+    <div class="container-fluid header">
+         <div class="row">
+             <div class="col-lg-12 col-md-12 col-sm-12 college_header">
+                    <b>Wheaton College </b>
+                  <sub>- The right tool to help you pick classes</sub>
+             </div>
         </div>
     </div>
 </body>
@@ -183,46 +205,44 @@
     $(".add_class" ).click(function() {
         var $row = $(this).closest("tr");      // Finds the closest row <tr>
         var $tds = $row.find("td");             // Finds all children <td> elements
-        $.each($tds, function() {               // Visits every single <td> element
-           // console.log($(this).text());        // Prints out the text within the <td>
-        });
-        //var name = ($tds[2].innerHTML).replace(/\s+/g, " ");
 
-        var name = $tds[2].innerHTML;
-        name = $.trim(name);
-        name = name.replace(/\s+/g, "");
-        name = name.split("<br>"); //deletes the <br>
-        //console.log("sdsd:" + name);
-       // console.log(name);
-        name = Array.from(name);
-        console.log(name);
+        //var course_time = ($tds[2].innerHTML).replace(/\s+/g, " ");
+        var course_time = $tds[2].innerHTML;
+        course_time = $.trim(course_time);
+        course_time = course_time.replace(/\s+/g, "");
+        course_time = course_time.split("<br>"); //deletes the <br>
+        //console.log("sdsd:" + course_time);
+       // console.log(course_time);
+        course_time = Array.from(course_time);
+        //console.log(course_time);
         var days=[];
-        var time =[];
+        var time=[];
         var i = 0;
         var k =0;
         var j =0;
 
-        name = Array.from(name[0]);
-        $(name).each(function(){
-            if (name[i].charCodeAt(0) > 64 & name[i]!=='P' & name[i]!=='A' & name[i]!=='r'){
-                days[j] = name[i];
+        course_time = Array.from(course_time[0]); //get the info from the first sub array. Need it because some classes have two different timings.
+        $(course_time).each(function(){
+            if (course_time[i].charCodeAt(0) > 64 & course_time[i]!=='P' & course_time[i]!=='A' & course_time[i]!=='r'){
+                days[j] = course_time[i];
                 j++;
                 i++;
             }
-            else if(name[i].charCodeAt(0) < 58){
-                time[k] = name[i];
+            else
+            {
+                time[k] = course_time[i];
+                i++;
                 k++;
-                i++;
-            }
-            else{
-                i++;
             }
         });
-        console.log(name);
-        days = days.slice(0,-2);
-        console.log("days: " + days);
-        console.log("time:" +time);
-    });
 
+        //console.log(course_time);
+        time = (time.toString()).replace(/,/g , ""); //makes the time array into a string and trims all the commas.
+        time = time.replace(/A/g, "AM");
+        time = time.replace(/P/g, "PM");
+        days = days.slice(0,-2); // trims the last two characters because it always contains 2 M's from the AM and PM
+        console.log("days: " + days);
+        console.log("time: " + time);
+    });
 </script>
 </html>

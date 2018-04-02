@@ -111,5 +111,12 @@ sub{
     border-radius: 50%;
     background: #316E95;
     color: white;
-
+}
+/*outer/bigger body of the calendar*/
+.calendar{
+    border: 1px solid black;
+}
+/*for the calendar title*/
+.selected_semester{
+    text-align: center;
 }
