@@ -18,7 +18,7 @@ def read_data(semester: str, subjects: list, foundation: str, division: str,
     """
     data_frame = pd.read_pickle(f"data/course_data/pickle_data/{semester}.pkl")
 
-    if subjects == ["%"]:
+    if "%" in subjects:
         pass
     else:
         data_frames = [data_frame.loc[data_frame["subject"] == subject]
