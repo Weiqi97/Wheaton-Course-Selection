@@ -28,48 +28,49 @@
 
     <!-- Function call for data table -->
     <script>
+        // This variable adjust the table size.
+        var height_adjust = 350;
 
         $(document).ready(function() {
-            var window_height = window.innerHeight-350;
-            console.log(window_height);
-            $('#result_table').DataTable( {
+            var data_table = $("#result_table");
+
+            // Calculate the proper height for the table.
+            var window_height = window.innerHeight-height_adjust;
+
+            var table = data_table.DataTable( {
                 "scrollY": window_height,
                 "scrollCollapse": true,
                 "paging":         false,
                 responsive: {
                     details: {
-                        type: 'column',
-                        target: 'tr'
+                        type: "column",
+                        target: "tr"
                     }
                 }
-            });
-        });
+            } );
 
-        $('#result_table').find('tbody').on('click', 'td.glyphicon glyphicon-chevron-down', function () {
-                var tr = $(this).closest('tr');
-                var row = table.row( tr );
+            data_table.find("tbody").on("click", "#show_detail", function() {
+                var tr = $(this).closest("tr");
+                var row = table.row(tr);
 
-                if ( row.child.isShown() ) {
-                    $('div.slider', row.child()).slideUp( function () {
-                        row.child.hide();
-                        tr.removeClass('shown');
-                    } );
-                }
-                else {
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass("shown");
+                } else {
                     // Open this row
-                    row.child( format(tr.data("child-value")) ).show();
-                    tr.addClass('shown');
-                    $('div.slider', row.child()).slideDown();
+                    row.child(format(tr.data("child-value"))).show();
+                    tr.addClass("shown");
                 }
+            } );
         } );
 
-
         $(function(){
-           $(window).on('resize', resize_result_table);
+           $(window).on("resize", resize_result_table);
         });
 
         function resize_result_table(){
-            var window_height = window.innerHeight-350;
+            var window_height = window.innerHeight-height_adjust;
             console.log("the new height"+window_height);
             $('#result_table').DataTable( {
                 "destroy": true,
@@ -77,6 +78,11 @@
                 "scrollCollapse": true,
                 "paging":         false
             } );
+        }
+
+        function format(row) {
+            console.log(row);
+            return "<div>"+row+"</div>";
         }
 
     </script>
@@ -145,7 +151,7 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Course Number</th>
+                            <th>Number</th>
                             <th>Title</th>
                             <th>Time</th>
                             <th>Instructor</th>
@@ -155,8 +161,8 @@
                     </thead>
                     <tbody>
                     {%  for _, row in selected_data.iterrows() %}
-                        <tr data-child-value="SAY">
-                            <td class="glyphicon glyphicon-chevron-down"></td>
+                        <tr data-child-value={{ row.to_json }}>
+                            <td class="glyphicon glyphicon-chevron-down" id="show_detail"></td>
                             <td>
                                 <a target="_blank" href={{ row["number"].link }}>
                                     {{ row["number"].num }}
@@ -177,10 +183,7 @@
                                 {% endfor %}
                             </td>
                             <td>{{ row["CRN"] }}</td>
-                            <td id="add_button">
-                                <div class="slider"><button>+</button></div>
-                            </td>
-                            <div class="slider">STH</div>
+                            <td id="add_button"><button>+</button></td>
                         </tr>
                     {% endfor %}
                     </tbody>
