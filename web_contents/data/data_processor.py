@@ -198,7 +198,7 @@ def get_hidden_days_info(class_times: List[list]) -> List[str]:
         """
         info_str = " ".join(class_time)
         for original, replace in TIME_FILTER.iteritems():
-            info_str.replace(original, replace)
+            info_str = info_str.replace(original, replace)
 
         return info_str
 
