@@ -58,7 +58,7 @@
             data_table.find("tbody").on("click", "#show_detail", function() {
                 var tr = $(this).closest("tr");
                 var row = table.row(tr);
-                var location = table.row( this ).data()[7];
+                var location = table.row( this ).data()[10];
 
 
                 if (row.child.isShown()) {
@@ -183,7 +183,7 @@
                     <th>Location</th>
                     <th>Connection</th>
                     <th>Exam</th>
-                    <th>Foundation</th>
+                    <th>Info</th>
                     <th>Division</th>
                     <th>Area</th>
                 </tr></thead>
@@ -244,10 +244,22 @@
                     </td>
 
                     <!-- Column of class foundation. -->
-                    <td>{{ row["foundation"] }}</td>
+                    <td>
+                        {% if row["foundation"] %}
+                            foundation: {{ row["foundation"] }} !
+                        {% endif %}
+
+                        {% if row["division"] %}
+                            division: {{ row["division"] }} !
+                        {% endif %}
+
+                        {% if row["area"] %}
+                            area: {{ row["area"] }} !
+                        {% endif %}
+                    </td>
 
                     <!-- Column of class division. -->
-                    <td>{{ row["division"] }}</td>
+                    <td>{{ row["hidden_days"] }}</td>
 
                     <!-- Column of class area. -->
                     <td>{{ row["area"] }}</td>
