@@ -176,9 +176,9 @@ def fetch_current_semester() -> pd.Series:
     select_box = web_soup.find("select", {"name": "schedule_beginterm"})
 
     # Find the content of the selected tag.
-    select_value = select_box.find("option", selected=True).contents[0]
+    select_value = str(select_box.find("option", selected=True).contents[0])
 
-    return pd.Series(data=select_value, index="selected")
+    return pd.Series(data=select_value)
 
 
 def save_fetched_data():
