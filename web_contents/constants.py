@@ -49,6 +49,6 @@ SKIP_BEGINNING = 3
 SEMESTER_NUMBER = 18
 
 # Time filter constants
-TIME_FILTER = pd.Series(data=["", "", "Monday", "Tuesday", "Wednesday",
+TIME_FILTER = pd.Series(data=["", "", "", "Monday", "Tuesday", "Wednesday",
                               "Thursday", "Friday"],
-                        index=["AM", "PM", "M", "T", "W", "R", "F"])
+                        index=["AM", "PM", "TBA", "M", "T", "W", "R", "F"])
