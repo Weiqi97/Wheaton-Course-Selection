@@ -66,3 +66,8 @@ def read_divisions() -> list:
 def read_areas() -> list:
     """Reads data from saved pickle file."""
     return pd.read_pickle("data/web_data/areas.pkl")
+
+
+def read_current_semester() -> pd.Series:
+    """Reads data from saved pickle file."""
+    return pd.read_pickle("data/web_data/current_semester.pkl")
