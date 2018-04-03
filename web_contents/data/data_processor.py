@@ -6,7 +6,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from typing import List
 from web_contents.constants import base_url, ClassConx, ClassExam, \
-    ClassNumber, ClassInstructor, SeatInfo, SKIP_BEGINNING
+    ClassNumber, ClassInstructor, SeatInfo, SKIP_BEGINNING, TIME_FILTER
 from web_contents.data.data_fetcher import fetch_semesters, fetch_subjects, \
     fetch_web_content
 
@@ -183,6 +183,24 @@ def get_conx_info(each_class: BeautifulSoup) -> List[ClassConx]:
             for each_class_info in connection_info]
 
 
+# TODO: This function is hell ugly. Serve as a temporary solution.
+def get_hidden_days_info(class_times: List[list]) -> List[str]:
+    """
+    Get hidden class information time.
+    :param class_times:
+    :return:
+    """
+    def _hidden_days_info_helper(class_time: list) -> str:
+        info_str = " ".join(class_time)
+        for original, replace in TIME_FILTER.iteritems():
+            info_str.replace(original, replace)
+
+        return info_str
+
+    return [_hidden_days_info_helper(class_time=class_time)
+            for class_time in class_times]
+
+
 def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
     """
     This function will refine class information from the web page.
@@ -262,6 +280,9 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
 
     class_info_frame["textbook"] = \
         [each_class[10].find("a")['href'] for each_class in class_basic_info]
+
+    class_info_frame["hidden_days"] = \
+        get_hidden_days_info(class_info_frame["time"])
 
     return class_info_frame
 
