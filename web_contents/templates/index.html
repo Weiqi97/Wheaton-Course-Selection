@@ -41,6 +41,7 @@
                 "scrollY": window_height,
                 "scrollCollapse": true,
                 "paging":         false,
+                "bInfo" :         false,
                 responsive: {
                     details: {
                         type: "column",
@@ -49,7 +50,7 @@
                 },
                 "columnDefs": [
                     {
-                        "targets": [6, 7, 8, 9, 10, 11, 12],
+                        "targets": [6, 7, 8, 9, 10, 11, 12, 13],
                         "visible": false
                     }
                 ]
@@ -58,7 +59,13 @@
             data_table.find("tbody").on("click", "#show_detail", function() {
                 var tr = $(this).closest("tr");
                 var row = table.row(tr);
-                var location = table.row( this ).data()[10];
+                var CRN = table.row( this ).data()[6];
+                var Location = table.row( this ).data()[7];
+                var Connection = table.row( this ).data()[8];
+                var Exam = table.row( this ).data()[9];
+                var Info = table.row( this ).data()[10];
+                var Seats = table.row( this ).data()[11];
+                var Special = table.row( this ).data()[12];
 
 
                 if (row.child.isShown()) {
@@ -77,14 +84,14 @@
            $(window).on("resize", resize_result_table);
         });
 
-        function resize_result_table(){
+        function resize_result_table() {
             var window_height = window.innerHeight-height_adjust;
-            console.log("the new height"+window_height);
+
             $('#result_table').DataTable( {
-                "destroy": true,
                 "scrollY": window_height,
                 "scrollCollapse": true,
                 "paging":         false,
+                "bInfo" :         false,
                 responsive: {
                     details: {
                         type: "column",
@@ -93,7 +100,7 @@
                 },
                 "columnDefs": [
                     {
-                        "targets": [6, 7, 8, 9, 10, 11, 12],
+                        "targets": [6, 7, 8, 9, 10, 11, 12, 13],
                         "visible": false
                     }
                 ]
@@ -171,8 +178,8 @@
         <div class="col-lg-6 col-md-6">Calendar goes here!</div>
         <div class="col-lg-6 col-md-6 result_table">
             <table class="table table-striped nowrap" id="result_table" style="width: 50%;">
+                <!-- Set up table headers. -->
                 <thead><tr>
-                    <!-- Set up table headers -->
                     <th></th>
                     <th>Number</th>
                     <th>Title</th>
@@ -184,9 +191,12 @@
                     <th>Connection</th>
                     <th>Exam</th>
                     <th>Info</th>
-                    <th>Division</th>
-                    <th>Area</th>
+                    <th>Seats</th>
+                    <th>Special</th>
+                    <th>Hidden Days</th>
                 </tr></thead>
+
+                <!-- Set up table columns. -->
                 <tbody>
                 {%  for _, row in selected_data.iterrows() %}<tr>
                     <!-- Column of show details button. -->
@@ -243,39 +253,47 @@
                                 {{ row["exam"].letter }}</a>
                     </td>
 
-                    <!-- Column of class foundation. -->
+                    <!-- Column of class found, div, area info. -->
                     <td>
                         {% if row["foundation"] %}
-                            foundation: {{ row["foundation"] }} !
+                            Foundation: {{ row["foundation"] }}
                         {% endif %}
 
                         {% if row["division"] %}
-                            division: {{ row["division"] }} !
+                            Division: {{ row["division"] }}
                         {% endif %}
 
                         {% if row["area"] %}
-                            area: {{ row["area"] }} !
+                            Area: {{ row["area"] }}
                         {% endif %}
                     </td>
 
-                    <!-- Column of class division. -->
-                    <td>{{ row["hidden_days"] }}</td>
+                    <!-- Column of seats info. -->
+                    <td>
+                        Max enroll: {{ row["seats"].max }}
+                        Seats taken: {{ row["seats"].taken }}
+                        Available seats: {{ row["seats"].avail }}
+                        Wait list: {{ row["seats"].wait_list }}
+                    </td>
 
-                    <!-- Column of class area. -->
-                    <td>{{ row["area"] }}</td>
+                    <!-- Column of special note. -->
+                    <td>
+                        {{ row["special_info"] }}
+                    </td>
+
+                    <!-- Column of hidden days. -->
+                    <td>{{ row["hidden_days"] }}</td>
                 </tr>{% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
-    <br>
-<div class="container-fluid header">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 college_header">
-                <b>Wheaton College </b>
-                <sub>- The right tool to help you pick classes</sub>
-              </div>
-        </div>
-    </div>
 </body>
+
+<footer>
+    <div class="footer navbar-fixed-bottom">
+        Credit to Computer Science Department.
+    </div>
+</footer>
+
 </html>
