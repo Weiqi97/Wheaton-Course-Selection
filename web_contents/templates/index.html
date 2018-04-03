@@ -74,7 +74,7 @@
                     tr.removeClass("shown");
                 } else {
                     // Open this row
-                    row.child(format(location)).show();
+                    row.child(format(CRN, Exam, Connection, Info)).show();
                     tr.addClass("shown");
                 }
             } );
@@ -107,9 +107,16 @@
             } );
         }
 
-        function format(row) {
-            console.log(row);
-            return "<div>"+row+"</div>";
+        function format(CRN, Exam, Connection, Info) {
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+                '<tr>'+
+                    '<td width="33%">'+CRN+'</td>'+
+                    '<td width="33%">'+Exam+'</td>'+
+                    '<td width="33%">'+Connection+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                    '<td>'+Info+'</td>'+
+                '</tr>'+'</table>';
         }
 
     </script>
@@ -200,7 +207,7 @@
                 <tbody>
                 {%  for _, row in selected_data.iterrows() %}<tr>
                     <!-- Column of show details button. -->
-                    <td class="glyphicon glyphicon-chevron-down" id="show_detail"></td>
+                    <td class="glyphicon glyphicon-chevron-down text-center" id="show_detail"></td>
 
                     <!-- Column of class number. -->
                     <td>
@@ -230,10 +237,11 @@
                     <td id="add_button"><button>+</button></td>
 
                     <!-- Column of class CRN. -->
-                    <td>{{ row["CRN"] }}</td>
+                    <td>CRN: {{ row["CRN"] }}</td>
 
                     <!-- Column of class location. -->
                     <td>
+                        Location:
                         {% for location in row["location"] %}
                             {{ location }} !
                         {% endfor %}
@@ -241,6 +249,7 @@
 
                     <!-- Column of connection. -->
                     <td>
+                        Connection:
                         {% for connection in row["connection"] %}
                             <a target="_blank" href={{ connection.link }}>
                                 {{ connection.num }}</a><br>
@@ -249,6 +258,7 @@
 
                     <!-- Column of exam. -->
                     <td>
+                        Exam:
                         <a target="_blank" href={{ row["exam"].link }}>
                                 {{ row["exam"].letter }}</a>
                     </td>
