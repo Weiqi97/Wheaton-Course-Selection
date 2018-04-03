@@ -187,8 +187,8 @@ def get_conx_info(each_class: BeautifulSoup) -> List[ClassConx]:
 def get_hidden_days_info(class_times: List[list]) -> List[str]:
     """
     Get hidden class information time.
-    :param class_times:
-    :return:
+    :param class_times: List of class times.
+    :return: List of strings with substituted full week day names.
     """
     def _hidden_days_info_helper(class_time: list) -> str:
         """
