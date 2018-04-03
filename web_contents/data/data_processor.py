@@ -217,9 +217,9 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
     class_info_frame = pd.DataFrame(
         data=0,
         index=np.arange(len(class_info_list)),
-        columns=["subject", "number", "exam", "title", "CRN", "time",
+        columns=["subject", "number", "exam", "title", "CRN", "time", "seats",
                  "location", "instructor", "foundation", "division", "area",
-                 "connection", "textbook", "seats", "special_info"]
+                 "connection", "textbook", "special_info", "hidden_days"]
     )
 
     # Get class seats information and store in the data frame..
