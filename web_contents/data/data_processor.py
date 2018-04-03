@@ -191,6 +191,11 @@ def get_hidden_days_info(class_times: List[list]) -> List[str]:
     :return:
     """
     def _hidden_days_info_helper(class_time: list) -> str:
+        """
+        Hidden values helper.
+        :param class_time: list of time of each class.
+        :return: a string that contains exact class day time.
+        """
         info_str = " ".join(class_time)
         for original, replace in TIME_FILTER.iteritems():
             info_str.replace(original, replace)
