@@ -69,6 +69,8 @@
                 var Seats = table.row( this ).data()[12];
                 var Special = table.row( this ).data()[13];
 
+                console.log(Textbook);
+
                 // Refine info strings.
                 Info = Info.replace(/_/g, "<td>");
                 Info = Info.replace(/!/g, "</td>");
@@ -78,7 +80,7 @@
                 Seats = Seats.replace(/!/g, "</td>");
 
                 // Refine special info string.
-                Special = Special.replace(/_/g, "<td>");
+                Special = Special.replace(/_/g, "<td colspan='4'>");
                 Special = Special.replace(/!/g, "</td>");
 
                 if (row.child.isShown()) {
@@ -320,7 +322,7 @@
 
                     <!-- Column of exam. -->
                     <td>
-                        {% if row["exam"] %}
+                        {% if row["exam"].link %}
                             Exam:
                             <a target="_blank" href={{ row["exam"].link }}>
                                 {{ row["exam"].letter }}</a>
@@ -350,8 +352,7 @@
 
                     <!-- Column of textbook links. -->
                     <td>
-                        <a target="_blank" href={{ row["textbook"] }}>
-                            {{ Textbook }}</a>
+                        <a target="_blank" href={{ row["textbook"] }}>Textbook</a>
                     </td>
 
                     <!-- Column of class found, div, area info. -->
