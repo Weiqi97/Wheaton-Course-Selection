@@ -31,7 +31,8 @@
     <!-- Function call for data table -->
     <script>
 
-
+        // Global constants
+        var height_adjust = 200; // Adjust the table size.
         $(document).ready(function() {
             var data_table = $("#result_table");
 
@@ -68,8 +69,13 @@
                 var Seats = table.row( this ).data()[12];
                 var Special = table.row( this ).data()[13];
 
-                Info = replaceAll(Info, "?", "<td>");
+                // Refine info strings.
+                Info = Info.replace(/_/g, "<td>");
+                Info = Info.replace(/!/g, "</td>");
 
+                // Refine seats string.
+                Seats = Seats.replace(/_/g, "<td>");
+                Seats = Seats.replace(/!/g, "</td>");
 
                 if (row.child.isShown()) {
                     // This row is already open - close it
@@ -88,6 +94,33 @@
 
 
 
+        // Function to resize data table every time browser size changes.
+        $(function() {
+            $(window).on("resize", resize_result_table);
+        } );
+
+        function resize_result_table() {
+            // Get the new proper window height.
+            var window_height = window.innerHeight-height_adjust;
+
+            // Reinitialize data table to a proper size.
+            $('#result_table').DataTable( {
+                "destroy":        true,
+                "scrollY":        window_height,
+                "scrollX":        true,
+                "scrollCollapse": true,
+                "paging":         false,
+                "bInfo" :         false,
+                "columnDefs": [
+                    {
+                        "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
+                        "visible": false
+                    }
+                ]
+            } );
+        }
+
+
         function format(CRN, Exam, Connection, Location, Textbook, Info, Seats, Special) {
             return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:0px;">'+
                 '<th width="25%"></th><th width="25%"></th><th width="25%"></th><th width="25%"></th>'+
@@ -100,12 +133,8 @@
                     '<td colspan="2">'+Location+'</td>'+
                     '<td colspan="2">'+Textbook+'</td>'+
                 '</tr>'+
-                '<tr>'+
-                    '<td>'+Info+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                    '<td colspan="4">'+Seats+'</td>'+
-                '</tr>'+
+                '<tr>'+Info+'</tr>'+
+                '<tr>'+Seats+'</tr>'+
                 '<tr>'+
                     '<td>'+Special+'</td>'+
                 '</tr>'+'</table>';
@@ -325,29 +354,29 @@
                     <!-- Column of class found, div, area info. -->
                     <td>
                         {% if row["foundation"] %}
-                            ?Foundation: {{ row["foundation"] }}!
+                            _Foundation: {{ row["foundation"] }}!
                         {% endif %}
 
                         {% if row["division"] %}
-                            ?Division: {{ row["division"] }}!
+                            _Division: {{ row["division"] }}!
                         {% endif %}
 
                         {% if row["area"] %}
-                            ?Area: {{ row["area"] }}!
+                            _Area: {{ row["area"] }}!
                         {% endif %}
                     </td>
 
                     <!-- Column of seats info. -->
                     <td>
-                        ?Max enroll: {{ row["seats"].max }}!
-                        ?Seats taken: {{ row["seats"].taken }}!
-                        ?Available seats: {{ row["seats"].avail }}!
-                        ?Wait list: {{ row["seats"].wait_list }}!
+                        _Max enroll: {{ row["seats"].max }}!
+                        _Seats taken: {{ row["seats"].taken }}!
+                        _Available seats: {{ row["seats"].avail }}!
+                        _Wait list: {{ row["seats"].wait_list }}!
                     </td>
 
                     <!-- Column of special note. -->
                     <td>
-                        ?{{ row["special_info"] }}!
+                        {{ row["special_info"] }}
                     </td>
 
                     <!-- Column of hidden days. -->
