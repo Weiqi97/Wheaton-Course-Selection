@@ -31,8 +31,10 @@
     <script src='../static/node_modules/moment/min/moment.min.js'></script>
     <script src='../static/node_modules/fullcalendar/dist//fullcalendar.js'></script>
     <!-- Function call for data table -->
-    <script>
 
+
+    <script>
+        //TODO: continue to get the value of the semester
         $(document).ready(function() {
             var window_height = window.innerHeight-350;
             console.log(window_height);
@@ -58,15 +60,47 @@
             });
         }
         //----------------CALENDAR----------------------------
-        $(function() {
+        $(function(){
+
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
                 weekends: false,
                 defaultView:'agendaWeek',
                 header:{
-                    left: "title"
+                    center: "title",
+                    right: "",
+                    left:""
                 },
-                titleFormat: '[Hello]'
+                titleFormat: '[Calendar]',
+                columnFormat: 'dddd',
+                eventSources: [
+                    // your event source
+                    {
+                        events: [ // put the array in the `events` property
+                            {
+                              title  : 'event1',
+                              start  : '2010-01-01'
+                            },
+                            {
+                              title  : 'Econ',
+                              start  : '2018-04-04T14:30:00',
+                              end    : '2018-04-04T15:30:00',
+                                description: 'this is so cool',
+                                color: 'green',
+                                textColor: 'white'
+
+                            },
+                            {
+                              title  : 'event3',
+                              start  : '2010-01-09T12:30:00',
+
+                            }
+                          ]
+                        }
+
+    // any other event sources...
+
+                ]
             });
 
         });
@@ -133,7 +167,7 @@
     <div class="container-fluid">
 
         <div class="col-lg-6 col-md-6 calendar">
-            <h5 class="selected_semester">Semester</h5>
+            <br>
             <div id="calendar"></div>
         </div>
 
