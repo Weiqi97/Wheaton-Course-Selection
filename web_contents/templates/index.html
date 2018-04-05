@@ -45,7 +45,7 @@
 
                 "columnDefs": [
                     {
-                        "targets": [6, 7, 8, 9, 10, 11, 12, 13],
+                        "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
                         "visible": false
                     }
                 ]
@@ -55,12 +55,13 @@
                 var tr = $(this).closest("tr");
                 var row = table.row(tr);
                 var CRN = table.row( this ).data()[6];
-                var Location = table.row( this ).data()[7];
+                var Exam = table.row( this ).data()[7];
                 var Connection = table.row( this ).data()[8];
-                var Exam = table.row( this ).data()[9];
-                var Info = table.row( this ).data()[10];
-                var Seats = table.row( this ).data()[11];
-                var Special = table.row( this ).data()[12];
+                var Location = table.row( this ).data()[9];
+                var Textbook = table.row( this ).data()[10];
+                var Info = table.row( this ).data()[11];
+                var Seats = table.row( this ).data()[12];
+                var Special = table.row( this ).data()[13];
 
 
                 if (row.child.isShown()) {
@@ -92,7 +93,7 @@
 
                 "columnDefs": [
                     {
-                        "targets": [6, 7, 8, 9, 10, 11, 12, 13],
+                        "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
                         "visible": false
                     }
                 ]
@@ -187,9 +188,10 @@
                     <th>Instructor</th>
                     <th id="add_button">Add</th>
                     <th>CRN</th>
-                    <th>Location</th>
-                    <th>Connection</th>
                     <th>Exam</th>
+                    <th>Connection</th>
+                    <th>Location</th>
+                    <th>Textbook</th>
                     <th>Info</th>
                     <th>Seats</th>
                     <th>Special</th>
@@ -232,13 +234,12 @@
                     <!-- Column of class CRN. -->
                     <td>CRN: {{ row["CRN"] }}</td>
 
-                    <!-- Column of class location. -->
+                    <!-- Column of exam. -->
                     <td>
-                        {% if row["location"] %}
-                            Location:
-                            {% for location in row["location"] %}
-                                {{ location }} !
-                            {% endfor %}
+                        {% if row["exam"] %}
+                            Exam:
+                            <a target="_blank" href={{ row["exam"].link }}>
+                                {{ row["exam"].letter }}</a>
                         {% endif %}
                     </td>
 
@@ -253,13 +254,20 @@
                         {% endif %}
                     </td>
 
-                    <!-- Column of exam. -->
+                    <!-- Column of class location. -->
                     <td>
-                        {% if row["exam"] %}
-                            Exam:
-                            <a target="_blank" href={{ row["exam"].link }}>
-                                    {{ row["exam"].letter }}</a>
+                        {% if row["location"] %}
+                            Location:
+                            {% for location in row["location"] %}
+                                {{ location }} !
+                            {% endfor %}
                         {% endif %}
+                    </td>
+
+                    <!-- Column of textbook links. -->
+                    <td>
+                        <a target="_blank" href={{ row["textbook"] }}>
+                            {{ Textbook }}</a>
                     </td>
 
                     <!-- Column of class found, div, area info. -->
@@ -292,8 +300,6 @@
 
                     <!-- Column of hidden days. -->
                     <td>{{ row["hidden_days"] }}</td>
-
-                    <!-- Column of textbook links. -->
                 </tr>{% endfor %}
                 </tbody>
             </table>
