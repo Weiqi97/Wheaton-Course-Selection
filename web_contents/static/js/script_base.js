@@ -1,3 +1,7 @@
+// Function to resize data table every time browser size changes.
+$(function() {
+    $(window).on("resize", resize_result_table);
+} );
 
 // TODO: If possible make the alert box bigger with larger font.
 // This function will alert user if they left select box empty.
