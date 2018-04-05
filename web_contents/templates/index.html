@@ -301,7 +301,7 @@
                     </td>
 
                     <!-- Column of add class to calendar button. -->
-                    <td id="add_button"><button>+</button></td>
+                    <td id="add_button"><button class="add_class glyphicon glyphicon-plus"></button></td>
 
                     <!-- Column of class CRN. -->
                     <td>CRN: {{ row["CRN"] }}</td>
@@ -393,7 +393,7 @@
         var $tds = $row.find("td");             // Finds all children <td> elements
 
         //var course_time = ($tds[2].innerHTML).replace(/\s+/g, " ");
-        var course_time = $tds[2].innerHTML;
+        var course_time = $tds[3].innerHTML;
         course_time = $.trim(course_time);
         course_time = course_time.replace(/\s+/g, "");
         course_time = course_time.split("<br>"); //deletes the <br>
