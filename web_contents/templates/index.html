@@ -77,6 +77,10 @@
                 Seats = Seats.replace(/_/g, "<td>");
                 Seats = Seats.replace(/!/g, "</td>");
 
+                // Refine special info string.
+                Special = Special.replace(/_/g, "<td>");
+                Special = Special.replace(/!/g, "</td>");
+
                 if (row.child.isShown()) {
                     // This row is already open - close it
                     row.child.hide();
@@ -135,9 +139,8 @@
                 '</tr>'+
                 '<tr>'+Info+'</tr>'+
                 '<tr>'+Seats+'</tr>'+
-                '<tr>'+
-                    '<td>'+Special+'</td>'+
-                '</tr>'+'</table>';
+                '<tr>'+Special+'</tr>'+
+                '</table>';
         }
         //----------------CALENDAR----------------------------
         $(function(){
@@ -376,7 +379,9 @@
 
                     <!-- Column of special note. -->
                     <td>
-                        {{ row["special_info"] }}
+                        {% if row["special_info"] %}
+                           _{{ row["special_info"] }}!
+                        {% endif %}
                     </td>
 
                     <!-- Column of hidden days. -->
