@@ -227,9 +227,10 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
 
     class_info_frame["seats"] = [
         SeatInfo(max=str(each_class[1].contents[0]),
-                 taken=str(each_class[1].contents[0]),
-                 avail=str(each_class[1].contents[0]),
-                 wait_list=str(each_class[1].contents[0]))
+                 taken=str(each_class[2].contents[0]),
+                 avail=str(each_class[3].contents[0]),
+                 wait_list=str(each_class[4].contents[0]))
+        if each_class else ""
         for each_class in class_seats_info]
 
     # Get class special information, if any stores in the data frame.

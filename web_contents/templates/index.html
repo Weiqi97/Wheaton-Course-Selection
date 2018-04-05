@@ -22,7 +22,7 @@
     <!-- Data Table -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
-    !-- Calendar -->
+    <!-- Calendar -->
     <script src='../static/node_modules/moment/min/moment.min.js'></script>
     <script src='../static/node_modules/fullcalendar/dist/fullcalendar.js'></script>
     <link rel='stylesheet' href='../static/node_modules/fullcalendar/dist/fullcalendar.css' />
@@ -30,16 +30,16 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed">
     <!-- Function call for data table -->
     <script>
-        // This variable adjust the table size.
-        var height_adjust = 350;
-
-        //TODO: continue to get the value of the semester
+        // ---------------------- Data Table ----------------------------------
+        // TODO: Add animation for data table row child. Also change icon on clicking.
+        // When document is ready display the data table.
         $(document).ready(function() {
-            var data_table = $("#result_table");
+            var data_table = $("#result_table"); // Data table selector.
 
             // Calculate the proper height for the table.
             var window_height = window.innerHeight-height_adjust;
 
+            // Initialize data table.
             var table = data_table.DataTable( {
                 "scrollY":        window_height,
                 "scrollX":        true,
@@ -55,9 +55,13 @@
                 ]
             } );
 
+            // Get proper data for row child.
             data_table.find("tbody").on("click", "#show_detail", function() {
+                // Set variables for row child display method.
                 var tr = $(this).closest("tr");
                 var row = table.row(tr);
+
+                // Get all the data from table row.
                 var CRN = table.row( this ).data()[6];
                 var Exam = table.row( this ).data()[7];
                 var Connection = table.row( this ).data()[8];
@@ -67,7 +71,22 @@
                 var Seats = table.row( this ).data()[12];
                 var Special = table.row( this ).data()[13];
 
+                // Refine info strings and add connection to it.
+                Info = Info.replace(/_/g, "<td>");
+                Info = Info.replace(/!/g, "</td>");
+                if (Connection !== "") {
+                    Info = Info + "<td>" + Connection + "</td>";
+                }
 
+                // Refine seats string.
+                Seats = Seats.replace(/_/g, "<td>");
+                Seats = Seats.replace(/!/g, "</td>");
+
+                // Refine special info string.
+                Special = Special.replace(/_/g, "<td colspan='4'>");
+                Special = Special.replace(/!/g, "</td>");
+
+                // Show row child on click or close.
                 if (row.child.isShown()) {
                     // This row is already open - close it
                     row.child.hide();
@@ -81,55 +100,14 @@
             } );
         } );
 
-        $(function(){
-           $(window).on("resize", resize_result_table);
-        });
+        // Function to resize data table every time browser size changes.
+        $(function() {
+            $(window).on("resize", resize_result_table);
+        } );
+        // --------------------------------------------------------------------
 
-        function resize_result_table() {
-            var window_height = window.innerHeight-height_adjust;
-
-            $('#result_table').DataTable( {
-                "destroy":        true,
-                "scrollY":        window_height,
-                "scrollX":        true,
-                "scrollCollapse": true,
-                "paging":         false,
-                "bInfo" :         false,
-
-                "columnDefs": [
-                    {
-                        "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
-                        "visible": false
-                    }
-                ]
-            } );
-        }
-
-        function format(CRN, Exam, Connection, Location, Textbook, Info, Seats, Special) {
-            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:0px;">'+
-                '<th>'+'</th>'+
-                '<tr>'+
-                    '<td >'+CRN+'</td>'+
-                    '<td >'+Exam+'</td>'+
-                    '<td >'+Connection+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                    '<td>'+Location+'</td>'+
-                    '<td>'+Textbook+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                    '<td>'+Info+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                    '<td>'+Seats+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                    '<td>'+Special+'</td>'+
-                '</tr>'+'</table>';
-        }
         //----------------CALENDAR----------------------------
         $(function(){
-
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
                 weekends: false,
@@ -231,21 +209,17 @@
             </form>
         </div>
     </div>
-
     <br>
 
-    <!-- This part is for result table. -->
+    <!-- This part is for body of the page (Calendar, Table). -->
     <div class="container-fluid">
-
+        <!-- This part displays the calendar. -->
         <div class="col-lg-6 col-md-6 calendar">
             <br>
             <div id="calendar"></div>
         </div>
 
-
-    <!--This is for displaying the course schedule-->
-
-
+        <!--This is for displaying the course schedule-->
         <div class="col-lg-6 col-md-6 result_table">
             <table class="table table-striped nowrap" id="result_table" style="width: 50%;">
                 <!-- Set up table headers. -->
@@ -305,7 +279,7 @@
 
                     <!-- Column of exam. -->
                     <td>
-                        {% if row["exam"] %}
+                        {% if row["exam"].link %}
                             Exam:
                             <a target="_blank" href={{ row["exam"].link }}>
                                 {{ row["exam"].letter }}</a>
@@ -328,43 +302,44 @@
                         {% if row["location"] %}
                             Location:
                             {% for location in row["location"] %}
-                                {{ location }} !
+                                {{ location }}
                             {% endfor %}
                         {% endif %}
                     </td>
 
                     <!-- Column of textbook links. -->
                     <td>
-                        <a target="_blank" href={{ row["textbook"] }}>
-                            {{ Textbook }}</a>
+                        <a target="_blank" href={{ row["textbook"] }}>Textbook</a>
                     </td>
 
                     <!-- Column of class found, div, area info. -->
                     <td>
                         {% if row["foundation"] %}
-                            Foundation: {{ row["foundation"] }}
+                            _Foundation: {{ row["foundation"] }}!
                         {% endif %}
 
                         {% if row["division"] %}
-                            Division: {{ row["division"] }}
+                            _Division: {{ row["division"] }}!
                         {% endif %}
 
                         {% if row["area"] %}
-                            Area: {{ row["area"] }}
+                            _Area: {{ row["area"] }}!
                         {% endif %}
                     </td>
 
                     <!-- Column of seats info. -->
                     <td>
-                        Max enroll: {{ row["seats"].max }}
-                        Seats taken: {{ row["seats"].taken }}
-                        Available seats: {{ row["seats"].avail }}
-                        Wait list: {{ row["seats"].wait_list }}
+                        _{{ row["seats"].max }}!
+                        _{{ row["seats"].taken }}!
+                        _{{ row["seats"].avail }}!
+                        _{{ row["seats"].wait_list }}!
                     </td>
 
                     <!-- Column of special note. -->
                     <td>
-                        {{ row["special_info"] }}
+                        {% if row["special_info"] %}
+                           _{{ row["special_info"] }}!
+                        {% endif %}
                     </td>
 
                     <!-- Column of hidden days. -->
@@ -376,6 +351,7 @@
     </div>
 </body>
 
+<!-- This part sets the footer of the page. -->
 <footer>
     <div class="footer navbar-fixed-bottom">
         Credit to Computer Science Department.
