@@ -97,11 +97,26 @@ sub{
 .result_table{
     border: 1px solid black;
 }
-
-div.slider {
-    display: none;
+/*for the table header in result table*/
+.dataTables_scrollHead{
+    border: 1px solid black;
 }
-
-table.dataTable tbody td.no-padding {
-    padding: 0;
+/*make the placeholder color for semesters and subjects white */
+.bootstrap-select.btn-group .dropdown-toggle .filter-option{
+    color:white;
+}
+/*this is to make the + icon rounded in the course page*/
+#add_button .glyphicon{
+    padding: 5px;
+    border-radius: 50%;
+    background: #316E95;
+    color: white;
+}
+/*outer/bigger body of the calendar*/
+.calendar{
+    border: 1px solid black;
+}
+/*for the calendar title*/
+.selected_semester{
+    text-align: center;
 }

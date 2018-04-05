@@ -25,11 +25,17 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed">
 
+
+
+    <link rel='stylesheet' href='../static/node_modules/fullcalendar/dist/fullcalendar.css' />
+    <script src='../static/node_modules/moment/min/moment.min.js'></script>
+    <script src='../static/node_modules/fullcalendar/dist//fullcalendar.js'></script>
     <!-- Function call for data table -->
     <script>
         // This variable adjust the table size.
         var height_adjust = 350;
 
+        //TODO: continue to get the value of the semester
         $(document).ready(function() {
             var data_table = $("#result_table");
 
@@ -123,8 +129,54 @@
                     '<td>'+Special+'</td>'+
                 '</tr>'+'</table>';
         }
+        //----------------CALENDAR----------------------------
+        $(function(){
+
+            $('#calendar').fullCalendar({
+                // put your options and callbacks here
+                weekends: false,
+                defaultView:'agendaWeek',
+                header:{
+                    center: "title",
+                    right: "",
+                    left:""
+                },
+                titleFormat: '[Calendar]',
+                columnFormat: 'dddd',
+                eventSources: [
+                    // your event source
+                    {
+                        events: [ // put the array in the `events` property
+                            {
+                              title  : 'event1',
+                              start  : '2010-01-01'
+                            },
+                            {
+                              title  : 'Econ',
+                              start  : '2018-04-04T14:30:00',
+                              end    : '2018-04-04T15:30:00',
+                                description: 'this is so cool',
+                                color: 'green',
+                                textColor: 'white'
+
+                            },
+                            {
+                              title  : 'event3',
+                              start  : '2010-01-09T12:30:00',
+
+                            }
+                          ]
+                        }
+
+    // any other event sources...
+
+                ]
+            });
+
+        });
 
     </script>
+
 </head>
 
 
@@ -187,7 +239,16 @@
 
     <!-- This part is for result table. -->
     <div class="container-fluid">
-        <div class="col-lg-6 col-md-6">Calendar goes here!</div>
+
+        <div class="col-lg-6 col-md-6 calendar">
+            <br>
+            <div id="calendar"></div>
+        </div>
+
+
+    <!--This is for displaying the course schedule-->
+
+
         <div class="col-lg-6 col-md-6 result_table">
             <table class="table table-striped nowrap" id="result_table" style="width: 50%;">
                 <!-- Set up table headers. -->
@@ -240,7 +301,7 @@
                     </td>
 
                     <!-- Column of add class to calendar button. -->
-                    <td id="add_button"><button>+</button></td>
+                    <td id="add_button"><button class="add_class glyphicon glyphicon-plus"></button></td>
 
                     <!-- Column of class CRN. -->
                     <td>CRN: {{ row["CRN"] }}</td>
@@ -324,4 +385,50 @@
     </div>
 </footer>
 
+
+<script>
+    /*This function gets data from the row that has been clicked*/
+    $(".add_class" ).click(function() {
+        var $row = $(this).closest("tr");      // Finds the closest row <tr>
+        var $tds = $row.find("td");             // Finds all children <td> elements
+
+        //var course_time = ($tds[2].innerHTML).replace(/\s+/g, " ");
+        var course_time = $tds[3].innerHTML;
+        course_time = $.trim(course_time);
+        course_time = course_time.replace(/\s+/g, "");
+        course_time = course_time.split("<br>"); //deletes the <br>
+        //console.log("sdsd:" + course_time);
+       // console.log(course_time);
+        course_time = Array.from(course_time);
+        //console.log(course_time);
+        var days=[];
+        var time=[];
+        var i = 0;
+        var k =0;
+        var j =0;
+
+        course_time = Array.from(course_time[0]); //get the info from the first sub array. Need it because some classes have two different timings.
+        $(course_time).each(function(){
+            if (course_time[i].charCodeAt(0) > 64 & course_time[i]!=='P' & course_time[i]!=='A' & course_time[i]!=='r'){
+                days[j] = course_time[i];
+                j++;
+                i++;
+            }
+            else
+            {
+                time[k] = course_time[i];
+                i++;
+                k++;
+            }
+        });
+
+        //console.log(course_time);
+        time = (time.toString()).replace(/,/g , ""); //makes the time array into a string and trims all the commas.
+        time = time.replace(/A/g, "AM");
+        time = time.replace(/P/g, "PM");
+        days = days.slice(0,-2); // trims the last two characters because it always contains 2 M's from the AM and PM
+        console.log("days: " + days);
+        console.log("time: " + time);
+    });
+</script>
 </html>
