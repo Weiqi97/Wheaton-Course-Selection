@@ -30,15 +30,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed">
     <!-- Function call for data table -->
     <script>
-
-        // Global constants
-        var height_adjust = 200; // Adjust the table size.
+        // ---------------------- Data Table ----------------------------------
+        // When document is ready display the data table.
         $(document).ready(function() {
-            var data_table = $("#result_table");
+            var data_table = $("#result_table"); // Data table selector.
 
             // Calculate the proper height for the table.
             var window_height = window.innerHeight-height_adjust;
 
+            // Initialize data table.
             var table = data_table.DataTable( {
                 "scrollY":        window_height,
                 "scrollX":        true,
@@ -54,6 +54,7 @@
                 ]
             } );
 
+            // Get proper data for row child.
             data_table.find("tbody").on("click", "#show_detail", function() {
                 // Set variables for row child display method.
                 var tr = $(this).closest("tr");
@@ -84,6 +85,7 @@
                 Special = Special.replace(/_/g, "<td colspan='4'>");
                 Special = Special.replace(/!/g, "</td>");
 
+                // Show row child on click or close.
                 if (row.child.isShown()) {
                     // This row is already open - close it
                     row.child.hide();
@@ -97,53 +99,14 @@
             } );
         } );
 
-
-
-
-
         // Function to resize data table every time browser size changes.
         $(function() {
             $(window).on("resize", resize_result_table);
         } );
+        // --------------------------------------------------------------------
 
-        function resize_result_table() {
-            // Get the new proper window height.
-            var window_height = window.innerHeight-height_adjust;
-
-            // Reinitialize data table to a proper size.
-            $('#result_table').DataTable( {
-                "destroy":        true,
-                "scrollY":        window_height,
-                "scrollX":        true,
-                "scrollCollapse": true,
-                "paging":         false,
-                "bInfo" :         false,
-                "columnDefs": [
-                    {
-                        "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
-                        "visible": false
-                    }
-                ]
-            } );
-        }
-
-
-        function format(CRN, Exam, Connection, Location, Textbook, Info, Seats, Special) {
-            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:0px;">'+
-                '<tr>'+
-                    '<td width="25%">'+CRN+'</td>'+
-                    '<td width="25%">'+Exam+'</td>'+
-                    '<td width="25%">'+Location+'</td>'+
-                    '<td width="25%">'+Textbook+'</td>'+
-                '</tr>'+
-                '<tr>'+Info+'</tr>'+
-                '<tr>'+Seats+'</tr>'+
-                '<tr>'+Special+'</tr>'+
-                '</table>';
-        }
         //----------------CALENDAR----------------------------
         $(function(){
-
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
                 weekends: false,
@@ -250,16 +213,13 @@
 
     <!-- This part is for result table. -->
     <div class="container-fluid">
-
+        <!-- This part displays the calendar. -->
         <div class="col-lg-6 col-md-6 calendar">
             <br>
             <div id="calendar"></div>
         </div>
 
-
-    <!--This is for displaying the course schedule-->
-
-
+        <!--This is for displaying the course schedule-->
         <div class="col-lg-6 col-md-6 result_table">
             <table class="table table-striped nowrap" id="result_table" style="width: 50%;">
                 <!-- Set up table headers. -->
@@ -391,6 +351,7 @@
     </div>
 </body>
 
+<!-- This part sets the footer of the page. -->
 <footer>
     <div class="footer navbar-fixed-bottom">
         Credit to Computer Science Department.
