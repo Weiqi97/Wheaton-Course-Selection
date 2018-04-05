@@ -183,7 +183,6 @@ def get_conx_info(each_class: BeautifulSoup) -> List[ClassConx]:
             for each_class_info in connection_info]
 
 
-# TODO: This function is hell ugly. Serve as a temporary solution.
 def get_hidden_days_info(class_times: List[list]) -> List[str]:
     """
     Get hidden class information time.
