@@ -6,7 +6,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from typing import List
 from web_contents.constants import base_url, ClassConx, ClassExam, \
-    ClassNumber, ClassInstructor, SeatInfo, SKIP_BEGINNING
+    ClassNumber, ClassInstructor, SeatInfo, SKIP_BEGINNING, TIME_FILTER
 from web_contents.data.data_fetcher import fetch_semesters, fetch_subjects, \
     fetch_web_content
 
@@ -141,7 +141,7 @@ def get_location_info(class_basic_info: list) -> List[List[str]]:
                 for index, content in enumerate(each_class[4].contents)]
 
     return \
-        [list(filter(None, _location_info_helper(each_class=each_class)))
+        [list(set(filter(None, _location_info_helper(each_class=each_class))))
          if _location_info_helper(each_class=each_class) is not None else ""
          for each_class in class_basic_info]
 
@@ -178,9 +178,31 @@ def get_conx_info(each_class: BeautifulSoup) -> List[ClassConx]:
     """
     connection_info = each_class[9].find_all("a")
     return [ClassConx(num=str(each_class_info.contents[0]),
-                      link=each_class_info['href'])
+                      link=base_url + each_class_info['href'])
             if connection_info else None
             for each_class_info in connection_info]
+
+
+def get_hidden_days_info(class_times: List[list]) -> List[str]:
+    """
+    Get hidden class information time.
+    :param class_times: List of class times.
+    :return: List of strings with substituted full week day names.
+    """
+    def _hidden_days_info_helper(class_time: list) -> str:
+        """
+        Hidden values helper.
+        :param class_time: list of time of each class.
+        :return: a string that contains exact class day time.
+        """
+        info_str = " ".join(class_time)
+        for original, replace in TIME_FILTER.iteritems():
+            info_str = info_str.replace(original, replace)
+
+        return info_str
+
+    return [_hidden_days_info_helper(class_time=class_time)
+            for class_time in class_times]
 
 
 def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
@@ -194,9 +216,9 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
     class_info_frame = pd.DataFrame(
         data=0,
         index=np.arange(len(class_info_list)),
-        columns=["subject", "number", "exam", "title", "CRN", "time",
+        columns=["subject", "number", "exam", "title", "CRN", "time", "seats",
                  "location", "instructor", "foundation", "division", "area",
-                 "connection", "textbook", "seats", "special_info"]
+                 "connection", "textbook", "special_info", "hidden_days"]
     )
 
     # Get class seats information and store in the data frame..
@@ -262,6 +284,9 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
 
     class_info_frame["textbook"] = \
         [each_class[10].find("a")['href'] for each_class in class_basic_info]
+
+    class_info_frame["hidden_days"] = \
+        get_hidden_days_info(class_info_frame["time"])
 
     return class_info_frame
 

@@ -31,33 +31,103 @@
     <script src='../static/node_modules/moment/min/moment.min.js'></script>
     <script src='../static/node_modules/fullcalendar/dist//fullcalendar.js'></script>
     <!-- Function call for data table -->
-
-
     <script>
+        // This variable adjust the table size.
+        var height_adjust = 350;
+
         //TODO: continue to get the value of the semester
         $(document).ready(function() {
-            var window_height = window.innerHeight-350;
-            console.log(window_height);
-            $('#result_table').DataTable( {
-                "scrollY": window_height,
+            var data_table = $("#result_table");
+
+            // Calculate the proper height for the table.
+            var window_height = window.innerHeight-height_adjust;
+
+            var table = data_table.DataTable( {
+                "scrollY":        window_height,
+                "scrollX":        true,
                 "scrollCollapse": true,
-                "paging":         false
-            });
-        });
+                "paging":         false,
+                "bInfo" :         false,
+
+                "columnDefs": [
+                    {
+                        "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
+                        "visible": false
+                    }
+                ]
+            } );
+
+            data_table.find("tbody").on("click", "#show_detail", function() {
+                var tr = $(this).closest("tr");
+                var row = table.row(tr);
+                var CRN = table.row( this ).data()[6];
+                var Exam = table.row( this ).data()[7];
+                var Connection = table.row( this ).data()[8];
+                var Location = table.row( this ).data()[9];
+                var Textbook = table.row( this ).data()[10];
+                var Info = table.row( this ).data()[11];
+                var Seats = table.row( this ).data()[12];
+                var Special = table.row( this ).data()[13];
+
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass("shown");
+                } else {
+                    // Open this row
+                    row.child(format(CRN, Exam, Connection, Location, Textbook,
+                        Info, Seats, Special)).show();
+                    tr.addClass("shown");
+                }
+            } );
+        } );
 
         $(function(){
-           $(window).on('resize', resize_result_table);
+           $(window).on("resize", resize_result_table);
         });
-        function resize_result_table(){
 
-            var window_height = window.innerHeight-350;
-            console.log("the new height"+window_height);
+        function resize_result_table() {
+            var window_height = window.innerHeight-height_adjust;
+
             $('#result_table').DataTable( {
-                "destroy": true,
-                "scrollY": window_height,
+                "destroy":        true,
+                "scrollY":        window_height,
+                "scrollX":        true,
                 "scrollCollapse": true,
-                "paging":         false
-            });
+                "paging":         false,
+                "bInfo" :         false,
+
+                "columnDefs": [
+                    {
+                        "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
+                        "visible": false
+                    }
+                ]
+            } );
+        }
+
+        function format(CRN, Exam, Connection, Location, Textbook, Info, Seats, Special) {
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:0px;">'+
+                '<th>'+'</th>'+
+                '<tr>'+
+                    '<td >'+CRN+'</td>'+
+                    '<td >'+Exam+'</td>'+
+                    '<td >'+Connection+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                    '<td>'+Location+'</td>'+
+                    '<td>'+Textbook+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                    '<td>'+Info+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                    '<td>'+Seats+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                    '<td>'+Special+'</td>'+
+                '</tr>'+'</table>';
         }
         //----------------CALENDAR----------------------------
         $(function(){
@@ -111,26 +181,27 @@
 
 
 <body>
+    <!-- Header of the page. -->
     <div class="container-fluid header">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 college_header">
                 <b>Wheaton College </b>
                 <sub>- The right tool to help you pick classes</sub>
-              </div>
+            </div>
         </div>
     </div>
+
+    <!-- Selection drop downs. -->
     <div class="container-fluid course-picker">
         <div class="row">
             <form name="Selections" method="post">
                 <select class="selectpicker col-lg-2" id="semester" name="semester" title="Semesters">
-                    <option value="" selected>Semesters</option>
                     {% for name in fetched_semesters.index %}
                         <option value= "{{name}}">{{name}}</option>"
                     {% endfor %}
                 </select>
 
-                <select class="selectpicker col-lg-2" data-live-search="true" id="subjects"
-                        name="subjects" title="Subject(s)" multiple="multiple">
+                <select class="selectpicker col-lg-2" data-live-search="true" id="subjects" name="subjects" title="Subject(s)" multiple="multiple">
                     {% for name, value in fetched_subjects.iteritems() %}
                         <option value= "{{value}}">{{name}}</option>"
                     {% endfor %}
@@ -163,7 +234,10 @@
             </form>
         </div>
     </div>
+
     <br>
+
+    <!-- This part is for result table. -->
     <div class="container-fluid">
 
         <div class="col-lg-6 col-md-6 calendar">
@@ -176,63 +250,141 @@
 
 
         <div class="col-lg-6 col-md-6 result_table">
-            {% if data_generated %}
-                <table class="table table-striped" id="result_table" style="width: 50%;">
-                    <thead>
-                        <tr>
-                            <th class="courseNumber">Course Number</th>
-                            <th>Title</th>
-                            <th>Time</th>
-                            <th>Instructor</th>
-                            <th>CRN</th>
-                            <th id="add_button">To calendar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {%  for _, row in selected_data.iterrows() %}
-                        <tr>
-                            <td>
-                                <a target="_blank" href={{ row["number"].link }}>
-                                    {{ row["number"].num }}
-                                </a>
-                            </td>
+            <table class="table table-striped nowrap" id="result_table" style="width: 50%;">
+                <!-- Set up table headers. -->
+                <thead><tr>
+                    <th></th>
+                    <th>Number</th>
+                    <th>Title</th>
+                    <th>Time</th>
+                    <th>Instructor</th>
+                    <th id="add_button">Add</th>
+                    <th>CRN</th>
+                    <th>Exam</th>
+                    <th>Connection</th>
+                    <th>Location</th>
+                    <th>Textbook</th>
+                    <th>Info</th>
+                    <th>Seats</th>
+                    <th>Special</th>
+                    <th>Hidden Days</th>
+                </tr></thead>
 
-                            <td>{{ row["title"] }}</td>
-                            <td>
-                                {% for time in row["time"] %}
-                                    {{ time }}<br>
-                                {% endfor %}
-                            </td>
-                            <td>
-                                {% for instructor in row["instructor"] %}
-                                    <a target="_blank" href={{ instructor.link }}>
-                                        {{ instructor.name }}
-                                    </a>
-                                    <br>
-                                {% endfor %}
-                            </td>
-                            <td>{{ row["CRN"] }}</td>
-                            <td id="add_button"><button class="add_class glyphicon glyphicon-plus"</button></td>
-                        </tr>
+                <!-- Set up table columns. -->
+                <tbody>
+                {%  for _, row in selected_data.iterrows() %}<tr>
+                    <!-- Column of show details button. -->
+                    <td class="glyphicon glyphicon-chevron-down text-center" id="show_detail"></td>
 
-                    {% endfor %}
+                    <!-- Column of class number. -->
+                    <td>
+                        <a target="_blank" href={{ row["number"].link }}>
+                            {{ row["number"].num }}</a>
+                    </td>
 
-                    </tbody>
-                </table>
-            {% endif %}
-        </div>
-    </div>
-    <br>
+                    <!-- Column of class title. -->
+                    <td>{{ row["title"] }}</td>
 
-    <div class="container-fluid header">
-         <div class="row">
-             <div class="col-lg-12 col-md-12 col-sm-12 college_header">
-                    <b>Wheaton College </b>
-                  <sub>- The right tool to help you pick classes</sub>
-             </div>
+                    <!-- Column of class time. -->
+                    <td>
+                        {% for time in row["time"] %}
+                            {{ time }}<br>
+                        {% endfor %}
+                    </td>
+
+                    <!-- Column of class instructor(s). -->
+                    <td>
+                        {% for instructor in row["instructor"] %}
+                            <a target="_blank" href={{ instructor.link }}>
+                                {{ instructor.name }}</a><br>
+                        {% endfor %}
+                    </td>
+
+                    <!-- Column of add class to calendar button. -->
+                    <td id="add_button"><button>+</button></td>
+
+                    <!-- Column of class CRN. -->
+                    <td>CRN: {{ row["CRN"] }}</td>
+
+                    <!-- Column of exam. -->
+                    <td>
+                        {% if row["exam"] %}
+                            Exam:
+                            <a target="_blank" href={{ row["exam"].link }}>
+                                {{ row["exam"].letter }}</a>
+                        {% endif %}
+                    </td>
+
+                    <!-- Column of connection. -->
+                    <td>
+                        {% if row["connection"] %}
+                            Connection(s):
+                            {% for connection in row["connection"] %}
+                                <a target="_blank" href={{ connection.link }}>
+                                    {{ connection.num }}</a>
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+
+                    <!-- Column of class location. -->
+                    <td>
+                        {% if row["location"] %}
+                            Location:
+                            {% for location in row["location"] %}
+                                {{ location }} !
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+
+                    <!-- Column of textbook links. -->
+                    <td>
+                        <a target="_blank" href={{ row["textbook"] }}>
+                            {{ Textbook }}</a>
+                    </td>
+
+                    <!-- Column of class found, div, area info. -->
+                    <td>
+                        {% if row["foundation"] %}
+                            Foundation: {{ row["foundation"] }}
+                        {% endif %}
+
+                        {% if row["division"] %}
+                            Division: {{ row["division"] }}
+                        {% endif %}
+
+                        {% if row["area"] %}
+                            Area: {{ row["area"] }}
+                        {% endif %}
+                    </td>
+
+                    <!-- Column of seats info. -->
+                    <td>
+                        Max enroll: {{ row["seats"].max }}
+                        Seats taken: {{ row["seats"].taken }}
+                        Available seats: {{ row["seats"].avail }}
+                        Wait list: {{ row["seats"].wait_list }}
+                    </td>
+
+                    <!-- Column of special note. -->
+                    <td>
+                        {{ row["special_info"] }}
+                    </td>
+
+                    <!-- Column of hidden days. -->
+                    <td>{{ row["hidden_days"] }}</td>
+                </tr>{% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </body>
+
+<footer>
+    <div class="footer navbar-fixed-bottom">
+        Credit to Computer Science Department.
+    </div>
+</footer>
+
 
 <script>
     /*This function gets data from the row that has been clicked*/

@@ -18,7 +18,7 @@ def read_data(semester: str, subjects: list, foundation: str, division: str,
     """
     data_frame = pd.read_pickle(f"data/course_data/pickle_data/{semester}.pkl")
 
-    if subjects == ["%"]:
+    if "%" in subjects:
         pass
     else:
         data_frames = [data_frame.loc[data_frame["subject"] == subject]
@@ -43,26 +43,31 @@ def read_data(semester: str, subjects: list, foundation: str, division: str,
     return data_frame
 
 
-def read_subjects() -> list:
+def read_subjects() -> pd.Series:
     """Reads data from saved pickle file."""
     return pd.read_pickle("data/web_data/subjects.pkl")
 
 
-def read_semesters() -> list:
+def read_semesters() -> pd.Series:
     """Reads data from saved pickle file."""
     return pd.read_pickle("data/web_data/semesters.pkl")
 
 
-def read_foundations() -> list:
+def read_foundations() -> pd.Series:
     """Reads data from saved pickle file."""
     return pd.read_pickle("data/web_data/foundations.pkl")
 
 
-def read_divisions() -> list:
+def read_divisions() -> pd.Series:
     """Reads data from saved pickle file."""
     return pd.read_pickle("data/web_data/divisions.pkl")
 
 
-def read_areas() -> list:
+def read_areas() -> pd.Series:
     """Reads data from saved pickle file."""
     return pd.read_pickle("data/web_data/areas.pkl")
+
+
+def read_current_semester() -> str:
+    """Reads data from saved pickle file."""
+    return pd.read_pickle("data/web_data/current_semester.pkl")[0]
