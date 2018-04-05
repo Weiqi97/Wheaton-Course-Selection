@@ -69,11 +69,12 @@
                 var Seats = table.row( this ).data()[12];
                 var Special = table.row( this ).data()[13];
 
-                console.log(Textbook);
-
-                // Refine info strings.
+                // Refine info strings and add connection to it.
                 Info = Info.replace(/_/g, "<td>");
                 Info = Info.replace(/!/g, "</td>");
+                if (Connection !== "") {
+                    Info = Info + "<td>" + Connection + "</td>";
+                }
 
                 // Refine seats string.
                 Seats = Seats.replace(/_/g, "<td>");
@@ -129,15 +130,11 @@
 
         function format(CRN, Exam, Connection, Location, Textbook, Info, Seats, Special) {
             return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:0px;">'+
-                '<th width="25%"></th><th width="25%"></th><th width="25%"></th><th width="25%"></th>'+
                 '<tr>'+
-                    '<td>'+CRN+'</td>'+
-                    '<td>'+Exam+'</td>'+
-                    '<td>'+Connection+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                    '<td colspan="2">'+Location+'</td>'+
-                    '<td colspan="2">'+Textbook+'</td>'+
+                    '<td width="25%">'+CRN+'</td>'+
+                    '<td width="25%">'+Exam+'</td>'+
+                    '<td width="25%">'+Location+'</td>'+
+                    '<td width="25%">'+Textbook+'</td>'+
                 '</tr>'+
                 '<tr>'+Info+'</tr>'+
                 '<tr>'+Seats+'</tr>'+
