@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="../static/node_modules/bootstrap-select/dist/css/bootstrap-select.css">
     <!-- Data Table -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed">
@@ -38,16 +37,12 @@
             var window_height = window.innerHeight-height_adjust;
 
             var table = data_table.DataTable( {
-                "scrollY": window_height,
+                "scrollY":        window_height,
+                "scrollX":        true,
                 "scrollCollapse": true,
                 "paging":         false,
                 "bInfo" :         false,
-                responsive: {
-                    details: {
-                        type: "column",
-                        target: "tr"
-                    }
-                },
+
                 "columnDefs": [
                     {
                         "targets": [6, 7, 8, 9, 10, 11, 12, 13],
@@ -74,7 +69,7 @@
                     tr.removeClass("shown");
                 } else {
                     // Open this row
-                    row.child(format(CRN, Exam, Connection, Info)).show();
+                    row.child(format(CRN, Exam, Location, Connection, Info)).show();
                     tr.addClass("shown");
                 }
             } );
@@ -88,16 +83,13 @@
             var window_height = window.innerHeight-height_adjust;
 
             $('#result_table').DataTable( {
-                "scrollY": window_height,
+                "destroy":        true,
+                "scrollY":        window_height,
+                "scrollX":        true,
                 "scrollCollapse": true,
                 "paging":         false,
                 "bInfo" :         false,
-                responsive: {
-                    details: {
-                        type: "column",
-                        target: "tr"
-                    }
-                },
+
                 "columnDefs": [
                     {
                         "targets": [6, 7, 8, 9, 10, 11, 12, 13],
@@ -107,12 +99,13 @@
             } );
         }
 
-        function format(CRN, Exam, Connection, Info) {
+        function format(CRN, Exam, Location, Connection, Info) {
             return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
                 '<tr>'+
-                    '<td width="33%">'+CRN+'</td>'+
-                    '<td width="33%">'+Exam+'</td>'+
-                    '<td width="33%">'+Connection+'</td>'+
+                    '<td width="25%">'+CRN+'</td>'+
+                    '<td width="25%">'+Exam+'</td>'+
+                    '<td width="25%">'+Location+'</td>'+
+                    '<td width="25%">'+Connection+'</td>'+
                 '</tr>'+
                 '<tr>'+
                     '<td>'+Info+'</td>'+
@@ -241,26 +234,32 @@
 
                     <!-- Column of class location. -->
                     <td>
-                        Location:
-                        {% for location in row["location"] %}
-                            {{ location }} !
-                        {% endfor %}
+                        {% if row["location"] %}
+                            Location:
+                            {% for location in row["location"] %}
+                                {{ location }} !
+                            {% endfor %}
+                        {% endif %}
                     </td>
 
                     <!-- Column of connection. -->
                     <td>
-                        Connection:
-                        {% for connection in row["connection"] %}
-                            <a target="_blank" href={{ connection.link }}>
-                                {{ connection.num }}</a><br>
-                        {% endfor %}
+                        {% if row["connection"] %}
+                            Connection(s):
+                            {% for connection in row["connection"] %}
+                                <a target="_blank" href={{ connection.link }}>
+                                    {{ connection.num }}</a>
+                            {% endfor %}
+                        {% endif %}
                     </td>
 
                     <!-- Column of exam. -->
                     <td>
-                        Exam:
-                        <a target="_blank" href={{ row["exam"].link }}>
-                                {{ row["exam"].letter }}</a>
+                        {% if row["exam"] %}
+                            Exam:
+                            <a target="_blank" href={{ row["exam"].link }}>
+                                    {{ row["exam"].letter }}</a>
+                        {% endif %}
                     </td>
 
                     <!-- Column of class found, div, area info. -->
