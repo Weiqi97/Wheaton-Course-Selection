@@ -70,7 +70,8 @@
                     tr.removeClass("shown");
                 } else {
                     // Open this row
-                    row.child(format(CRN, Exam, Location, Connection, Info)).show();
+                    row.child(format(CRN, Exam, Connection, Location, Textbook,
+                        Info, Seats, Special)).show();
                     tr.addClass("shown");
                 }
             } );
@@ -100,16 +101,26 @@
             } );
         }
 
-        function format(CRN, Exam, Location, Connection, Info) {
-            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+        function format(CRN, Exam, Connection, Location, Textbook, Info, Seats, Special) {
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:0px;">'+
+                '<th>'+'</th>'+
                 '<tr>'+
-                    '<td width="25%">'+CRN+'</td>'+
-                    '<td width="25%">'+Exam+'</td>'+
-                    '<td width="25%">'+Location+'</td>'+
-                    '<td width="25%">'+Connection+'</td>'+
+                    '<td >'+CRN+'</td>'+
+                    '<td >'+Exam+'</td>'+
+                    '<td >'+Connection+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                    '<td>'+Location+'</td>'+
+                    '<td>'+Textbook+'</td>'+
                 '</tr>'+
                 '<tr>'+
                     '<td>'+Info+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                    '<td>'+Seats+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                    '<td>'+Special+'</td>'+
                 '</tr>'+'</table>';
         }
 
