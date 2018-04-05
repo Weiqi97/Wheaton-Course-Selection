@@ -1,6 +1,7 @@
 # coding=utf-8
 """This file contains needed constants."""
 
+import pandas as pd
 from typing import NamedTuple
 
 
@@ -45,5 +46,9 @@ base_url = "https://weblprod1.wheatonma.edu"
 # This value used to skip first three useless rows in the web content.
 SKIP_BEGINNING = 3
 # This value used to extract desired number of semester values.
-#   - four full academic years and two more future semesters.
 SEMESTER_NUMBER = 18
+
+# Time filter constants
+TIME_FILTER = pd.Series(data=["", "", "", "Monday", "Tuesday", "Wednesday",
+                              "Thursday", "Friday"],
+                        index=["AM", "PM", "TBA", "M", "T", "W", "R", "F"])

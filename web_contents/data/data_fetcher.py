@@ -163,6 +163,24 @@ def fetch_areas() -> pd.Series:
     return pd.Series(data=option_values, index=option_names)
 
 
+def fetch_current_semester() -> pd.Series:
+    """
+    Fetch the current selected semester.
+    :return: A pandas series contains desired value.
+    """
+    # Set up the fake browser object and open the target website.
+    browser = mechanicalsoup.StatefulBrowser()
+    web_soup = browser.open(url).soup
+
+    # Find the correct select tag.
+    select_box = web_soup.find("select", {"name": "schedule_beginterm"})
+
+    # Find the content of the selected tag.
+    select_value = str(select_box.find("option", selected=True).contents[0])
+
+    return pd.Series(data=select_value)
+
+
 def save_fetched_data():
     """
     This function fetches all the selection drop down data from the website
@@ -173,3 +191,4 @@ def save_fetched_data():
     fetch_foundations().to_pickle("web_data/foundations.pkl")
     fetch_divisions().to_pickle("web_data/divisions.pkl")
     fetch_areas().to_pickle("web_data/areas.pkl")
+    fetch_current_semester().to_pickle("web_data/current_semester.pkl")

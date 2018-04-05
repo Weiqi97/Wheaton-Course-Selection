@@ -97,11 +97,11 @@ sub{
 .result_table{
     border: 1px solid black;
 }
-/*for the table header in result table*/
-.dataTables_scrollHead{
-    border: 1px solid black;
+
+div.slider {
+    display: none;
 }
-/*make the placeholder color for semesters and subjects white */
-.bootstrap-select.btn-group .dropdown-toggle .filter-option{
-    color:white;
+
+table.dataTable tbody td.no-padding {
+    padding: 0;
 }
