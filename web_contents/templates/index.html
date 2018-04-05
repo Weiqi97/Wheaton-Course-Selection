@@ -30,8 +30,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed">
     <!-- Function call for data table -->
     <script>
-        // This variable adjust the table size.
-        var height_adjust = 350;
+
 
         $(document).ready(function() {
             var data_table = $("#result_table");
@@ -55,8 +54,11 @@
             } );
 
             data_table.find("tbody").on("click", "#show_detail", function() {
+                // Set variables for row child display method.
                 var tr = $(this).closest("tr");
                 var row = table.row(tr);
+
+                // Get all the data from table row.
                 var CRN = table.row( this ).data()[6];
                 var Exam = table.row( this ).data()[7];
                 var Connection = table.row( this ).data()[8];
@@ -65,6 +67,8 @@
                 var Info = table.row( this ).data()[11];
                 var Seats = table.row( this ).data()[12];
                 var Special = table.row( this ).data()[13];
+
+                Info = replaceAll(Info, "?", "<td>");
 
 
                 if (row.child.isShown()) {
@@ -80,47 +84,27 @@
             } );
         } );
 
-        $(function(){
-           $(window).on("resize", resize_result_table);
-        });
 
-        function resize_result_table() {
-            var window_height = window.innerHeight-height_adjust;
 
-            $('#result_table').DataTable( {
-                "destroy":        true,
-                "scrollY":        window_height,
-                "scrollX":        true,
-                "scrollCollapse": true,
-                "paging":         false,
-                "bInfo" :         false,
 
-                "columnDefs": [
-                    {
-                        "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
-                        "visible": false
-                    }
-                ]
-            } );
-        }
 
         function format(CRN, Exam, Connection, Location, Textbook, Info, Seats, Special) {
             return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:0px;">'+
-                '<th>'+'</th>'+
+                '<th width="25%"></th><th width="25%"></th><th width="25%"></th><th width="25%"></th>'+
                 '<tr>'+
-                    '<td >'+CRN+'</td>'+
-                    '<td >'+Exam+'</td>'+
-                    '<td >'+Connection+'</td>'+
+                    '<td>'+CRN+'</td>'+
+                    '<td>'+Exam+'</td>'+
+                    '<td>'+Connection+'</td>'+
                 '</tr>'+
                 '<tr>'+
-                    '<td>'+Location+'</td>'+
-                    '<td>'+Textbook+'</td>'+
+                    '<td colspan="2">'+Location+'</td>'+
+                    '<td colspan="2">'+Textbook+'</td>'+
                 '</tr>'+
                 '<tr>'+
                     '<td>'+Info+'</td>'+
                 '</tr>'+
                 '<tr>'+
-                    '<td>'+Seats+'</td>'+
+                    '<td colspan="4">'+Seats+'</td>'+
                 '</tr>'+
                 '<tr>'+
                     '<td>'+Special+'</td>'+
@@ -327,7 +311,7 @@
                         {% if row["location"] %}
                             Location:
                             {% for location in row["location"] %}
-                                {{ location }} !
+                                {{ location }}
                             {% endfor %}
                         {% endif %}
                     </td>
@@ -341,29 +325,29 @@
                     <!-- Column of class found, div, area info. -->
                     <td>
                         {% if row["foundation"] %}
-                            Foundation: {{ row["foundation"] }}
+                            ?Foundation: {{ row["foundation"] }}!
                         {% endif %}
 
                         {% if row["division"] %}
-                            Division: {{ row["division"] }}
+                            ?Division: {{ row["division"] }}!
                         {% endif %}
 
                         {% if row["area"] %}
-                            Area: {{ row["area"] }}
+                            ?Area: {{ row["area"] }}!
                         {% endif %}
                     </td>
 
                     <!-- Column of seats info. -->
                     <td>
-                        Max enroll: {{ row["seats"].max }}
-                        Seats taken: {{ row["seats"].taken }}
-                        Available seats: {{ row["seats"].avail }}
-                        Wait list: {{ row["seats"].wait_list }}
+                        ?Max enroll: {{ row["seats"].max }}!
+                        ?Seats taken: {{ row["seats"].taken }}!
+                        ?Available seats: {{ row["seats"].avail }}!
+                        ?Wait list: {{ row["seats"].wait_list }}!
                     </td>
 
                     <!-- Column of special note. -->
                     <td>
-                        {{ row["special_info"] }}
+                        ?{{ row["special_info"] }}!
                     </td>
 
                     <!-- Column of hidden days. -->
