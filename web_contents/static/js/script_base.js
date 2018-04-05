@@ -37,21 +37,21 @@ function checkField() {
 
     // Check if subject was empty, if so alert with proper message.
     if (subjects === "") {
-        swal({
+        swal( {
             type: "warning",
             title: "Please select subject(s)!",
             confirmButtonText: "Got it!"
-        });
+        } );
         return false;
     }
 
     // Check if subject was empty, if so alert with proper message.
     else if (semester === "") {
-        swal({
+        swal( {
             type: "warning",
             title: "Please select a semester!",
             confirmButtonText: "Got it!"
-        });
+        } );
         return false;
     }
     else{
@@ -59,4 +59,7 @@ function checkField() {
     }
 }
 
-
+// A helper function for replace all.
+function replaceAll(str, find, replace) {
+    return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+}
