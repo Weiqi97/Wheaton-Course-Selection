@@ -9,7 +9,7 @@ function resize_result_table() {
     // Reinitialize data table to a proper size.
     $('#result_table').DataTable( {
         "destroy":        true,
-        "scrollY":        window_height,
+        "scrollY":        800,
         "scrollX":        true,
         "scrollCollapse": true,
         "paging":         false,

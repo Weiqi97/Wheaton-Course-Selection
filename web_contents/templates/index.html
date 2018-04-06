@@ -35,13 +35,13 @@
         // When document is ready display the data table.
         $(document).ready(function() {
             var data_table = $("#result_table"); // Data table selector.
-
+            var height_adjust = 200;
             // Calculate the proper height for the table.
             var window_height = window.innerHeight-height_adjust;
 
             // Initialize data table.
             var table = data_table.DataTable( {
-                "scrollY":        window_height,
+                "scrollY":        643,
                 "scrollX":        true,
                 "scrollCollapse": true,
                 "paging":         false,
@@ -101,9 +101,6 @@
         } );
 
         // Function to resize data table every time browser size changes.
-        $(function() {
-            $(window).on("resize", resize_result_table);
-        } );
         // --------------------------------------------------------------------
 
         //----------------CALENDAR----------------------------
@@ -158,12 +155,14 @@
 <body>
     <!-- Header of the page. -->
     <div class="container-fluid header">
+        <br>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 college_header">
                 <b>Wheaton College </b>
                 <sub>- The right tool to help you pick classes</sub>
             </div>
         </div>
+        <br>
     </div>
 
     <!-- Selection drop downs. -->
@@ -204,15 +203,15 @@
                 </select>
 
                 <button type="submit" id="submit" onclick="return checkField()">
-                    Search &nbsp
-                </button><i class="glyphicon glyphicon-search"></i>
+                    Search <i class="glyphicon glyphicon-search"></i>
+                </button>
             </form>
         </div>
     </div>
     <br>
 
     <!-- This part is for body of the page (Calendar, Table). -->
-    <div class="container-fluid">
+    <div class="container-fluid calendar_outerbox">
         <!-- This part displays the calendar. -->
         <div class="col-lg-6 col-md-6 calendar">
             <br>
@@ -352,11 +351,26 @@
 </body>
 
 <!-- This part sets the footer of the page. -->
+<br>
 <footer>
-    <div class="footer navbar-fixed-bottom">
-        Credit to Computer Science Department.
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <br>
+                  <div class="col-lg-12 col-md-12">
+                      <center>
+                          <div class="footer_header">Wheaton college </div>
+                          <div class ="artist"><img src="../static/images/github.png" class="headshot"> Please visit our Github page</div>
+                          <div class ="artist"><img src="../static/images/gmail-icon.png" class="headshot"> feng_weiqi@wheatoncollege.edu & norbu_phuntsho@wheatoncollege.edu </div>
+                          <div class ="artist">copy right &copy 2018  </div>
+                      </center>
+                  </div>
+            </div>
+        </div>
     </div>
+    <br>
 </footer>
+
 
 
 <script>
