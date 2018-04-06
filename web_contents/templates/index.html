@@ -22,10 +22,7 @@
     <!-- Data Table -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
-    <!-- Calendar -->
-    <script src='../static/node_modules/moment/min/moment.min.js'></script>
-    <script src='../static/node_modules/fullcalendar/dist/fullcalendar.js'></script>
-    <link rel='stylesheet' href='../static/node_modules/fullcalendar/dist/fullcalendar.css' />
+
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed">
     <!-- Function call for data table -->
@@ -107,48 +104,6 @@
         // --------------------------------------------------------------------
 
         //----------------CALENDAR----------------------------
-        $(function(){
-            $('#calendar').fullCalendar({
-                // put your options and callbacks here
-                weekends: false,
-                defaultView:'agendaWeek',
-                header:{
-                    center: "title",
-                    right: "",
-                    left:""
-                },
-                titleFormat: '[Calendar]',
-                columnFormat: 'dddd',
-                eventSources: [
-                    // your event source
-                    {
-                        events: [ // put the array in the `events` property
-                            {
-                              title  : 'event1',
-                              start  : '2010-01-01'
-                            },
-                            {
-                              title  : 'Econ',
-                              start  : '2018-04-04T14:30:00',
-                              end    : '2018-04-04T15:30:00',
-                                description: 'this is so cool',
-                                color: 'green',
-                                textColor: 'white'
-
-                            },
-                            {
-                              title  : 'event3',
-                              start  : '2010-01-09T12:30:00'
-                            }
-                          ]
-                        }
-
-    // any other event sources...
-
-                ]
-            });
-
-        });
 
     </script>
 
@@ -212,11 +167,146 @@
     <br>
 
     <!-- This part is for body of the page (Calendar, Table). -->
-    <div class="container-fluid">
+    <div class="container-fluid ">
         <!-- This part displays the calendar. -->
-        <div class="col-lg-6 col-md-6 calendar">
+
             <br>
-            <div id="calendar"></div>
+            <div class="col-lg-6 col-md-6">
+                <table class="calendar">
+                    <thead>
+                        <tr>
+                            <th>Time/Day</th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>7 am</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>8 am</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>9 am</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>10 am</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>11 am</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>12 am</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1 pm</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>2 pm</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>3 pm</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>4 pm</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>5 pm</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>6 pm</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>7 pm</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>8 pm</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>9 pm</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+
+                </table>
         </div>
 
         <!--This is for displaying the course schedule-->
@@ -400,8 +490,12 @@
         time = time.replace(/A/g, "AM");
         time = time.replace(/P/g, "PM");
         days = days.slice(0,-2); // trims the last two characters because it always contains 2 M's from the AM and PM
-        console.log("days: " + days);
-        console.log("time: " + time);
+        //console.log("days: " + days);
+        //console.log("time: " + time);
+        var arr = time.split('-'); // split the time by start and end;
+        console.log(arr[0]);
+
+
     });
 </script>
 </html>

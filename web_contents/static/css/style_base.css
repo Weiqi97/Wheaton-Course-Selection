@@ -115,6 +115,7 @@ sub{
 /*outer/bigger body of the calendar*/
 .calendar{
     border: 1px solid black;
+    width:100%;
 }
 /*for the calendar title*/
 .selected_semester{
