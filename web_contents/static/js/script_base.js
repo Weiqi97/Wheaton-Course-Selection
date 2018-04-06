@@ -1,28 +1,3 @@
-// Global constants
-var height_adjust = 200; // Adjust the table size.
-
-// When browser size changed, find proper size of new data table.
-function resize_result_table() {
-    // Get the new proper window height.
-    var window_height = window.innerHeight-height_adjust;
-
-    // Reinitialize data table to a proper size.
-    $('#result_table').DataTable( {
-        "destroy":        true,
-        "scrollY":        window_height,
-        "scrollX":        true,
-        "scrollCollapse": true,
-        "paging":         false,
-        "bInfo" :         false,
-        "columnDefs": [
-            {
-                "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
-                "visible": false
-            }
-        ]
-    } );
-}
-
 // Format result to display as a table in row child.
 function format(CRN, Exam, Connection, Location, Textbook, Info, Seats, Special) {
     return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
