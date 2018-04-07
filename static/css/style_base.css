@@ -120,3 +120,11 @@ sub{
 .selected_semester{
     text-align: center;
 }
+
+div.slider {
+    display: none;
+}
+
+table.dataTable tbody td.no-padding {
+    padding: 0;
+}
