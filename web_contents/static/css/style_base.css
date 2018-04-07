@@ -1,9 +1,13 @@
 body{
-    background:blue;
+    background-image: url("../images/wheaton-campus.jpg");
+    background-position: center;
+    background-size: cover;
+
 }
 .header{
     background-color: #0072bc;
     padding: 5px;
+    opacity:0.8;
 }
 .college_header{
     font-family: 'Questrial', sans-serif, serif;
@@ -15,7 +19,8 @@ body{
     text-align: center;
 }
 .course-picker{
-    background-color: #0072bc;
+    background-color: rgba(0,114,188,0.8);
+
 }
 /*this is for the slogan*/
 sub{
@@ -86,6 +91,8 @@ sub{
 }
 .result_table{
     border: 1px solid black;
+    background:white;
+
 }
 /*for the table header in result table*/
 .dataTables_scrollHead{
@@ -118,6 +125,7 @@ sub{
 footer{
     margin-top:20px;
     background:black;
+    opacity:0.8;
 }
 #footer{
     padding-top:5px;
@@ -142,3 +150,25 @@ footer{
 .artist{
     color: white;
 }
+.calendar{
+    background-color: rgba(255, 255, 255,0.9);
+    color:black;
+    border-color: black;
+}
+ul.inner li {
+    opacity: 0;
+    animation-name: menu1;
+    animation-duration: 400ms;
+    animation-fill-mode:forwards;
+}
+
+@keyframes menu1 {
+    from{opacity: 0;}
+    to{opacity:1;}
+}
+
+
+select option[selected]{
+    background-color: #ee6e73;
+}
+
