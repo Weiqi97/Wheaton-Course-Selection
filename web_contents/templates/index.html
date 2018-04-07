@@ -30,23 +30,19 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed">
     <!-- Function call for data table -->
     <script>
-        // ---------------------- Data Table ----------------------------------
+        // ---------------------------- Data Table ----------------------------
         // TODO: Add animation for data table row child. Also change icon on clicking.
         // When document is ready display the data table.
         $(document).ready(function() {
             var data_table = $("#result_table"); // Data table selector.
 
-            // Calculate the proper height for the table.
-            var window_height = window.innerHeight-height_adjust;
-
             // Initialize data table.
             var table = data_table.DataTable( {
-                "scrollY":        window_height,
+                "scrollY":        643,
                 "scrollX":        true,
                 "scrollCollapse": true,
                 "paging":         false,
                 "bInfo" :         false,
-
                 "columnDefs": [
                     {
                         "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
@@ -99,12 +95,6 @@
                 }
             } );
         } );
-
-        // Function to resize data table every time browser size changes.
-        $(function() {
-            $(window).on("resize", resize_result_table);
-        } );
-        // --------------------------------------------------------------------
 
         //----------------CALENDAR----------------------------
         $(function(){
@@ -215,7 +205,6 @@
     <div class="container-fluid">
         <!-- This part displays the calendar. -->
         <div class="col-lg-6 col-md-6 calendar">
-            <br>
             <div id="calendar"></div>
         </div>
 
@@ -245,7 +234,9 @@
                 <tbody>
                 {%  for _, row in selected_data.iterrows() %}<tr>
                     <!-- Column of show details button. -->
-                    <td class="glyphicon glyphicon-chevron-down text-center" id="show_detail"></td>
+                    <td class="" id="show_detail">
+                        <span><span class="glyphicon glyphicon-chevron-down text-center"></span></span>
+                    </td>
 
                     <!-- Column of class number. -->
                     <td>
@@ -350,14 +341,6 @@
         </div>
     </div>
 </body>
-
-<!-- This part sets the footer of the page. -->
-<footer>
-    <div class="footer navbar-fixed-bottom">
-        Credit to Computer Science Department.
-    </div>
-</footer>
-
 
 <script>
     /*This function gets data from the row that has been clicked*/
