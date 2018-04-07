@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Selection</title>
+    <!-- Project javascript -->
+    <script src="../static/js/script_base.js"></script>
+    <!-- Project CSS -->
+    <link rel="stylesheet" href="../static/css/style_base.css">
+    <!-- Jquery JS -->
+    <script src="../static/node_modules/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../static/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+    <!-- CSS and JS for sweet alert package. -->
+    <script src="../static/node_modules/sweetalert2/dist/sweetalert2.js"></script>
+    <link rel="stylesheet" href="../static/node_modules/sweetalert2/dist/sweetalert2.css">
+    <!-- Bootstrap Select -->
+    <script src="../static/node_modules/bootstrap-select/dist/js/bootstrap-select.js"></script>
+    <link rel="stylesheet" href="../static/node_modules/bootstrap-select/dist/css/bootstrap-select.css">
+    <!-- Data Table -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+    <!-- Calendar -->
+    <script src='../static/node_modules/moment/min/moment.min.js'></script>
+    <script src='../static/node_modules/fullcalendar/dist/fullcalendar.js'></script>
+    <link rel='stylesheet' href='../static/node_modules/fullcalendar/dist/fullcalendar.css' />
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed">
+    <!-- Function call for data table -->
+    <script>
+        // ---------------------------- Data Table ----------------------------
+        // TODO: Add animation for data table row child. Also change icon on clicking.
+        // When document is ready display the data table.
+        $(document).ready(function() {
+            var data_table = $("#result_table"); // Data table selector.
+
+            // Initialize data table.
+            var table = data_table.DataTable( {
+                "scrollY":        643,
+                "scrollX":        true,
+                "scrollCollapse": true,
+                "paging":         false,
+                "bInfo" :         false,
+                "columnDefs": [
+                    {
+                        "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
+                        "visible": false
+                    }
+                ]
+            } );
+
+            // Get proper data for row child.
+            data_table.find("tbody").on("click", "#show_detail", function() {
+                // Set variables for row child display method.
+                var tr = $(this).closest("tr");
+                var row = table.row(tr);
+
+                // Get all the data from table row.
+                var CRN = table.row( this ).data()[6];
+                var Exam = table.row( this ).data()[7];
+                var Connection = table.row( this ).data()[8];
+                var Location = table.row( this ).data()[9];
+                var Textbook = table.row( this ).data()[10];
+                var Info = table.row( this ).data()[11];
+                var Seats = table.row( this ).data()[12];
+                var Special = table.row( this ).data()[13];
+
+                // TODO: This looks ugly.. Seeking for fixing method afterwards.
+                // Refine info strings and add connection to it.
+                Info = Info.replace(/_/g, "<td>");
+                Info = Info.replace(/!/g, "</td>");
+                if (Connection !== "") {
+                    Info = Info + "<td>" + Connection + "</td>";
+                }
+
+                // Refine seats string.
+                Seats = Seats.replace(/_/g, "<td>");
+                Seats = Seats.replace(/!/g, "</td>");
+
+                // Refine special info string.
+                Special = Special.replace(/_/g, "<td colspan='4'>");
+                Special = Special.replace(/!/g, "</td>");
+
+                // This row is already open - close it
+                if (row.child.isShown()) {
+                    $("div.slider", row.child()).slideUp( function() {
+                        row.child.hide();
+                        tr.removeClass("shown");
+                    } );
+                }
+                // Open this row
+                else {
+                    row.child(format(CRN, Exam, Connection, Location, Textbook,
+                        Info, Seats, Special), "no-padding").show();
+                    tr.addClass("shown");
+                    $('div.slider', row.child()).slideDown();
+                }
+            } );
+        } );
+
+        //----------------CALENDAR----------------------------
+        $(function(){
+            $('#calendar').fullCalendar({
+                // put your options and callbacks here
+                weekends: false,
+                defaultView:'agendaWeek',
+                header:{
+                    center: "title",
+                    right: "",
+                    left:""
+                },
+                titleFormat: '[Calendar]',
+                columnFormat: 'dddd',
+                eventSources: [
+                    // your event source
+                    {
+                        events: [ // put the array in the `events` property
+                            {
+                              title  : 'event1',
+                              start  : '2010-01-01'
+                            },
+                            {
+                              title  : 'Econ',
+                              start  : '2018-04-04T14:30:00',
+                              end    : '2018-04-04T15:30:00',
+                                description: 'this is so cool',
+                                color: 'green',
+                                textColor: 'white'
+
+                            },
+                            {
+                              title  : 'event3',
+                              start  : '2010-01-09T12:30:00'
+                            }
+                          ]
+                        }
+
+    // any other event sources...
+
+                ]
+            });
+
+        });
+
+    </script>
+
+</head>
+
+
+<body>
+    <!-- Header of the page. -->
+    <div class="container-fluid header">
+        <br>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 college_header">
+                <b>Wheaton College </b>
+                <sub>- The right tool to help you pick classes</sub>
+            </div>
+        </div>
+        <br>
+    </div>
+
+    <!-- Selection drop downs. -->
+    <div class="container-fluid course-picker home">
+        <div class="row">
+            <form name="Selections" method="post">
+                <select class="selectpicker col-lg-2" id="semester" name="semester" title="Semesters">
+                    {% for name in fetched_semesters.index %}
+                        <option value= "{{name}}">{{name}}</option>"
+                    {% endfor %}
+                </select>
+
+                <select class="selectpicker col-lg-2" data-live-search="true" id="subjects" name="subjects" title="Subject(s)" multiple="multiple">
+                    {% for name, value in fetched_subjects.iteritems() %}
+                        <option value= "{{value}}">{{name}}</option>"
+                    {% endfor %}
+                </select>
+
+                <label for="foundation"></label>
+                <select class="selectpicker col-lg-2" id="foundation" name="foundation">
+                    {% for name, value in fetched_foundations.iteritems() %}
+                        <option value= "{{value}}">{{name}}</option>"
+                    {% endfor %}
+                </select>
+
+                <label for="division"></label>
+                <select class="selectpicker col-lg-2" id="division" name="division">
+                    {% for name, value in fetched_divisions.iteritems() %}
+                        <option value= "{{value}}">{{name}}</option>"
+                    {% endfor %}
+                </select>
+
+                <label for="area"></label>
+                <select class="selectpicker col-lg-2" id="area" name="area">
+                    {% for name, value in fetched_areas.iteritems() %}
+                        <option value= "{{value}}">{{name}}</option>"
+                    {% endfor %}
+                </select>
+
+                <button type="submit" id="submit" onclick="return checkField()">
+                    Search <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+    <br>
+
+    <!-- This part is for body of the page (Calendar, Table). -->
+    <div class="container-fluid calendar_outerbox">
+        <!-- This part displays the calendar. -->
+        <div class="col-lg-6 col-md-6 calendar">
+            <div id="calendar"></div>
+        </div>
+
+        <!--This is for displaying the course schedule-->
+        <div class="col-lg-6 col-md-6 result_table">
+            <table class="table table-striped nowrap" id="result_table" style="width: 50%;">
+                <!-- Set up table headers. -->
+                <thead><tr>
+                    <th></th>
+                    <th>Number</th>
+                    <th>Title</th>
+                    <th>Time</th>
+                    <th>Instructor</th>
+                    <th id="add_button">Add</th>
+                    <th>CRN</th>
+                    <th>Exam</th>
+                    <th>Connection</th>
+                    <th>Location</th>
+                    <th>Textbook</th>
+                    <th>Info</th>
+                    <th>Seats</th>
+                    <th>Special</th>
+                    <th>Hidden Days</th>
+                </tr></thead>
+
+                <!-- Set up table columns. -->
+                <tbody>
+                {%  for _, row in selected_data.iterrows() %}<tr>
+                    <!-- Column of show details button. -->
+                    <td class="details-control" id="show_detail"></td>
+
+                    <!-- Column of class number. -->
+                    <td>
+                        <a target="_blank" href={{ row["number"].link }}>
+                            {{ row["number"].num }}</a>
+                    </td>
+
+                    <!-- Column of class title. -->
+                    <td>{{ row["title"] }}</td>
+
+                    <!-- Column of class time. -->
+                    <td>
+                        {% for time in row["time"] %}
+                            {{ time }}<br>
+                        {% endfor %}
+                    </td>
+
+                    <!-- Column of class instructor(s). -->
+                    <td>
+                        {% for instructor in row["instructor"] %}
+                            <a target="_blank" href={{ instructor.link }}>
+                                {{ instructor.name }}</a><br>
+                        {% endfor %}
+                    </td>
+
+                    <!-- Column of add class to calendar button. -->
+                    <td id="add_button"><button class="add_class glyphicon glyphicon-plus"></button></td>
+
+                    <!-- Column of class CRN. -->
+                    <td>CRN: {{ row["CRN"] }}</td>
+
+                    <!-- Column of exam. -->
+                    <td>
+                        {% if row["exam"].link %}
+                            Exam:
+                            <a target="_blank" href={{ row["exam"].link }}>
+                                {{ row["exam"].letter }}</a>
+                        {% endif %}
+                    </td>
+
+                    <!-- Column of connection. -->
+                    <td>
+                        {% if row["connection"] %}
+                            Connection(s):
+                            {% for connection in row["connection"] %}
+                                <a target="_blank" href={{ connection.link }}>
+                                    {{ connection.num }}</a>
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+
+                    <!-- Column of class location. -->
+                    <td>
+                        {% if row["location"] %}
+                            Location:
+                            {% for location in row["location"] %}
+                                {{ location }}
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+
+                    <!-- Column of textbook links. -->
+                    <td>
+                        <a target="_blank" href={{ row["textbook"] }}>Textbook</a>
+                    </td>
+
+                    <!-- Column of class found, div, area info. -->
+                    <td>
+                        {% if row["foundation"] %}
+                            _Foundation: {{ row["foundation"] }}!
+                        {% endif %}
+
+                        {% if row["division"] %}
+                            _Division: {{ row["division"] }}!
+                        {% endif %}
+
+                        {% if row["area"] %}
+                            _Area: {{ row["area"] }}!
+                        {% endif %}
+                    </td>
+
+                    <!-- Column of seats info. -->
+                    <td>
+                        _{{ row["seats"].max }}!
+                        _{{ row["seats"].taken }}!
+                        _{{ row["seats"].avail }}!
+                        _{{ row["seats"].wait_list }}!
+                    </td>
+
+                    <!-- Column of special note. -->
+                    <td>
+                        {% if row["special_info"] %}
+                           _{{ row["special_info"] }}!
+                        {% endif %}
+                    </td>
+
+                    <!-- Column of hidden days. -->
+                    <td>{{ row["hidden_days"] }}</td>
+                </tr>{% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+<!-- This part sets the footer of the page. -->
+<br>
+<footer>
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <br>
+                  <div class="col-lg-12 col-md-12">
+                      <center>
+                          <div class="footer_header">Wheaton college </div>
+                          <div class ="artist"><a href="https://github.com/Weiqi97/WheatonCourseSelection"><img src="../static/images/github.png" class="headshot"> Please visit our Github page</a></div>
+                          <div class ="artist"><img src="../static/images/gmail-icon.png" class="headshot"> feng_weiqi@wheatoncollege.edu & norbu_phuntsho@wheatoncollege.edu </div>
+                          <div class ="artist">copy right &copy 2018  </div>
+                      </center>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</footer>
+
+
+
+<script>
+    /*This function gets data from the row that has been clicked*/
+    $(".add_class" ).click(function() {
+        var $row = $(this).closest("tr");      // Finds the closest row <tr>
+        var $tds = $row.find("td");             // Finds all children <td> elements
+
+        //var course_time = ($tds[2].innerHTML).replace(/\s+/g, " ");
+        var course_time = $tds[3].innerHTML;
+        course_time = $.trim(course_time);
+        course_time = course_time.replace(/\s+/g, "");
+        course_time = course_time.split("<br>"); //deletes the <br>
+        //console.log("sdsd:" + course_time);
+       // console.log(course_time);
+        course_time = Array.from(course_time);
+        //console.log(course_time);
+        var days=[];
+        var time=[];
+        var i = 0;
+        var k =0;
+        var j =0;
+
+        course_time = Array.from(course_time[0]); //get the info from the first sub array. Need it because some classes have two different timings.
+        $(course_time).each(function(){
+            if (course_time[i].charCodeAt(0) > 64 & course_time[i]!=='P' & course_time[i]!=='A' & course_time[i]!=='r'){
+                days[j] = course_time[i];
+                j++;
+                i++;
+            }
+            else
+            {
+                time[k] = course_time[i];
+                i++;
+                k++;
+            }
+        });
+
+        //console.log(course_time);
+        time = (time.toString()).replace(/,/g , ""); //makes the time array into a string and trims all the commas.
+        time = time.replace(/A/g, "AM");
+        time = time.replace(/P/g, "PM");
+        days = days.slice(0,-2); // trims the last two characters because it always contains 2 M's from the AM and PM
+        console.log("days: " + days);
+        console.log("time: " + time);
+    });
+      $('.selectpicker').selectpicker({
+          style: 'btn-info',
+          size: 10
+      });
+</script>
+</html>
