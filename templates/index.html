@@ -163,7 +163,7 @@
     </div>
 
     <!-- Selection drop downs. -->
-    <div class="container-fluid course-picker home">
+    <div class="container-fluid course-picker">
         <div class="row">
             <form name="Selections" method="post">
                 <select class="selectpicker col-lg-2 col-md-2" id="semester" name="semester" title="Semesters">
@@ -355,8 +355,8 @@
                 <br>
                   <div class="col-lg-12 col-md-12" style="text-align: center;">
                       <div class="footer_header">Wheaton college </div>
-                      <div class ="artist"><a href="https://github.com/Weiqi97/WheatonCourseSelection"><img src="../static/images/github.png" class="headshot"> Please visit our Github page</a></div>
-                      <div class ="artist"><img src="../static/images/gmail-icon.png" class="headshot"> feng_weiqi@wheatoncollege.edu & norbu_phuntsho@wheatoncollege.edu </div>
+                      <div class ="artist"><a href="https://github.com/Weiqi97/WheatonCourseSelection"><img src="../static/images/github.png" class="contact-icon"> Please visit our Github page</a></div>
+                      <div class ="artist"><img src="../static/images/gmail-icon.png" class="contact-icon"> feng_weiqi@wheatoncollege.edu & norbu_phuntsho@wheatoncollege.edu </div>
                       <div class ="artist">copy right &copy 2018  </div>
                   </div>
             </div>
@@ -411,6 +411,8 @@
         console.log("days: " + days);
         console.log("time: " + time);
     });
+
+    //color and size of the dropdown for the course selection
       $('.selectpicker').selectpicker({
           style: 'btn-info',
           size: 10
