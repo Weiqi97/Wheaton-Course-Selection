@@ -152,61 +152,63 @@
 <body>
     <!-- Header of the page. -->
     <div class="container-fluid header">
+        <br>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 college_header">
                 <b>Wheaton College </b>
                 <sub>- The right tool to help you pick classes</sub>
             </div>
         </div>
+        <br>
     </div>
 
     <!-- Selection drop downs. -->
-    <div class="container-fluid course-picker">
+    <div class="container-fluid course-picker home">
         <div class="row">
             <form name="Selections" method="post">
-                <select class="selectpicker col-lg-2" id="semester" name="semester" title="Semesters">
+                <select class="selectpicker col-lg-2 col-md-2" id="semester" name="semester" title="Semesters">
                     {% for name in fetched_semesters.index %}
                         <option value= "{{name}}">{{name}}</option>"
                     {% endfor %}
                 </select>
 
-                <select class="selectpicker col-lg-2" data-live-search="true" id="subjects" name="subjects" title="Subject(s)" multiple="multiple">
+                <select class="selectpicker col-lg-2 col-md-2" data-live-search="true" id="subjects" name="subjects" title="Subject(s)" multiple="multiple">
                     {% for name, value in fetched_subjects.iteritems() %}
                         <option value= "{{value}}">{{name}}</option>"
                     {% endfor %}
                 </select>
 
                 <label for="foundation"></label>
-                <select class="selectpicker col-lg-2" id="foundation" name="foundation">
+                <select class="selectpicker col-lg-2 col-md-2" id="foundation" name="foundation">
                     {% for name, value in fetched_foundations.iteritems() %}
                         <option value= "{{value}}">{{name}}</option>"
                     {% endfor %}
                 </select>
 
                 <label for="division"></label>
-                <select class="selectpicker col-lg-2" id="division" name="division">
+                <select class="selectpicker col-lg-2 col-md-2" id="division" name="division">
                     {% for name, value in fetched_divisions.iteritems() %}
                         <option value= "{{value}}">{{name}}</option>"
                     {% endfor %}
                 </select>
 
                 <label for="area"></label>
-                <select class="selectpicker col-lg-2" id="area" name="area">
+                <select class="selectpicker col-lg-2 col-md-2" id="area" name="area">
                     {% for name, value in fetched_areas.iteritems() %}
                         <option value= "{{value}}">{{name}}</option>"
                     {% endfor %}
                 </select>
 
                 <button type="submit" id="submit" onclick="return checkField()">
-                    Search &nbsp
-                </button><i class="glyphicon glyphicon-search"></i>
+                    Search <i class="glyphicon glyphicon-search"></i>
+                </button>
             </form>
         </div>
     </div>
     <br>
 
     <!-- This part is for body of the page (Calendar, Table). -->
-    <div class="container-fluid">
+    <div class="container-fluid calendar_outerbox">
         <!-- This part displays the calendar. -->
         <div class="col-lg-6 col-md-6 calendar">
             <div id="calendar"></div>
@@ -344,6 +346,27 @@
     </div>
 </body>
 
+<!-- This part sets the footer of the page. -->
+<br>
+<footer>
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <br>
+                  <div class="col-lg-12 col-md-12" style="text-align: center;">
+                      <div class="footer_header">Wheaton college </div>
+                      <div class ="artist"><a href="https://github.com/Weiqi97/WheatonCourseSelection"><img src="../static/images/github.png" class="headshot"> Please visit our Github page</a></div>
+                      <div class ="artist"><img src="../static/images/gmail-icon.png" class="headshot"> feng_weiqi@wheatoncollege.edu & norbu_phuntsho@wheatoncollege.edu </div>
+                      <div class ="artist">copy right &copy 2018  </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</footer>
+
+
+
 <script>
     /*This function gets data from the row that has been clicked*/
     $(".add_class" ).click(function() {
@@ -388,5 +411,9 @@
         console.log("days: " + days);
         console.log("time: " + time);
     });
+      $('.selectpicker').selectpicker({
+          style: 'btn-info',
+          size: 10
+      });
 </script>
 </html>
