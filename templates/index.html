@@ -82,16 +82,19 @@
                 Special = Special.replace(/_/g, "<td colspan='4'>");
                 Special = Special.replace(/!/g, "</td>");
 
-                // Show row child on click or close.
+                // This row is already open - close it
                 if (row.child.isShown()) {
-                    // This row is already open - close it
-                    row.child.hide();
-                    tr.removeClass("shown");
-                } else {
-                    // Open this row
+                    $("div.slider", row.child()).slideUp( function() {
+                        row.child.hide();
+                        tr.removeClass("shown");
+                    } );
+                }
+                // Open this row
+                else {
                     row.child(format(CRN, Exam, Connection, Location, Textbook,
-                        Info, Seats, Special)).show();
+                        Info, Seats, Special), "no-padding").show();
                     tr.addClass("shown");
+                    $('div.slider', row.child()).slideDown();
                 }
             } );
         } );
