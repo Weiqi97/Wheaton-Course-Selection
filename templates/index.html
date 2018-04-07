@@ -67,6 +67,7 @@
                 var Seats = table.row( this ).data()[12];
                 var Special = table.row( this ).data()[13];
 
+                // TODO: This looks ugly.. Seeking for fixing method afterwards.
                 // Refine info strings and add connection to it.
                 Info = Info.replace(/_/g, "<td>");
                 Info = Info.replace(/!/g, "</td>");
@@ -237,9 +238,7 @@
                 <tbody>
                 {%  for _, row in selected_data.iterrows() %}<tr>
                     <!-- Column of show details button. -->
-                    <td class="" id="show_detail">
-                        <span><span class="glyphicon glyphicon-chevron-down text-center"></span></span>
-                    </td>
+                    <td class="details-control" id="show_detail"></td>
 
                     <!-- Column of class number. -->
                     <td>

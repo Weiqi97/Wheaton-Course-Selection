@@ -128,3 +128,15 @@ div.slider {
 table.dataTable tbody td.no-padding {
     padding: 0;
 }
+
+td.details-control {
+    background: url("../images/angle-down.svg") no-repeat center center;
+    background-size: 40% auto;
+    cursor: pointer;
+}
+
+tr.shown td.details-control {
+    background: url("../images/angle-up.svg") no-repeat center center;
+    background-size: 40% auto;
+    cursor: pointer;
+}
