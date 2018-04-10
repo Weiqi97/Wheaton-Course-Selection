@@ -1,9 +1,10 @@
 body{
-    background-image: url("../images/wheaton-campus.jpg");
+
+    background-image: url("../images/whea.jpg");
     background-position: center;
     background-size: cover;
-
 }
+
 .header{
     background-color: #0072bc;
     padding: 5px;
@@ -92,7 +93,14 @@ sub{
 .result_table{
     border: 1px solid black;
     background:white;
-
+}
+#result_table tr{
+    transition: all 150ms ease-in;
+}
+#result_table tr:hover{
+    transition: all 150ms ease-in;
+    background: rgba(80,90,70,0.2);
+    );
 }
 /*for the table header in result table*/
 .dataTables_scrollHead{
@@ -112,13 +120,16 @@ sub{
 /*outer/bigger body of the calendar*/
 .calendar{
     border: 1px solid black;
+
 }
+
 /*for the calendar title*/
 .selected_semester{
     text-align: center;
 }
 .col-lg-6{
     height: 750px;
+
 }
 
 /*the whole footer div*/
@@ -192,3 +203,5 @@ tr.shown td.details-control {
     background-size: 40% auto;
     cursor: pointer;
 }
+
+
