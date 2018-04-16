@@ -112,17 +112,16 @@ sub{
 }
 /*this is to make the + icon rounded in the course page*/
 #add_button .glyphicon{
-    padding: 5px;
+    padding: 3px;
     border-radius: 50%;
-    background: #316E95;
+    background: #2AA21D;
     color: white;
+    font-size: 12px;
 }
 /*outer/bigger body of the calendar*/
 .calendar{
     border: 1px solid black;
-
 }
-
 /*for the calendar title*/
 .selected_semester{
     text-align: center;
@@ -203,5 +202,4 @@ tr.shown td.details-control {
     background-size: 40% auto;
     cursor: pointer;
 }
-
 
