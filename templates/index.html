@@ -1,52 +1,85 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Course Selection</title>
-    <!-- Project javascript -->
+
+    <!-- Project javascript and CSS -->
     <script src="../static/js/script_base.js"></script>
-    <!-- Project CSS -->
     <link rel="stylesheet" href="../static/css/style_base.css">
+
     <!-- Jquery JS -->
     <script src="../static/node_modules/jquery/dist/jquery.min.js"></script>
+
     <!-- Bootstrap -->
     <script src="../static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../static/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
-    <!-- CSS and JS for sweet alert package. -->
+
+    <!-- Sweet alert. -->
     <script src="../static/node_modules/sweetalert2/dist/sweetalert2.js"></script>
     <link rel="stylesheet" href="../static/node_modules/sweetalert2/dist/sweetalert2.css">
+
     <!-- Bootstrap Select -->
     <script src="../static/node_modules/bootstrap-select/dist/js/bootstrap-select.js"></script>
     <link rel="stylesheet" href="../static/node_modules/bootstrap-select/dist/css/bootstrap-select.css">
+
     <!-- Data Table -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+
+    <!-- Jquery Schedule -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="../static/node_modules/jquery-schedule/dist/jquery.schedule.min.js"></script>
+    <link rel="stylesheet" href="../static/node_modules/jquery-schedule/dist/jquery.schedule.min.css">
+
+
+
     <!-- Calendar -->
     <script src='../static/node_modules/moment/min/moment.min.js'></script>
     <script src='../static/node_modules/fullcalendar/dist/fullcalendar.js'></script>
     <link rel='stylesheet' href='../static/node_modules/fullcalendar/dist/fullcalendar.css' />
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed">
+
+
+
     <!-- Function call for data table -->
     <script>
-        // ---------------------------- Data Table ----------------------------
-        // TODO: Add animation for data table row child. Also change icon on clicking.
+
+
+
         // When document is ready display the data table.
         $(document).ready(function() {
-            var data_table = $("#result_table"); // Data table selector.
+            // Calendar
 
+            $("#schedule").jqs( {
+                mode: "read"
+            } );
+            $("#schedule td:nth-child(6)").hide();
+            $("#schedule td:nth-child(7)").hide();
+            $(".jqs-grid-head div:nth-child(6)").hide();
+            $(".jqs-grid-head div:nth-child(7)").hide();
+
+            // -------- Data Table --------
             // Initialize data table.
+            var data_table = $("#result_table"); // Data table selector.
             var table = data_table.DataTable( {
                 "scrollY":        643,
                 "scrollX":        true,
                 "scrollCollapse": true,
                 "paging":         false,
                 "bInfo" :         false,
+                "autoWidth":      false,
                 "columnDefs": [
                     {
                         "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
                         "visible": false
+                    },
+                    {
+                        "width": "20%",
+                        "targets": [1, 2, 3, 4]
                     }
                 ]
             } );
@@ -208,10 +241,10 @@
     <br>
 
     <!-- This part is for body of the page (Calendar, Table). -->
-    <div class="container-fluid calendar_outerbox">
+    <div class="container-fluid">
         <!-- This part displays the calendar. -->
-        <div class="col-lg-6 col-md-6 calendar">
-            <div id="calendar"></div>
+        <div class="col-lg-6 col-md-6">
+            <div id="schedule"></div>
         </div>
 
         <!--This is for displaying the course schedule-->
@@ -388,6 +421,17 @@
         var k =0;
         var j =0;
 
+        var schedule = $("#schedule").jqs("import", [
+            {
+                day: 3,
+                periods: [
+                    ["00:00", "08:30"],
+                    ["09:00", "12:00"]
+                ]
+            }
+        ]);
+
+
         course_time = Array.from(course_time[0]); //get the info from the first sub array. Need it because some classes have two different timings.
         $(course_time).each(function(){
             if (course_time[i].charCodeAt(0) > 64 & course_time[i]!=='P' & course_time[i]!=='A' & course_time[i]!=='r'){
@@ -411,9 +455,11 @@
         console.log("days: " + days);
         console.log("time: " + time);
     });
-      $('.selectpicker').selectpicker({
-          style: 'btn-info',
-          size: 10
-      });
+
+
+    $('.selectpicker').selectpicker({
+        style: 'btn-info',
+        size: 10
+    });
 </script>
 </html>

@@ -150,10 +150,11 @@ footer{
 .artist{
     color: white;
 }
-.calendar{
+#schedule{
     background-color: rgba(255, 255, 255,0.9);
     color:black;
     border-color: black;
+    height:100%;
 }
 ul.inner li {
     opacity: 0;
@@ -191,4 +192,7 @@ tr.shown td.details-control {
     background: url("../images/angle-up.svg") no-repeat center center;
     background-size: 40% auto;
     cursor: pointer;
+}
+div .jqs-grid-day{
+    width:25%;
 }
