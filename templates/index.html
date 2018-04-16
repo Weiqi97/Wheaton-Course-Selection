@@ -111,53 +111,7 @@
                 }
             } );
         } );
-
-        //----------------CALENDAR----------------------------
-        $(function(){
-            $('#calendar').fullCalendar({
-                // put your options and callbacks here
-                weekends: false,
-                defaultView:'agendaWeek',
-                header:{
-                    center: "title",
-                    right: "",
-                    left:""
-                },
-                titleFormat: '[Calendar]',
-                columnFormat: 'dddd',
-                eventSources: [
-                    // your event source
-                    {
-                        events: [ // put the array in the `events` property
-                            {
-                              title  : 'event1',
-                              start  : '2010-01-01'
-                            },
-                            {
-                              title  : 'Econ',
-                              start  : '2018-04-04T14:30:00',
-                              end    : '2018-04-04T15:30:00',
-                                description: 'this is so cool',
-                                color: 'green',
-                                textColor: 'white'
-
-                            },
-                            {
-                              title  : 'event3',
-                              start  : '2010-01-09T12:30:00'
-                            }
-                          ]
-                        }
-
-    // any other event sources...
-
-                ]
-            });
-
-        });
-
     </script>
-
 </head>
 
 
@@ -168,7 +122,7 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 college_header">
                 <b>Wheaton College </b>
-                <sub>- The right tool to help you pick classes</sub>
+                <sub> - The right tool to help you pick classes</sub>
             </div>
         </div>
         <br>
@@ -220,7 +174,7 @@
     <br>
 
     <!-- This part is for body of the page (Calendar, Table). -->
-    <div class="container-fluid calendar_outerbox">
+    <div class="container-fluid">
         <!-- This part displays the calendar. -->
         <div class="col-lg-6 col-md-6 calendar">
             <div id="calendar"></div>
