@@ -1,5 +1,8 @@
-/* ----- General Page Setting. ----- */
-/* Adjust headers. */
+body{
+    background: url("../images/whea.jpg") center;
+    background-size: cover;
+}
+
 .header{
     background-color: #0072bc;
     padding: 5px;
@@ -11,23 +14,15 @@
     color:white;
     text-align: center;margin-bottom:5px;
 }
-/* Set background of the entire page. */
-body{
-    background: url("../images/whea.jpg") center;
-    background-size: cover;
+#add_button{
+    text-align: center;
 }
-
-/* Set height of both calendar and result table. */
-.col-lg-6{
-    height: 750px;
+.course-picker{
+    background-color: rgba(0,114,188,0.8);
 }
-/* --------------------------------- */
-
-/* --- Course selection setting. --- */
-/* make the placeholder color for semesters and subjects white */
-.bootstrap-select.btn {
-    color: white;
+.bootstrap-select .btn {
     background: transparent;
+    color: white;
     -webkit-transition: ease-in-out 500ms;
     -moz-transition: ease-in-out 500ms;
     -ms-transition: ease-in-out 500ms;
@@ -35,7 +30,11 @@ body{
     transition: ease-in-out 500ms;
     font-family:sans-serif,serif ;
 }
-.bootstrap-select.dropdown-menu {
+/*make the placeholder color for semesters and subjects white */
+.bootstrap-select.btn-group .dropdown-toggle .filter-option{
+    color:white;
+}
+.bootstrap-select .dropdown-menu {
     margin: 0;
     -webkit-transition: ease-in-out 500ms;
     -moz-transition: ease-in-out 500ms;
@@ -43,20 +42,23 @@ body{
     -o-transition: ease-in-out 500ms;
     transition: ease-in-out 500ms;
 }
-.bootstrap-select.btn-group.dropdown-toggle .filter-option{
-    color:white;
+ul.inner li {
+    opacity: 0;
+    animation-name: menu1;
+    animation-duration: 400ms;
+    animation-fill-mode:forwards;
 }
-/* Set background color for course-picker. */
-.course-picker{
-    background-color: rgba(0,114,188,0.8);
+@keyframes menu1 {
+    from{opacity: 0;}
+    to{opacity:1;}
 }
 
-/* Search button for course selction on the header. */
+/*search button for course selction on the header*/
 #submit{
     width:7%;
     padding-top:2px;
     padding-bottom: 4px;
-    font-family:sans-serif, serif;
+    font-family:sans-serif,serif ;
     text-align: center;
     margin-left:5%;
     color: #ee6551;
@@ -72,6 +74,7 @@ body{
     transition: ease-in-out 300ms;
     margin-bottom:5px;
 }
+
 #submit:hover {
     border: 2px solid #ee6e73;
     -webkit-transition: ease-in-out 300ms;
@@ -80,11 +83,11 @@ body{
     -o-transition: ease-in-out 300ms;
     transition: ease-in-out 300ms;
     color:white;
-    border-radius:0;
+    border-radius:0px;
     padding-top:2px;
     padding-bottom: 4px;
 }
-/* Search icon beside the search/submit bar on the header. */
+/*the search icon beside the search/submit bar on the header*/
 #submit:hover .glyphicon-search{
     transform: rotateY(360deg);
     -webkit-transition: ease-in-out 500ms;
@@ -93,35 +96,36 @@ body{
     -o-transition: ease-in-out 500ms;
     transition: ease-in-out 500ms;
 }
-/* --------------------------------- */
+/*___________________________________________________*/
 
-/* Result table that displays search result. */
+/*sets the height of both the calendar and the result table*/
+.col-lg-6{
+    height: 750px;
+}
+/*___________________________________________________*/
+
+/*the table containing all the courses*/
 .result_table{
     border: 1px solid black;
     background:white;
 }
-
-/* Do we need this?
 #result_table tr{
     transition: all 150ms ease-in;
 }
-*/
-
-/* Change color of the table row when hover over. */
 #result_table tr:hover{
     transition: all 150ms ease-in;
     background: rgba(80,90,70,0.2);
+    );
 }
-
-/* For the table header in result table. */
+/*for the table header in result table*/
 .dataTables_scrollHead{
     border: 1px solid black;
 }
-/* Center the "+" icon in the result table. */
+/*"+" icon in the result table*/
 #add_button{
     text-align: center;
 }
-/* Make the "+" icon rounded in the result table. */
+/*this is to make the "+" icon rounded in the result table*/
 #add_button .glyphicon{
     padding: 3px;
     border-radius: 50%;
@@ -129,74 +133,72 @@ body{
     color: white;
     font-size: 12px;
 }
-/* Add animation for table row display. */
+/*hide the additional information about the class*/
 div.slider {
     display: none;
 }
-
-/* Do we need this?
 table.dataTable tbody td.no-padding {
     padding: 0;
 }
-*/
-
-/* Icon for showing more information about the class. */
+/*icon button for additional information about the class*/
 td.details-control {
     background: url("../images/angle-down.svg") no-repeat center center;
     background-size: 40% auto;
     cursor: pointer;
 }
-/* Icon for collapsing the additional information. */
+/*icon button for additional information about the class*/
 tr.shown td.details-control {
     background: url("../images/angle-up.svg") no-repeat center center;
     background-size: 40% auto;
     cursor: pointer;
     opacity:0.4;
 }
-/* --------------------------------- */
+/*___________________________________________________*/
 
-/* Weekly schedule. */
-#schedule{
+/*outer/bigger body of the calendar*/
+.calendar{
     background-color: rgba(255, 255, 255,0.9);
-    color: black;
-    border-color: black;
-    height: 100%;
+    color:black;
+    border: 1px solid black;
 }
-div .jqs-grid-day{
-    width:25%;
+/*for the calendar title*/
+.selected_semester{
+    text-align: center;
 }
+/*___________________________________________________*/
 
-/* --------------------------------- */
-
-/* footer box. */
+/*the whole footer box*/
 footer{
     margin-top:20px;
     background:black;
     opacity:0.8;
 }
-/* Second inside footer box. */
+/*second inside footer box*/
 #footer{
     padding-top:5px;
-    margin-bottom: 0;
+    margin-bottom: 0px;
 }
+/*footer header: Wheaton College*/
 .footer_header {
     font-family: 'Questrial',sans-serif,serif;
     font-size: 50px;
    color: #0072bc;
 }
-/* Contact icon on the footer. */
+
+/*icon on the footer*/
 .contact-icon{
     width:30px;
     border-radius: 50%;
 }
-/* names of the developer. */
+/*names of the developer*/
 .artist{
     color: white;
 }
-/* --------------------------------- */
-
-/* What does these do? */
-
+.calendar{
+    background-color: rgba(255, 255, 255,0.9);
+    color:black;
+    border-color: black;
+}
 ul.inner li {
     opacity: 0;
     animation-name: menu1;
@@ -214,3 +216,6 @@ select option[selected]{
     background-color: #ee6e73;
 }
 
+
+#schedule{background-color: rgba(255, 255, 255,0.9);color: black;border-color: black;height: 100%;}
+div .jqs-grid-day{width:25%;}
