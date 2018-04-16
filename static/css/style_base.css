@@ -1,10 +1,5 @@
-body{
-
-    background-image: url("../images/whea.jpg");
-    background-position: center;
-    background-size: cover;
-}
-
+/* ----- General Page Setting. ----- */
+/* Adjust headers. */
 .header{
     background-color: #0072bc;
     padding: 5px;
@@ -16,15 +11,30 @@ body{
     color:white;
     text-align: center;margin-bottom:5px;
 }
-#add_button{
-    text-align: center;
+/* Set background of the entire page. */
+body{
+    background: url("../images/whea.jpg") center;
+    background-size: cover;
 }
+
+/* Set height of both calendar and result table. */
+.col-lg-6{
+    height: 750px;
+}
+/* --------------------------------- */
+
+/* --- Course selection setting. --- */
+/* Set background color for course-picker. */
 .course-picker{
     background-color: rgba(0,114,188,0.8);
 }
-.bootstrap-select .btn {
-    background: transparent;
+/* make the placeholder color for semesters and subjects white */
+.bootstrap-select.btn-group.dropdown-toggle .filter-option{
+    color:white;
+}
+.bootstrap-select.btn {
     color: white;
+    background: transparent;
     -webkit-transition: ease-in-out 500ms;
     -moz-transition: ease-in-out 500ms;
     -ms-transition: ease-in-out 500ms;
@@ -32,11 +42,7 @@ body{
     transition: ease-in-out 500ms;
     font-family:sans-serif,serif ;
 }
-/*make the placeholder color for semesters and subjects white */
-.bootstrap-select.btn-group .dropdown-toggle .filter-option{
-    color:white;
-}
-.bootstrap-select .dropdown-menu {
+.bootstrap-select.dropdown-menu {
     margin: 0;
     -webkit-transition: ease-in-out 500ms;
     -moz-transition: ease-in-out 500ms;
@@ -44,23 +50,13 @@ body{
     -o-transition: ease-in-out 500ms;
     transition: ease-in-out 500ms;
 }
-ul.inner li {
-    opacity: 0;
-    animation-name: menu1;
-    animation-duration: 400ms;
-    animation-fill-mode:forwards;
-}
-@keyframes menu1 {
-    from{opacity: 0;}
-    to{opacity:1;}
-}
 
-/*search button for course selction on the header*/
+/* Search button for course selction on the header. */
 #submit{
     width:7%;
     padding-top:2px;
     padding-bottom: 4px;
-    font-family:sans-serif,serif ;
+    font-family:sans-serif, serif;
     text-align: center;
     margin-left:5%;
     color: #ee6551;
@@ -76,7 +72,6 @@ ul.inner li {
     transition: ease-in-out 300ms;
     margin-bottom:5px;
 }
-
 #submit:hover {
     border: 2px solid #ee6e73;
     -webkit-transition: ease-in-out 300ms;
@@ -85,11 +80,11 @@ ul.inner li {
     -o-transition: ease-in-out 300ms;
     transition: ease-in-out 300ms;
     color:white;
-    border-radius:0px;
+    border-radius:0;
     padding-top:2px;
     padding-bottom: 4px;
 }
-/*the search icon beside the search/submit bar on the header*/
+/* Search icon beside the search/submit bar on the header. */
 #submit:hover .glyphicon-search{
     transform: rotateY(360deg);
     -webkit-transition: ease-in-out 500ms;
@@ -98,36 +93,35 @@ ul.inner li {
     -o-transition: ease-in-out 500ms;
     transition: ease-in-out 500ms;
 }
-/*___________________________________________________*/
+/* --------------------------------- */
 
-/*sets the height of both the calendar and the result table*/
-.col-lg-6{
-    height: 750px;
-}
-/*___________________________________________________*/
-
-/*the table containing all the courses*/
+/* Result table that displays search result. */
 .result_table{
     border: 1px solid black;
     background:white;
 }
+
+/* Do we need this?
 #result_table tr{
     transition: all 150ms ease-in;
 }
+*/
+
+/* Change color of the table row when hover over. */
 #result_table tr:hover{
     transition: all 150ms ease-in;
     background: rgba(80,90,70,0.2);
-    );
 }
-/*for the table header in result table*/
+
+/* For the table header in result table. */
 .dataTables_scrollHead{
     border: 1px solid black;
 }
-/*"+" icon in the result table*/
+/* Center the "+" icon in the result table. */
 #add_button{
     text-align: center;
 }
-/*this is to make the "+" icon rounded in the result table*/
+/* Make the "+" icon rounded in the result table. */
 #add_button .glyphicon{
     padding: 3px;
     border-radius: 50%;
@@ -135,27 +129,30 @@ ul.inner li {
     color: white;
     font-size: 12px;
 }
-/*hide the additional information about the class*/
+/* Add animation for table row display. */
 div.slider {
     display: none;
 }
+/* Do we need this?
 table.dataTable tbody td.no-padding {
     padding: 0;
 }
-/*icon button for additional information about the class*/
+*/
+
+/* Icon for showing more information about the class. */
 td.details-control {
     background: url("../images/angle-down.svg") no-repeat center center;
     background-size: 40% auto;
     cursor: pointer;
 }
-/*icon button for additional information about the class*/
+/* Icon for collapsing the additional information. */
 tr.shown td.details-control {
     background: url("../images/angle-up.svg") no-repeat center center;
     background-size: 40% auto;
     cursor: pointer;
     opacity:0.4;
 }
-/*___________________________________________________*/
+/* --------------------------------- */
 
 /*outer/bigger body of the calendar*/
 .calendar{
@@ -178,7 +175,7 @@ footer{
 /*second inside footer box*/
 #footer{
     padding-top:5px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 /*footer header: Wheaton College*/
 .footer_header {
@@ -217,5 +214,4 @@ ul.inner li {
 select option[selected]{
     background-color: #ee6e73;
 }
-
 
