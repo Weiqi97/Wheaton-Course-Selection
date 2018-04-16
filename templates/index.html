@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -37,9 +38,15 @@
 
     <!-- Function call for data table -->
     <script type="text/javascript">
-        // ---------------------------- Data Table ----------------------------
-        // When document is ready display the data table.
         $(document).ready(function() {
+            // Display the schedule and hide weekends.
+            $("#schedule").jqs( { mode: "read" } );
+            $("#schedule td:nth-child(6)").hide();
+            $("#schedule td:nth-child(7)").hide();
+            $(".jqs-grid-head div:nth-child(6)").hide();
+            $(".jqs-grid-head div:nth-child(7)").hide();
+
+            // Display the data table and hide row child.
             var data_table = $("#result_table"); // Data table selector.
 
             // Initialize data table.
@@ -48,14 +55,12 @@
                 "scrollX":        true,
                 "scrollCollapse": true,
                 "paging":         false,
+                "bSort" :         false,
                 "bInfo" :         false,
-                "columnDefs": [
-                    {
-                        "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
-                        "visible": false
-                    }
-                ],
-                "bSort" : false
+                "columnDefs": [ {
+                    "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
+                    "visible": false
+                } ]
             } );
 
             // Get proper data for row child.
@@ -171,8 +176,8 @@
     <!-- This part is for body of the page (Calendar, Table). -->
     <div class="container-fluid">
         <!-- This part displays the calendar. -->
-        <div class="col-lg-6 col-md-6 calendar">
-            <div id="calendar"></div>
+        <div class="col-lg-6 col-md-6">
+            <div id="schedule"></div>
         </div>
 
         <!--This is for displaying the course schedule-->
