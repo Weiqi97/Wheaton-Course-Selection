@@ -1,8 +1,10 @@
 body{
-    background-image: url("../images/wheaton-campus.jpg");
+
+    background-image: url("../images/whea.jpg");
     background-position: center;
     background-size: cover;
 }
+
 .header{
     background-color: #0072bc;
     padding: 5px;
@@ -14,8 +16,9 @@ body{
     color:white;
     text-align: center;margin-bottom:5px;
 }
-/*___________________________________________________*/
-
+#add_button{
+    text-align: center;
+}
 .course-picker{
     background-color: rgba(0,114,188,0.8);
 }
@@ -108,6 +111,14 @@ ul.inner li {
     border: 1px solid black;
     background:white;
 }
+#result_table tr{
+    transition: all 150ms ease-in;
+}
+#result_table tr:hover{
+    transition: all 150ms ease-in;
+    background: rgba(80,90,70,0.2);
+    );
+}
 /*for the table header in result table*/
 .dataTables_scrollHead{
     border: 1px solid black;
@@ -118,10 +129,11 @@ ul.inner li {
 }
 /*this is to make the "+" icon rounded in the result table*/
 #add_button .glyphicon{
-    padding: 5px;
+    padding: 3px;
     border-radius: 50%;
-    background: #316E95;
+    background: #2AA21D;
     color: white;
+    font-size: 12px;
 }
 /*hide the additional information about the class*/
 div.slider {
@@ -184,7 +196,26 @@ footer{
 .artist{
     color: white;
 }
+.calendar{
+    background-color: rgba(255, 255, 255,0.9);
+    color:black;
+    border-color: black;
+}
+ul.inner li {
+    opacity: 0;
+    animation-name: menu1;
+    animation-duration: 400ms;
+    animation-fill-mode:forwards;
+}
+
+@keyframes menu1 {
+    from{opacity: 0;}
+    to{opacity:1;}
+}
 
 
+select option[selected]{
+    background-color: #ee6e73;
+}
 
 

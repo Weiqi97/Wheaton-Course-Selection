@@ -48,7 +48,8 @@
                         "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
                         "visible": false
                     }
-                ]
+                ],
+                "bSort" : false
             } );
 
             // Get proper data for row child.
@@ -216,16 +217,16 @@
 
         <!--This is for displaying the course schedule-->
         <div class="col-lg-6 col-md-6 result_table">
-            <table class="table table-striped nowrap" id="result_table" style="width: 50%;">
+            <table class="table table-striped nowrap" id="result_table" style="width:100%;">
                 <!-- Set up table headers. -->
                 <thead><tr>
                     <th></th>
                     <th>Number</th>
                     <th>Title</th>
+                    <th id="add_button"></th>
                     <th>Time</th>
                     <th>Instructor</th>
-                    <th id="add_button">Add</th>
-                    <th>CRN</th>
+                    <th >CRN</th>
                     <th>Exam</th>
                     <th>Connection</th>
                     <th>Location</th>
@@ -251,6 +252,10 @@
                     <!-- Column of class title. -->
                     <td>{{ row["title"] }}</td>
 
+                    <!-- Column of add class to calendar button. -->
+                    <td id="add_button"><button class="add_class glyphicon glyphicon-plus"></button></td>
+
+
                     <!-- Column of class time. -->
                     <td>
                         {% for time in row["time"] %}
@@ -266,8 +271,6 @@
                         {% endfor %}
                     </td>
 
-                    <!-- Column of add class to calendar button. -->
-                    <td id="add_button"><button class="add_class glyphicon glyphicon-plus"></button></td>
 
                     <!-- Column of class CRN. -->
                     <td>CRN: {{ row["CRN"] }}</td>
