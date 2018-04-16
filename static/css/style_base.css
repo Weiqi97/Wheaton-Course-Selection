@@ -24,14 +24,7 @@ body{
 /* --------------------------------- */
 
 /* --- Course selection setting. --- */
-/* Set background color for course-picker. */
-.course-picker{
-    background-color: rgba(0,114,188,0.8);
-}
 /* make the placeholder color for semesters and subjects white */
-.bootstrap-select.btn-group.dropdown-toggle .filter-option{
-    color:white;
-}
 .bootstrap-select.btn {
     color: white;
     background: transparent;
@@ -49,6 +42,13 @@ body{
     -ms-transition: ease-in-out 500ms;
     -o-transition: ease-in-out 500ms;
     transition: ease-in-out 500ms;
+}
+.bootstrap-select.btn-group.dropdown-toggle .filter-option{
+    color:white;
+}
+/* Set background color for course-picker. */
+.course-picker{
+    background-color: rgba(0,114,188,0.8);
 }
 
 /* Search button for course selction on the header. */
@@ -133,6 +133,7 @@ body{
 div.slider {
     display: none;
 }
+
 /* Do we need this?
 table.dataTable tbody td.no-padding {
     padding: 0;
@@ -154,53 +155,48 @@ tr.shown td.details-control {
 }
 /* --------------------------------- */
 
-/*outer/bigger body of the calendar*/
-.calendar{
+/* Weekly schedule. */
+#schedule{
     background-color: rgba(255, 255, 255,0.9);
-    color:black;
-    border: 1px solid black;
+    color: black;
+    border-color: black;
+    height: 100%;
 }
-/*for the calendar title*/
-.selected_semester{
-    text-align: center;
+div .jqs-grid-day{
+    width:25%;
 }
-/*___________________________________________________*/
 
-/*the whole footer box*/
+/* --------------------------------- */
+
+/* footer box. */
 footer{
     margin-top:20px;
     background:black;
     opacity:0.8;
 }
-/*second inside footer box*/
+/* Second inside footer box. */
 #footer{
     padding-top:5px;
     margin-bottom: 0;
 }
-/*footer header: Wheaton College*/
 .footer_header {
     font-family: 'Questrial',sans-serif,serif;
     font-size: 50px;
    color: #0072bc;
 }
-
-/*icon on the footer*/
+/* Contact icon on the footer. */
 .contact-icon{
     width:30px;
     border-radius: 50%;
 }
-/*names of the developer*/
+/* names of the developer. */
 .artist{
     color: white;
 }
-
+/* --------------------------------- */
 
 /* What does these do? */
-.calendar{
-    background-color: rgba(255, 255, 255,0.9);
-    color:black;
-    border-color: black;
-}
+
 ul.inner li {
     opacity: 0;
     animation-name: menu1;
