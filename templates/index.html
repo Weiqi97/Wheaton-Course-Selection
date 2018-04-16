@@ -40,7 +40,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
             // Display the schedule and hide weekends.
-            $("#schedule").jqs( { mode: "read" } );
+            $("#schedule").jqs( { mode: "read" , hour: 12} );
             $("#schedule td:nth-child(6)").hide();
             $("#schedule td:nth-child(7)").hide();
             $(".jqs-grid-head div:nth-child(6)").hide();
@@ -344,46 +344,58 @@
 <script>
     /*This function gets data from the row that has been clicked*/
     $(".add_class" ).click(function() {
-        var $row = $(this).closest("tr");      // Finds the closest row <tr>
-        var $tds = $row.find("td");             // Finds all children <td> elements
+        var row = $(this).closest("tr");  // Finds the closest row <tr>
+        var tds = row.find("td");         // Finds all children <td> elements
 
-        //var course_time = ($tds[2].innerHTML).replace(/\s+/g, " ");
-        var course_time = $tds[3].innerHTML;
-        course_time = $.trim(course_time);
+        // Refine the target td.
+        var course_title = $.trim(tds[2].innerHTML);
+        var course_time = $.trim(tds[4].innerHTML);
         course_time = course_time.replace(/\s+/g, "");
-        course_time = course_time.split("<br>"); //deletes the <br>
-        //console.log("sdsd:" + course_time);
-       // console.log(course_time);
-        course_time = Array.from(course_time);
-        //console.log(course_time);
-        var days=[];
-        var time=[];
-        var i = 0;
-        var k =0;
-        var j =0;
+        course_time = course_time.split("<br>");  //deletes the <br>
 
-        course_time = Array.from(course_time[0]); //get the info from the first sub array. Need it because some classes have two different timings.
+        course_time = Array.from(course_time);
+
+        var days=[], time=[], i = 0, k = 0, j = 0;
+
+        //TODO: Make this work for two times arrays.
+        //get the info from the first sub array.
+        course_time = Array.from(course_time[0]);
         $(course_time).each(function(){
             if (course_time[i].charCodeAt(0) > 64 & course_time[i]!=='P' & course_time[i]!=='A' & course_time[i]!=='r'){
-                days[j] = course_time[i];
-                j++;
-                i++;
+                days[j++] = course_time[i];
             }
-            else
-            {
-                time[k] = course_time[i];
-                i++;
-                k++;
-            }
+            else { time[k++] = course_time[i]; }
+            i++;
         });
 
-        //console.log(course_time);
-        time = (time.toString()).replace(/,/g , ""); //makes the time array into a string and trims all the commas.
-        time = time.replace(/A/g, "AM");
-        time = time.replace(/P/g, "PM");
-        days = days.slice(0,-2); // trims the last two characters because it always contains 2 M's from the AM and PM
+        //makes the time array into a string and trims all the commas.
+        time = (time.toString()).replace(/,/g , "");
+
+        // Format time for calendar
+        time = time.replace(/A/g, " am");
+        time = time.replace(/P/g, " pm");
+        time = time.split("-");
+        // Truncates the last two M from the AM and PM
+        days = days.slice(0, -2);
         console.log("days: " + days);
         console.log("time: " + time);
+
+
+/*
+        {
+        "day": 2,
+        "periods": [
+            {
+                "start": "10:00",
+                "end": "12:00",
+                "title": "A black period",
+                "backgroundColor": "rgba(0, 0, 0, 0.5)",
+                "borderColor":"#000",
+                "textColor": "#fff"
+            }
+        ]
+    }
+*/
     });
 
 </script>
