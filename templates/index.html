@@ -38,7 +38,9 @@
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed">
 
-    <!-- Function call for data table -->
+
+    <!-- TODO: Move all these to separated javascript file. -->
+    <!-- Function call for data table and calendar. -->
     <script type="text/javascript">
         $(document).ready(function() {
             // Display the data table and hide row child.
@@ -53,8 +55,8 @@
                 "bSort" :         false,
                 "bInfo" :         false,
                 "columnDefs": [ {
-                    "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
-                    "visible": false
+                    "targets":    [6, 7, 8, 9, 10, 11, 12, 13, 14],
+                    "visible":    false
                 } ]
             } );
 
@@ -90,14 +92,14 @@
                 Special = Special.replace(/_/g, "<td colspan='4'>");
                 Special = Special.replace(/!/g, "</td>");
 
-                // This row is already open - close it
+                // This row is already open - close it.
                 if (row.child.isShown()) {
                     $("div.slider", row.child()).slideUp( function() {
                         row.child.hide();
                         tr.removeClass("shown");
                     } );
                 }
-                // Open this row
+                // Open this row.
                 else {
                     row.child(format(CRN, Exam, Connection, Location, Textbook,
                         Info, Seats, Special), "no-padding").show();
@@ -109,38 +111,36 @@
             // --------- Calendar ---------
             $("#calendar").fullCalendar( {
                 header: {left: "", center: "", right: ""},
-                height: 750,
                 // Display just full length of weekday, without dates.
                 columnFormat: 'dddd',
                 defaultView: 'agendaWeek',
-                hiddenDays: [0,6],    // hide Saturday and Sunday
-                weekNumbers:  false,  // don't show week numbers
-                minTime: '8:00:00',   // display from 8 to 22
-                maxTime: '22:00:00',
-                slotDuration: '00:30:00', // 15 minutes for each row
-                allDaySlot: false,        // don't show "all day" at the top
+                hiddenDays: [0,6],          // hide Saturday and Sunday.
+                weekNumbers:  false,        // don't show week numbers.
+                minTime: '8:00:00',         // display from 8 to 23.
+                maxTime: '23:00:00',
+                slotDuration: '00:30:00',   // 30 minutes for each row.
+                allDaySlot: false,          // don't show "all day" at the top.
                 editable: true,
-                defaultDate: moment('2018-04-02'),
+                defaultDate: moment('2018-04-02')
             } );
         } );
 
-
-
+        // This function convert the time to a proper format.
         function timeConverter(time) {
             if (time.includes("A")){
                 if (time[2] === ":") return time.slice(0, 5) + ":00";
                 else return "0" + time.slice(0, 4) + ":00";
             }
             else{
-                if (Number(time.slice(0, 2)) != 12){
+                if (Number(time.slice(0, 2)) !== 12){
                     var number = Number(time.slice(0, 1)) + 12;
-                    var new_time = String(number) + time.slice(1, 4) + ":00";
-                    return new_time;
+                    return String(number) + time.slice(1, 4) + ":00";
                 }
                 else return time.slice(0, 5) + ":00";
             }
         }
 
+        // This function convert the day to a proper format.
         function dayConverter(day) {
             if (day === "M") return "2018-04-02T";
             else if (day === "T") return "2018-04-03T";
@@ -149,6 +149,49 @@
             else if (day === "F") return "2018-04-06T";
         }
 
+        // This function adds the event to calendar on click.
+        $(".add_class" ).click(function() {
+            var row = $(this).closest("tr");  // Finds the closest row <tr>
+            var tds = row.find("td");         // Finds all children <td> elements
+
+            // Refine the target td.
+            var course_title = $.trim(tds[2].innerHTML);
+            var course_time = $.trim(tds[4].innerHTML);
+            course_time = course_time.replace(/\s+/g, "");
+            course_time = course_time.split("<br>");  //deletes the <br>
+            course_time = Array.from(course_time);
+            var days=[], time=[], i = 0, k = 0, j = 0;
+
+            //TODO: Make this work for two times arrays.
+            //get the info from the first sub array.
+            course_time = Array.from(course_time[0]);
+            $(course_time).each(function(){
+                if (course_time[i].charCodeAt(0) > 64 & course_time[i]!=='P' & course_time[i]!=='A' & course_time[i]!=='r'){
+                    days[j++] = course_time[i];
+                }
+                else { time[k++] = course_time[i]; }
+                i++;
+            });
+
+            //makes the time array into a string and trims all the commas.
+            time = (time.toString()).replace(/,/g , "");
+
+            // Format time for calendar
+            time = time.split("-");
+            // Truncates the last two M from the AM and PM
+            days = days.slice(0, -2);
+
+            days.forEach(function(day){
+                var newEvent = {
+                    title: course_title,
+                    start: dayConverter(day) + timeConverter(time[0]),
+                    end: dayConverter(day) + timeConverter(time[1]),
+                    allDay: false
+                };
+                $("#calendar").fullCalendar("renderEvent", newEvent, "stick");
+            })
+        });
+
         //color and size of the dropdown for the course selection
         $('.selectpicker').selectpicker({
             style: 'btn-info',
@@ -156,7 +199,6 @@
         });
     </script>
 </head>
-
 
 <body>
     <!-- Header of the page. -->
@@ -216,14 +258,14 @@
     </div>
     <br>
 
-    <!-- This part is for body of the page (Calendar, Table). -->
+    <!-- This part is main body of the page (Calendar, Table). -->
     <div class="container-fluid">
         <!-- This part displays the calendar. -->
         <div class="col-lg-6 col-md-6 calendar">
             <div id="calendar"></div>
         </div>
 
-        <!--This is for displaying the course schedule-->
+        <!-- This is for displaying the course schedule. -->
         <div class="col-lg-6 col-md-6 result_table">
             <table class="table table-striped nowrap" id="result_table" style="width:100%;">
                 <!-- Set up table headers. -->
@@ -261,7 +303,9 @@
                     <td>{{ row["title"] }}</td>
 
                     <!-- Column of add class to calendar button. -->
-                    <td id="add_button"><button class="add_class glyphicon glyphicon-plus"></button></td>
+                    <td id="add_button">
+                        <button class="add_class glyphicon glyphicon-plus"></button>
+                    </td>
 
 
                     <!-- Column of class time. -->
@@ -364,68 +408,17 @@
         <div class="container">
             <div class="row">
                 <br>
-                  <div class="col-lg-12 col-md-12" style="text-align: center;">
-                      <div class="footer_header">Wheaton college </div>
-                      <div class ="artist"><a href="https://github.com/Weiqi97/WheatonCourseSelection"><img src="../static/images/github.png" class="contact-icon"> Please visit our Github page</a></div>
-                      <div class ="artist"><img src="../static/images/gmail-icon.png" class="contact-icon"> feng_weiqi@wheatoncollege.edu & norbu_phuntsho@wheatoncollege.edu </div>
-                      <div class ="artist">copy right &copy 2018  </div>
-                  </div>
+                <div class="col-lg-12 col-md-12" style="text-align: center;">
+                    <div class="footer_header">Wheaton college </div>
+                    <div class ="artist"><a href="https://github.com/Weiqi97/WheatonCourseSelection"><img src="../static/images/github.png" class="contact-icon"> Please visit our Github page</a></div>
+                    <div class ="artist"><img src="../static/images/gmail-icon.png" class="contact-icon"> feng_weiqi@wheatoncollege.edu & norbu_phuntsho@wheatoncollege.edu </div>
+                    <div class ="artist">copy right &copy 2018  </div>
+                </div>
             </div>
         </div>
     </div>
     <br>
 </footer>
 
-
-
-<script>
-    /*This function gets data from the row that has been clicked*/
-    $(".add_class" ).click(function() {
-        var row = $(this).closest("tr");  // Finds the closest row <tr>
-        var tds = row.find("td");         // Finds all children <td> elements
-
-        // Refine the target td.
-        var course_title = $.trim(tds[2].innerHTML);
-        var course_time = $.trim(tds[4].innerHTML);
-        course_time = course_time.replace(/\s+/g, "");
-        course_time = course_time.split("<br>");  //deletes the <br>
-
-        course_time = Array.from(course_time);
-
-        var days=[], time=[], i = 0, k = 0, j = 0;
-
-        //TODO: Make this work for two times arrays.
-        //get the info from the first sub array.
-        course_time = Array.from(course_time[0]);
-        $(course_time).each(function(){
-            if (course_time[i].charCodeAt(0) > 64 & course_time[i]!=='P' & course_time[i]!=='A' & course_time[i]!=='r'){
-                days[j++] = course_time[i];
-            }
-            else { time[k++] = course_time[i]; }
-            i++;
-        });
-
-        //makes the time array into a string and trims all the commas.
-        time = (time.toString()).replace(/,/g , "");
-
-        // Format time for calendar
-        time = time.split("-");
-        // Truncates the last two M from the AM and PM
-        days = days.slice(0, -2);
-
-        days.forEach(function(day){
-            var newEvent = {
-                title: course_title,
-                start: dayConverter(day) + timeConverter(time[0]),
-                end: dayConverter(day) + timeConverter(time[1]),
-                allDay: false
-            };
-            $("#calendar").fullCalendar("renderEvent", newEvent, "stick");
-        })
-
-
-
-    });
-
-</script>
+<!-- DONE! -->
 </html>
