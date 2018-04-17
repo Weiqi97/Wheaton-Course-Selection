@@ -29,9 +29,11 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
 
-    <!-- Jquery Schedule -->
-    <script src="../static/node_modules/jquery-schedule/dist/jquery.schedule.min.js"></script>
-    <link rel="stylesheet" href="../static/node_modules/jquery-schedule/dist/jquery.schedule.css">
+    <!-- Full Calendar -->
+    <script src='../static/node_modules/moment/min/moment.min.js'></script>
+    <script src='../static/node_modules/fullcalendar/dist/fullcalendar.js'></script>
+    <link rel='stylesheet' href='../static/node_modules/fullcalendar/dist/fullcalendar.css' />
+    <link rel='stylesheet' href='../static/node_modules/fullcalendar/dist/fullcalendar.print.css' media="print"/>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed">
@@ -39,13 +41,6 @@
     <!-- Function call for data table -->
     <script type="text/javascript">
         $(document).ready(function() {
-            // Display the schedule and hide weekends.
-            $("#schedule").jqs( { mode: "read" , hour: 12} );
-            $("#schedule td:nth-child(6)").hide();
-            $("#schedule td:nth-child(7)").hide();
-            $(".jqs-grid-head div:nth-child(6)").hide();
-            $(".jqs-grid-head div:nth-child(7)").hide();
-
             // Display the data table and hide row child.
             var data_table = $("#result_table"); // Data table selector.
 
@@ -110,7 +105,45 @@
                     $('div.slider', row.child()).slideDown();
                 }
             } );
+
+            // --------- Calendar ---------
+            $("#calendar").fullCalendar( {
+                header: {left: "", center: "", right: ""},
+                height: 750,
+                // Display just full length of weekday, without dates.
+                columnFormat: 'dddd',
+                defaultView: 'agendaWeek',
+                hiddenDays: [0,6],    // hide Saturday and Sunday
+                weekNumbers:  false,  // don't show week numbers
+                minTime: '8:00:00',   // display from 8 to 22
+                maxTime: '22:00:00',
+                slotDuration: '00:30:00', // 15 minutes for each row
+                allDaySlot: false,        // don't show "all day" at the top
+                editable: true,
+                defaultDate: moment('2018-04-02'),
+                eventSources: [
+                    // your event source
+                    {
+                        events: [ // put the array in the `events` property
+
+                            {
+                              title  : 'Econ',
+                              start  : '2018-04-02T11:30:00',
+                              end    : '2018-04-02T12:30:00',
+                                description: 'this is so cool',
+                                color: 'green',
+                                textColor: 'white'
+                            }
+                          ]
+                        }
+                ]
+            } );
         } );
+
+
+
+
+
 
         //color and size of the dropdown for the course selection
         $('.selectpicker').selectpicker({
@@ -182,8 +215,8 @@
     <!-- This part is for body of the page (Calendar, Table). -->
     <div class="container-fluid">
         <!-- This part displays the calendar. -->
-        <div class="col-lg-6 col-md-6">
-            <div id="schedule"></div>
+        <div class="col-lg-6 col-md-6 calendar">
+            <div id="calendar"></div>
         </div>
 
         <!--This is for displaying the course schedule-->
@@ -383,21 +416,13 @@
         var time1 = String(time[0]);
         var time2 = String(time[1]);
         // This is really fucked up
-        $("#schedule").jqs('import', [
-            {
-                "day": 2,
-                "periods": [
-                    {
-                        "start": "02:00",
-                        "end": "05:00",
-                        "title": "ll",
-                        "backgroundColor": "rgba(0, 0, 0, 0.5)",
-                        "borderColor":"#000",
-                        "textColor": "#fff"
-                    }
-                ]
-            }
-        ]);
+        var newEvent = {
+            title: course_title,
+            start: "2018-04-03T11:00:00am",
+            end: "2018-04-03T01:00:00pm",
+            allDay: false
+        };
+        $("#calendar").fullCalendar("renderEvent", newEvent, "stick");
 
 
     });
