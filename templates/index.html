@@ -277,7 +277,8 @@
                             class="contact-icon"> Please visit our Github page</a>
                     </div>
                     <div class="artist"><img
-                            src="../static/images/gmail-icon.png">
+                            src="../static/images/gmail-icon.png"
+                            class="contact-icon">
                         feng_weiqi@wheatoncollege.edu &
                         norbu_phuntsho@wheatoncollege.edu
                     </div>
@@ -371,7 +372,9 @@
             slotDuration: '00:30:00', // 15 minutes for each row
             allDaySlot: false,        // don't show "all day" at the top
             editable: true,
-            defaultDate: moment('2018-04-02')
+            defaultDate: moment('2018-04-02'),
+            eventStartEditable: false,
+            eventDurationEditable: false
         });
 
         //color and size of the dropdown for the course selection
