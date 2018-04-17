@@ -2,7 +2,7 @@
 function format(CRN, Exam, Connection, Location, Textbook, Info, Seats, Special) {
     return '<div class="slider">'+
         '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-            '<tr width="100%">'+
+            '<tr>'+
                 '<td width="25%">'+CRN+'</td>'+
                 '<td width="25%">'+Exam+'</td>'+
                 '<td width="25%">'+Location+'</td>'+
@@ -44,4 +44,7 @@ function checkField() {
         return true;
     }
 }
+
+
+
 

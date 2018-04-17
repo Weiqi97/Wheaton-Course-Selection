@@ -1,39 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Head of the file. -->
 <head>
     <meta charset="UTF-8">
     <title>Course Selection</title>
-    <!-- Project javascript -->
+    <!-- Project javascript and CSS -->
     <script src="../static/js/script_base.js"></script>
-    <!-- Project CSS -->
     <link rel="stylesheet" href="../static/css/style_base.css">
-    <!-- Jquery JS -->
+
+    <!-- Jquery -->
     <script src="../static/node_modules/jquery/dist/jquery.min.js"></script>
+
     <!-- Bootstrap -->
     <script src="../static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../static/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
-    <!-- CSS and JS for sweet alert package. -->
+
+    <!-- Sweet alert -->
     <script src="../static/node_modules/sweetalert2/dist/sweetalert2.js"></script>
     <link rel="stylesheet" href="../static/node_modules/sweetalert2/dist/sweetalert2.css">
+
     <!-- Bootstrap Select -->
     <script src="../static/node_modules/bootstrap-select/dist/js/bootstrap-select.js"></script>
     <link rel="stylesheet" href="../static/node_modules/bootstrap-select/dist/css/bootstrap-select.css">
+
     <!-- Data Table -->
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
-    <!-- Calendar -->
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+
+    <!-- Full Calendar -->
     <script src='../static/node_modules/moment/min/moment.min.js'></script>
     <script src='../static/node_modules/fullcalendar/dist/fullcalendar.js'></script>
     <link rel='stylesheet' href='../static/node_modules/fullcalendar/dist/fullcalendar.css' />
+    <link rel='stylesheet' href='../static/node_modules/fullcalendar/dist/fullcalendar.print.css' media="print"/>
+
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed">
-    <!-- Function call for data table -->
-    <script>
-        // ---------------------------- Data Table ----------------------------
-        // TODO: Add animation for data table row child. Also change icon on clicking.
-        // When document is ready display the data table.
+
+    <!-- TODO: Move this large chunk to another file. -->
+    <script type="text/javascript">
         $(document).ready(function() {
+            // Display the data table and hide row child.
             var data_table = $("#result_table"); // Data table selector.
 
             // Initialize data table.
@@ -42,14 +49,12 @@
                 "scrollX":        true,
                 "scrollCollapse": true,
                 "paging":         false,
+                "bSort" :         false,
                 "bInfo" :         false,
-                "columnDefs": [
-                    {
-                        "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
-                        "visible": false
-                    }
-                ],
-                "bSort" : false
+                "columnDefs": [ {
+                    "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
+                    "visible": false
+                } ]
             } );
 
             // Get proper data for row child.
@@ -68,7 +73,7 @@
                 var Seats = table.row( this ).data()[12];
                 var Special = table.row( this ).data()[13];
 
-                // TODO: This looks ugly.. Seeking for fixing method afterwards.
+                // TODO: UGLY. Seeking for fixing method afterwards.
                 // Refine info strings and add connection to it.
                 Info = Info.replace(/_/g, "<td>");
                 Info = Info.replace(/!/g, "</td>");
@@ -84,14 +89,14 @@
                 Special = Special.replace(/_/g, "<td colspan='4'>");
                 Special = Special.replace(/!/g, "</td>");
 
-                // This row is already open - close it
+                // This row is already open - close it.
                 if (row.child.isShown()) {
                     $("div.slider", row.child()).slideUp( function() {
                         row.child.hide();
                         tr.removeClass("shown");
                     } );
                 }
-                // Open this row
+                // Open this row.
                 else {
                     row.child(format(CRN, Exam, Connection, Location, Textbook,
                         Info, Seats, Special), "no-padding").show();
@@ -99,54 +104,54 @@
                     $('div.slider', row.child()).slideDown();
                 }
             } );
+
+            // --------- Calendar ---------
+            $("#calendar").fullCalendar( {
+                header: {left: "", center: "", right: ""},
+                // Display just full length of weekday, without dates.
+                columnFormat: 'dddd',
+                defaultView: 'agendaWeek',
+                hiddenDays: [0,6],    // hide Saturday and Sunday
+                weekNumbers:  false,  // don't show week numbers
+                minTime: '8:00:00',   // display from 8 to 22
+                maxTime: '22:00:00',
+                slotDuration: '00:30:00', // 15 minutes for each row
+                allDaySlot: false,        // don't show "all day" at the top
+                editable: true,
+                defaultDate: moment('2018-04-02')
+            } );
         } );
 
-        //----------------CALENDAR----------------------------
-        $(function(){
-            $('#calendar').fullCalendar({
-                // put your options and callbacks here
-                weekends: false,
-                defaultView:'agendaWeek',
-                header:{
-                    center: "title",
-                    right: "",
-                    left:""
-                },
-                titleFormat: '[Calendar]',
-                columnFormat: 'dddd',
-                eventSources: [
-                    // your event source
-                    {
-                        events: [ // put the array in the `events` property
-                            {
-                              title  : 'event1',
-                              start  : '2010-01-01'
-                            },
-                            {
-                              title  : 'Econ',
-                              start  : '2018-04-04T14:30:00',
-                              end    : '2018-04-04T15:30:00',
-                                description: 'this is so cool',
-                                color: 'green',
-                                textColor: 'white'
+        // Function to convert time to a proper format.
+        function timeConverter(time) {
+            if (time.includes("A")){
+                if (time[2] === ":") return time.slice(0, 5) + ":00";
+                else return "0" + time.slice(0, 4) + ":00";
+            }
+            else{
+                if (Number(time.slice(0, 2)) !== 12){
+                    var number = Number(time.slice(0, 1)) + 12;
+                    return String(number) + time.slice(1, 4) + ":00";
+                }
+                else return time.slice(0, 5) + ":00";
+            }
+        }
 
-                            },
-                            {
-                              title  : 'event3',
-                              start  : '2010-01-09T12:30:00'
-                            }
-                          ]
-                        }
+        // Function to convert day to a proper format.
+        function dayConverter(day) {
+            if (day === "M") return "2018-04-02T";
+            else if (day === "T") return "2018-04-03T";
+            else if (day === "W") return "2018-04-04T";
+            else if (day === "R") return "2018-04-05T";
+            else if (day === "F") return "2018-04-06T";
+        }
 
-    // any other event sources...
-
-                ]
-            });
-
+        //color and size of the dropdown for the course selection
+        $('.selectpicker').selectpicker({
+            style: 'btn-info',
+            size: 10
         });
-
     </script>
-
 </head>
 
 
@@ -157,7 +162,7 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 college_header">
                 <b>Wheaton College </b>
-                <sub>- The right tool to help you pick classes</sub>
+                <sub> - The right tool to help you pick classes</sub>
             </div>
         </div>
         <br>
@@ -209,7 +214,7 @@
     <br>
 
     <!-- This part is for body of the page (Calendar, Table). -->
-    <div class="container-fluid calendar_outerbox">
+    <div class="container-fluid">
         <!-- This part displays the calendar. -->
         <div class="col-lg-6 col-md-6 calendar">
             <div id="calendar"></div>
@@ -368,57 +373,63 @@
     <br>
 </footer>
 
+<!-- TODO: Figure out why this has to be here, not on the top. -->
+<script type="text/javascript">
+    // Gets data from the row clicked and insert it into the calendar.
+    // See if this can be simplified.
+    $('.add_class').click(function() {
+        var row = $(this).closest("tr");  // Finds the closest row <tr>
+        var tds = row.find("td");         // Finds all children <td> elements
 
+        // Refine the target td.
+        var course_title = $.trim(tds[2].innerHTML);
+        var course_time = $.trim(tds[4].innerHTML);
 
-<script>
-    /*This function gets data from the row that has been clicked*/
-    $(".add_class" ).click(function() {
-        var $row = $(this).closest("tr");      // Finds the closest row <tr>
-        var $tds = $row.find("td");             // Finds all children <td> elements
+        console.log(course_time.slice(0,3));
 
-        //var course_time = ($tds[2].innerHTML).replace(/\s+/g, " ");
-        var course_time = $tds[3].innerHTML;
-        course_time = $.trim(course_time);
-        course_time = course_time.replace(/\s+/g, "");
-        course_time = course_time.split("<br>"); //deletes the <br>
-        //console.log("sdsd:" + course_time);
-       // console.log(course_time);
-        course_time = Array.from(course_time);
-        //console.log(course_time);
-        var days=[];
-        var time=[];
-        var i = 0;
-        var k =0;
-        var j =0;
+        // Check if the class has an assigned time.
+        if (course_time.slice(0,3) === "TBA") {
+            swal( {
+                type: "warning",
+                title: "This class does not have an assigned time!",
+                confirmButtonText: "Got it!"
+            } );
+        }
 
-        course_time = Array.from(course_time[0]); //get the info from the first sub array. Need it because some classes have two different timings.
-        $(course_time).each(function(){
-            if (course_time[i].charCodeAt(0) > 64 & course_time[i]!=='P' & course_time[i]!=='A' & course_time[i]!=='r'){
-                days[j] = course_time[i];
-                j++;
-                i++;
-            }
-            else
-            {
-                time[k] = course_time[i];
-                i++;
-                k++;
-            }
-        });
+        // If has a time, add to calendar.
+        else {
+            course_time = course_time.replace(/\s+/g, "");
+            course_time = course_time.split("<br>");        //deletes the <br>
+            course_time = Array.from(course_time);
 
-        //console.log(course_time);
-        time = (time.toString()).replace(/,/g , ""); //makes the time array into a string and trims all the commas.
-        time = time.replace(/A/g, "AM");
-        time = time.replace(/P/g, "PM");
-        days = days.slice(0,-2); // trims the last two characters because it always contains 2 M's from the AM and PM
-        console.log("days: " + days);
-        console.log("time: " + time);
-    });
+            //get the info from the class time array.
+            course_time.forEach(function (each_time) {
+                var days = [], time = [], k = 0, j = 0;
+                // Refine days and times.
+                for (var i = 0; i < each_time.length; i++) {
+                    if (each_time[i].charCodeAt(0) > 64 & each_time[i] !== 'P' & each_time[i] !== 'A' && each_time[i] !== 'r')
+                        days[j++] = each_time[i];
+                    else time[k++] = each_time[i];
+                }
+                // makes the time array into a string and trims all the commas.
+                time = (time.toString()).replace(/,/g, "");
 
-    //color and size of the dropdown for the course selection
-      $('.selectpicker').selectpicker({
-          style: 'btn-info',
-          size: 10
-      });
+                // Format time for calendar
+                time = time.split("-");
+                // Truncates the last two M from the AM and PM
+                days = days.slice(0, -2);
+
+                days.forEach(function (day) {
+                    var newEvent = {
+                        title: course_title,
+                        start: dayConverter(day) + timeConverter(time[0]),
+                        end: dayConverter(day) + timeConverter(time[1]),
+                        allDay: false
+                    };
+                    $("#calendar").fullCalendar("renderEvent", newEvent, "stick");
+                })
+            });
+        }
+    } );
 </script>
 </html>

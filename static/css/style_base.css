@@ -1,7 +1,5 @@
 body{
-
-    background-image: url("../images/whea.jpg");
-    background-position: center;
+    background: url("../images/whea.jpg") center;
     background-size: cover;
 }
 
