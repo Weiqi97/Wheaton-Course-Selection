@@ -37,13 +37,7 @@
     <!-- Project javascript and CSS -->
     <script src="../static/js/script_base.js"></script>
     <link rel="stylesheet" href="../static/css/style_base.css">
-
-    <!-- TODO: Move this large chunk to another file. -->
-    <script type="text/javascript">
-
-    </script>
 </head>
-
 
 <body>
     <!-- Header of the page. -->
@@ -51,7 +45,7 @@
         <br>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 college_header">
-                <b>Wheaton College </b>
+                <b>Wheaton College</b>
                 <sub> - The right tool to help you pick classes</sub>
             </div>
         </div>
@@ -135,6 +129,7 @@
                 <!-- Set up table columns. -->
                 <tbody>
                 {%  for _, row in selected_data.iterrows() %}<tr>
+
                     <!-- Column of show details button. -->
                     <td class="details-control" id="show_detail"></td>
 
@@ -237,6 +232,7 @@
 
                     <!-- Column of hidden days. -->
                     <td>{{ row["hidden_days"] }}</td>
+
                 </tr>{% endfor %}
                 </tbody>
             </table>
@@ -250,21 +246,15 @@
     <div id="footer">
         <div class="container">
             <div class="row">
-                <br>
-                  <div class="col-lg-12 col-md-12" style="text-align: center;">
-                      <div class="footer_header">Wheaton college </div>
-                      <div class ="artist"><a href="https://github.com/Weiqi97/WheatonCourseSelection"><img src="../static/images/github.png" class="contact-icon"> Please visit our Github page</a></div>
-                      <div class ="artist"><img src="../static/images/gmail-icon.png" class="contact-icon"> feng_weiqi@wheatoncollege.edu & norbu_phuntsho@wheatoncollege.edu </div>
-                      <div class ="artist">copy right &copy 2018  </div>
-                  </div>
+                <br><div class="col-lg-12 col-md-12" style="text-align: center;">
+                    <div class="footer_header"> Wheaton college </div>
+                    <div class ="artist"><a href="https://github.com/Weiqi97/WheatonCourseSelection"><img src="../static/images/github.png" class="contact-icon"> Please visit our Github page</a></div>
+                    <div class ="artist"><img src="../static/images/gmail-icon.png"> feng_weiqi@wheatoncollege.edu & norbu_phuntsho@wheatoncollege.edu </div>
+                    <div class ="artist">&copy 2018 ALL RIGHTS RESERVED</div>
+                </div>
             </div>
         </div>
     </div>
     <br>
 </footer>
-
-<!-- TODO: Figure out why this has to be here, not on the top. -->
-<script type="text/javascript">
-
-</script>
 </html>
