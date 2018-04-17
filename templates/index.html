@@ -384,37 +384,52 @@
         // Refine the target td.
         var course_title = $.trim(tds[2].innerHTML);
         var course_time = $.trim(tds[4].innerHTML);
-        course_time = course_time.replace(/\s+/g, "");
-        course_time = course_time.split("<br>");        //deletes the <br>
-        course_time = Array.from(course_time);
 
-        //get the info from the class time array.
-        course_time.forEach(function(each_time) {
-            var days=[], time=[], k = 0, j = 0;
-            // Refine days and times.
-            for (var i = 0; i < each_time.length; i++){
-                if (each_time[i].charCodeAt(0) > 64 & each_time[i]!=='P' & each_time[i]!=='A' && each_time[i]!=='r')
-                    days[j++] = each_time[i];
-                else time[k++] = each_time[i];
-            }
-            // makes the time array into a string and trims all the commas.
-            time = (time.toString()).replace(/,/g , "");
+        console.log(course_time.slice(0,3));
 
-            // Format time for calendar
-            time = time.split("-");
-            // Truncates the last two M from the AM and PM
-            days = days.slice(0, -2);
+        // Check if the class has an assigned time.
+        if (course_time.slice(0,3) === "TBA") {
+            swal( {
+                type: "warning",
+                title: "This class does not have an assigned time!",
+                confirmButtonText: "Got it!"
+            } );
+        }
 
-            days.forEach(function(day){
-                var newEvent = {
-                    title: course_title,
-                    start: dayConverter(day) + timeConverter(time[0]),
-                    end: dayConverter(day) + timeConverter(time[1]),
-                    allDay: false
-                };
-                $("#calendar").fullCalendar("renderEvent", newEvent, "stick");
-            } )
-        } );
+        // If has a time, add to calendar.
+        else {
+            course_time = course_time.replace(/\s+/g, "");
+            course_time = course_time.split("<br>");        //deletes the <br>
+            course_time = Array.from(course_time);
+
+            //get the info from the class time array.
+            course_time.forEach(function (each_time) {
+                var days = [], time = [], k = 0, j = 0;
+                // Refine days and times.
+                for (var i = 0; i < each_time.length; i++) {
+                    if (each_time[i].charCodeAt(0) > 64 & each_time[i] !== 'P' & each_time[i] !== 'A' && each_time[i] !== 'r')
+                        days[j++] = each_time[i];
+                    else time[k++] = each_time[i];
+                }
+                // makes the time array into a string and trims all the commas.
+                time = (time.toString()).replace(/,/g, "");
+
+                // Format time for calendar
+                time = time.split("-");
+                // Truncates the last two M from the AM and PM
+                days = days.slice(0, -2);
+
+                days.forEach(function (day) {
+                    var newEvent = {
+                        title: course_title,
+                        start: dayConverter(day) + timeConverter(time[0]),
+                        end: dayConverter(day) + timeConverter(time[1]),
+                        allDay: false
+                    };
+                    $("#calendar").fullCalendar("renderEvent", newEvent, "stick");
+                })
+            });
+        }
     } );
 </script>
 </html>
