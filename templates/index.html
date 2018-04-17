@@ -151,55 +151,6 @@
             style: 'btn-info',
             size: 10
         });
-
-        /*This function gets data from the row that has been clicked*/
-    $(".add_class" ).click(function() {
-        var row = $(this).closest("tr");  // Finds the closest row <tr>
-        var tds = row.find("td");         // Finds all children <td> elements
-
-        // Refine the target td.
-        var course_title = $.trim(tds[2].innerHTML);
-        var course_time = $.trim(tds[4].innerHTML);
-        course_time = course_time.replace(/\s+/g, "");
-        course_time = course_time.split("<br>");  //deletes the <br>
-
-        course_time = Array.from(course_time);
-
-        var days=[], time=[], i = 0, k = 0, j = 0;
-
-        //TODO: Make this work for two times arrays.
-        //get the info from the first sub array.
-        course_time = Array.from(course_time[0]);
-        $(course_time).each(function(){
-            if (course_time[i].charCodeAt(0) > 64 & course_time[i]!=='P' & course_time[i]!=='A' & course_time[i]!=='r'){
-                days[j++] = course_time[i];
-            }
-            else { time[k++] = course_time[i]; }
-            i++;
-        });
-
-        //makes the time array into a string and trims all the commas.
-        time = (time.toString()).replace(/,/g , "");
-
-        // Format time for calendar
-        time = time.split("-");
-        // Truncates the last two M from the AM and PM
-        days = days.slice(0, -2);
-
-        days.forEach(function(day){
-            var newEvent = {
-                title: course_title,
-                start: dayConverter(day) + timeConverter(time[0]),
-                end: dayConverter(day) + timeConverter(time[1]),
-                allDay: false
-            };
-            $("#calendar").fullCalendar("renderEvent", newEvent, "stick");
-        })
-
-
-
-    });
-
     </script>
 </head>
 
@@ -422,10 +373,48 @@
     <br>
 </footer>
 
+<!-- TODO: Figure out why this has to be here, not on the top. -->
+<script type="text/javascript">
+    // Gets data from the row clicked and insert it into the calendar.
+    // See if this can be simplified.
+    $('.add_class').click(function() {
+        var row = $(this).closest("tr");  // Finds the closest row <tr>
+        var tds = row.find("td");         // Finds all children <td> elements
 
+        // Refine the target td.
+        var course_title = $.trim(tds[2].innerHTML);
+        var course_time = $.trim(tds[4].innerHTML);
+        course_time = course_time.replace(/\s+/g, "");
+        course_time = course_time.split("<br>");        //deletes the <br>
+        course_time = Array.from(course_time);
 
-<script>
+        //get the info from the class time array.
+        course_time.forEach(function(each_time) {
+            var days=[], time=[], k = 0, j = 0;
+            // Refine days and times.
+            for (var i = 0; i < each_time.length; i++){
+                if (each_time[i].charCodeAt(0) > 64 & each_time[i]!=='P' & each_time[i]!=='A' && each_time[i]!=='r')
+                    days[j++] = each_time[i];
+                else time[k++] = each_time[i];
+            }
+            // makes the time array into a string and trims all the commas.
+            time = (time.toString()).replace(/,/g , "");
 
+            // Format time for calendar
+            time = time.split("-");
+            // Truncates the last two M from the AM and PM
+            days = days.slice(0, -2);
 
+            days.forEach(function(day){
+                var newEvent = {
+                    title: course_title,
+                    start: dayConverter(day) + timeConverter(time[0]),
+                    end: dayConverter(day) + timeConverter(time[1]),
+                    allDay: false
+                };
+                $("#calendar").fullCalendar("renderEvent", newEvent, "stick");
+            } )
+        } );
+    } );
 </script>
 </html>
