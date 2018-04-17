@@ -10,7 +10,7 @@
 
     <!-- Jquery and Jquery UI -->
     <script src="../static/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="../static/node_modules/jquery-ui-dist/jquery-ui.min.css"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
     <!-- Bootstrap -->
     <script src="../static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -372,30 +372,34 @@
         time = (time.toString()).replace(/,/g , "");
 
         // Format time for calendar
-        time = time.replace(/A/g, " am");
-        time = time.replace(/P/g, " pm");
+        time = time.replace(/A/g, "");
+        time = time.replace(/P/g, "");
         time = time.split("-");
+        if (time[0].length < 5) time[0] = "0" + time[0];
+        if (time[1].length < 5) time[1] = "0" + time[1];
         // Truncates the last two M from the AM and PM
         days = days.slice(0, -2);
-        console.log("days: " + days);
-        console.log("time: " + time);
-
-
-/*
-        {
-        "day": 2,
-        "periods": [
+        console.log(time);
+        var time1 = String(time[0]);
+        var time2 = String(time[1]);
+        // This is really fucked up
+        $("#schedule").jqs('import', [
             {
-                "start": "10:00",
-                "end": "12:00",
-                "title": "A black period",
-                "backgroundColor": "rgba(0, 0, 0, 0.5)",
-                "borderColor":"#000",
-                "textColor": "#fff"
+                "day": 2,
+                "periods": [
+                    {
+                        "start": "02:00",
+                        "end": "05:00",
+                        "title": "ll",
+                        "backgroundColor": "rgba(0, 0, 0, 0.5)",
+                        "borderColor":"#000",
+                        "textColor": "#fff"
+                    }
+                ]
             }
-        ]
-    }
-*/
+        ]);
+
+
     });
 
 </script>
