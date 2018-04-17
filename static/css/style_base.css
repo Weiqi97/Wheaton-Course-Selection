@@ -1,9 +1,8 @@
 body{
-    background-image: url("../images/wheaton-campus.jpg");
-    background-position: center;
+    background: url("../images/whea.jpg") center;
     background-size: cover;
-
 }
+
 .header{
     background-color: #0072bc;
     padding: 5px;
@@ -20,13 +19,7 @@ body{
 }
 .course-picker{
     background-color: rgba(0,114,188,0.8);
-
 }
-/*this is for the slogan*/
-sub{
-    font-size: 1vw;
-}
-
 .bootstrap-select .btn {
     background: transparent;
     color: white;
@@ -36,7 +29,10 @@ sub{
     -o-transition: ease-in-out 500ms;
     transition: ease-in-out 500ms;
     font-family:sans-serif,serif ;
-
+}
+/*make the placeholder color for semesters and subjects white */
+.bootstrap-select.btn-group .dropdown-toggle .filter-option{
+    color:white;
 }
 .bootstrap-select .dropdown-menu {
     margin: 0;
@@ -46,7 +42,18 @@ sub{
     -o-transition: ease-in-out 500ms;
     transition: ease-in-out 500ms;
 }
+ul.inner li {
+    opacity: 0;
+    animation-name: menu1;
+    animation-duration: 400ms;
+    animation-fill-mode:forwards;
+}
+@keyframes menu1 {
+    from{opacity: 0;}
+    to{opacity:1;}
+}
 
+/*search button for course selction on the header*/
 #submit{
     width:7%;
     padding-top:2px;
@@ -69,7 +76,6 @@ sub{
 }
 
 #submit:hover {
-
     border: 2px solid #ee6e73;
     -webkit-transition: ease-in-out 300ms;
     -moz-transition: ease-in-out 300ms;
@@ -81,6 +87,7 @@ sub{
     padding-top:2px;
     padding-bottom: 4px;
 }
+/*the search icon beside the search/submit bar on the header*/
 #submit:hover .glyphicon-search{
     transform: rotateY(360deg);
     -webkit-transition: ease-in-out 500ms;
@@ -89,72 +96,108 @@ sub{
     -o-transition: ease-in-out 500ms;
     transition: ease-in-out 500ms;
 }
+/*___________________________________________________*/
+
+/*sets the height of both the calendar and the result table*/
+.col-lg-6{
+    height: 750px;
+}
+/*___________________________________________________*/
+
+/*the table containing all the courses*/
 .result_table{
     border: 1px solid black;
     background:white;
-
+}
+#result_table tr{
+    transition: all 150ms ease-in;
+}
+#result_table tr:hover{
+    transition: all 150ms ease-in;
+    background: rgba(80,90,70,0.2);
+    );
 }
 /*for the table header in result table*/
 .dataTables_scrollHead{
     border: 1px solid black;
 }
-/*make the placeholder color for semesters and subjects white */
-.bootstrap-select.btn-group .dropdown-toggle .filter-option{
-    color:white;
+/*"+" icon in the result table*/
+#add_button{
+    text-align: center;
 }
-/*this is to make the + icon rounded in the course page*/
+/*this is to make the "+" icon rounded in the result table*/
 #add_button .glyphicon{
-    padding: 5px;
+    padding: 3px;
     border-radius: 50%;
-    background: #316E95;
+    background: #2AA21D;
     color: white;
+    font-size: 12px;
 }
+/*hide the additional information about the class*/
+div.slider {
+    display: none;
+}
+table.dataTable tbody td.no-padding {
+    padding: 0;
+}
+/*icon button for additional information about the class*/
+td.details-control {
+    background: url("../images/angle-down.svg") no-repeat center center;
+    background-size: 40% auto;
+    cursor: pointer;
+}
+/*icon button for additional information about the class*/
+tr.shown td.details-control {
+    background: url("../images/angle-up.svg") no-repeat center center;
+    background-size: 40% auto;
+    cursor: pointer;
+    opacity:0.4;
+}
+/*___________________________________________________*/
+
 /*outer/bigger body of the calendar*/
 .calendar{
+    background-color: rgba(255, 255, 255,0.9);
+    color:black;
     border: 1px solid black;
 }
 /*for the calendar title*/
 .selected_semester{
     text-align: center;
 }
-.col-lg-6{
-    height: 750px;
-}
+/*___________________________________________________*/
 
-/*the whole footer div*/
+/*the whole footer box*/
 footer{
     margin-top:20px;
     background:black;
     opacity:0.8;
 }
+/*second inside footer box*/
 #footer{
     padding-top:5px;
     margin-bottom: 0px;
 }
-.footer-logo{
-    width: 50px;
-}
-.col-md4,.col-lg-4{
-   left: 35px;
-}
+/*footer header: Wheaton College*/
 .footer_header {
     font-family: 'Questrial',sans-serif,serif;
     font-size: 50px;
    color: #0072bc;
 }
 
-.headshot{
+/*icon on the footer*/
+.contact-icon{
     width:30px;
     border-radius: 50%;
 }
+/*names of the developer*/
 .artist{
     color: white;
 }
-#schedule{
+.calendar{
     background-color: rgba(255, 255, 255,0.9);
     color:black;
     border-color: black;
-    height:100%;
 }
 ul.inner li {
     opacity: 0;
@@ -174,25 +217,3 @@ select option[selected]{
 }
 
 
-div.slider {
-    display: none;
-}
-
-table.dataTable tbody td.no-padding {
-    padding: 0;
-}
-
-td.details-control {
-    background: url("../images/angle-down.svg") no-repeat center center;
-    background-size: 40% auto;
-    cursor: pointer;
-}
-
-tr.shown td.details-control {
-    background: url("../images/angle-up.svg") no-repeat center center;
-    background-size: 40% auto;
-    cursor: pointer;
-}
-div .jqs-grid-day{
-    width:25%;
-}
