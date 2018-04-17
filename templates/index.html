@@ -121,29 +121,33 @@
                 allDaySlot: false,        // don't show "all day" at the top
                 editable: true,
                 defaultDate: moment('2018-04-02'),
-                eventSources: [
-                    // your event source
-                    {
-                        events: [ // put the array in the `events` property
-
-                            {
-                              title  : 'Econ',
-                              start  : '2018-04-02T11:30:00',
-                              end    : '2018-04-02T12:30:00',
-                                description: 'this is so cool',
-                                color: 'green',
-                                textColor: 'white'
-                            }
-                          ]
-                        }
-                ]
             } );
         } );
 
 
 
+        function timeConverter(time) {
+            if (time.includes("A")){
+                if (time[2] === ":") return time.slice(0, 5) + ":00";
+                else return "0" + time.slice(0, 4) + ":00";
+            }
+            else{
+                if (Number(time.slice(0, 2)) != 12){
+                    var number = Number(time.slice(0, 1)) + 12;
+                    var new_time = String(number) + time.slice(1, 4) + ":00";
+                    return new_time;
+                }
+                else return time.slice(0, 5) + ":00";
+            }
+        }
 
-
+        function dayConverter(day) {
+            if (day === "M") return "2018-04-02T";
+            else if (day === "T") return "2018-04-03T";
+            else if (day === "W") return "2018-04-04T";
+            else if (day === "R") return "2018-04-05T";
+            else if (day === "F") return "2018-04-06T";
+        }
 
         //color and size of the dropdown for the course selection
         $('.selectpicker').selectpicker({
@@ -405,24 +409,20 @@
         time = (time.toString()).replace(/,/g , "");
 
         // Format time for calendar
-        time = time.replace(/A/g, "");
-        time = time.replace(/P/g, "");
         time = time.split("-");
-        if (time[0].length < 5) time[0] = "0" + time[0];
-        if (time[1].length < 5) time[1] = "0" + time[1];
         // Truncates the last two M from the AM and PM
         days = days.slice(0, -2);
-        console.log(time);
-        var time1 = String(time[0]);
-        var time2 = String(time[1]);
-        // This is really fucked up
-        var newEvent = {
-            title: course_title,
-            start: "2018-04-03T11:00:00am",
-            end: "2018-04-03T01:00:00pm",
-            allDay: false
-        };
-        $("#calendar").fullCalendar("renderEvent", newEvent, "stick");
+
+        days.forEach(function(day){
+            var newEvent = {
+                title: course_title,
+                start: dayConverter(day) + timeConverter(time[0]),
+                end: dayConverter(day) + timeConverter(time[1]),
+                allDay: false
+            };
+            $("#calendar").fullCalendar("renderEvent", newEvent, "stick");
+        })
+
 
 
     });
