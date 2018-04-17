@@ -45,10 +45,6 @@ function checkField() {
     }
 }
 
-function dayConverter(day) {
-    if (day === "M") return 0;
-    else if (day === "T") return 1;
-    else if (day === "W") return 2;
-    else if (day === "R") return 3;
-    else if (day === "F") return 4;
-}
+
+
+
