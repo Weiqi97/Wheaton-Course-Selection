@@ -10,29 +10,38 @@
 
     <!-- Bootstrap -->
     <script src="../static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../static/node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet"
+          href="../static/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="../static/node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
 
     <!-- Sweet alert -->
     <script src="../static/node_modules/sweetalert2/dist/sweetalert2.js"></script>
-    <link rel="stylesheet" href="../static/node_modules/sweetalert2/dist/sweetalert2.css">
+    <link rel="stylesheet"
+          href="../static/node_modules/sweetalert2/dist/sweetalert2.css">
 
     <!-- Bootstrap Select -->
     <script src="../static/node_modules/bootstrap-select/dist/js/bootstrap-select.js"></script>
-    <link rel="stylesheet" href="../static/node_modules/bootstrap-select/dist/css/bootstrap-select.css">
+    <link rel="stylesheet"
+          href="../static/node_modules/bootstrap-select/dist/css/bootstrap-select.css">
 
     <!-- Data Table -->
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
 
     <!-- Full Calendar -->
     <script src='../static/node_modules/moment/min/moment.min.js'></script>
     <script src='../static/node_modules/fullcalendar/dist/fullcalendar.js'></script>
-    <link rel='stylesheet' href='../static/node_modules/fullcalendar/dist/fullcalendar.css' />
-    <link rel='stylesheet' href='../static/node_modules/fullcalendar/dist/fullcalendar.print.css' media="print"/>
+    <link rel='stylesheet'
+          href='../static/node_modules/fullcalendar/dist/fullcalendar.css'/>
+    <link rel='stylesheet'
+          href='../static/node_modules/fullcalendar/dist/fullcalendar.print.css'
+          media="print"/>
 
     <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed">
 
     <!-- Project javascript and CSS -->
     <script src="../static/js/script_base.js"></script>
@@ -40,95 +49,105 @@
 </head>
 
 <body>
-    <!-- Header of the page. -->
-    <div class="container-fluid header">
-        <br>
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 college_header">
-                <b>Wheaton College</b>
-                <sub> - The right tool to help you pick classes</sub>
-            </div>
-        </div>
-        <br>
-    </div>
-
-    <!-- Selection drop downs. -->
-    <div class="container-fluid course-picker">
-        <div class="row">
-            <form name="Selections" method="post">
-                <select class="selectpicker col-lg-2 col-md-2" id="semester" name="semester" title="Semesters">
-                    {% for name in fetched_semesters.index %}
-                        <option value= "{{name}}">{{name}}</option>"
-                    {% endfor %}
-                </select>
-
-                <select class="selectpicker col-lg-2 col-md-2" data-live-search="true" id="subjects" name="subjects" title="Subject(s)" multiple="multiple">
-                    {% for name, value in fetched_subjects.iteritems() %}
-                        <option value= "{{value}}">{{name}}</option>"
-                    {% endfor %}
-                </select>
-
-                <label for="foundation"></label>
-                <select class="selectpicker col-lg-2 col-md-2" id="foundation" name="foundation">
-                    {% for name, value in fetched_foundations.iteritems() %}
-                        <option value= "{{value}}">{{name}}</option>"
-                    {% endfor %}
-                </select>
-
-                <label for="division"></label>
-                <select class="selectpicker col-lg-2 col-md-2" id="division" name="division">
-                    {% for name, value in fetched_divisions.iteritems() %}
-                        <option value= "{{value}}">{{name}}</option>"
-                    {% endfor %}
-                </select>
-
-                <label for="area"></label>
-                <select class="selectpicker col-lg-2 col-md-2" id="area" name="area">
-                    {% for name, value in fetched_areas.iteritems() %}
-                        <option value= "{{value}}">{{name}}</option>"
-                    {% endfor %}
-                </select>
-
-                <button type="submit" id="submit" onclick="return checkField()">
-                    Search <i class="glyphicon glyphicon-search"></i>
-                </button>
-            </form>
+<!-- Header of the page. -->
+<div class="container-fluid header">
+    <br>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 college_header">
+            <b>Wheaton College</b>
+            <sub> - The right tool to help you pick classes</sub>
         </div>
     </div>
     <br>
+</div>
 
-    <!-- This part is for body of the page (Calendar, Table). -->
-    <div class="container-fluid">
-        <!-- This part displays the calendar. -->
-        <div class="col-lg-6 col-md-6 calendar">
-            <div id="calendar"></div>
-        </div>
+<!-- Selection drop downs. -->
+<div class="container-fluid course-picker">
+    <div class="row">
+        <form name="Selections" method="post">
+            <select class="selectpicker col-lg-2 col-md-2" id="semester"
+                    name="semester" title="Semesters">
+                {% for name in fetched_semesters.index %}
+                    <option value="{{ name }}">{{ name }}</option>"
+                {% endfor %}
+            </select>
 
-        <!--This is for displaying the course schedule-->
-        <div class="col-lg-6 col-md-6 result_table">
-            <table class="table table-striped nowrap" id="result_table" style="width:100%;">
-                <!-- Set up table headers. -->
-                <thead><tr>
-                    <th></th>
-                    <th>Number</th>
-                    <th>Title</th>
-                    <th id="add_button"></th>
-                    <th>Time</th>
-                    <th>Instructor</th>
-                    <th >CRN</th>
-                    <th>Exam</th>
-                    <th>Connection</th>
-                    <th>Location</th>
-                    <th>Textbook</th>
-                    <th>Info</th>
-                    <th>Seats</th>
-                    <th>Special</th>
-                    <th>Hidden Days</th>
-                </tr></thead>
+            <select class="selectpicker col-lg-2 col-md-2"
+                    data-live-search="true" id="subjects" name="subjects"
+                    title="Subject(s)" multiple="multiple">
+                {% for name, value in fetched_subjects.iteritems() %}
+                    <option value="{{ value }}">{{ name }}</option>"
+                {% endfor %}
+            </select>
 
-                <!-- Set up table columns. -->
-                <tbody>
-                {%  for _, row in selected_data.iterrows() %}<tr>
+            <label for="foundation"></label>
+            <select class="selectpicker col-lg-2 col-md-2" id="foundation"
+                    name="foundation">
+                {% for name, value in fetched_foundations.iteritems() %}
+                    <option value="{{ value }}">{{ name }}</option>"
+                {% endfor %}
+            </select>
+
+            <label for="division"></label>
+            <select class="selectpicker col-lg-2 col-md-2" id="division"
+                    name="division">
+                {% for name, value in fetched_divisions.iteritems() %}
+                    <option value="{{ value }}">{{ name }}</option>"
+                {% endfor %}
+            </select>
+
+            <label for="area"></label>
+            <select class="selectpicker col-lg-2 col-md-2" id="area"
+                    name="area">
+                {% for name, value in fetched_areas.iteritems() %}
+                    <option value="{{ value }}">{{ name }}</option>"
+                {% endfor %}
+            </select>
+
+            <button type="submit" id="submit" onclick="return checkField()">
+                Search <i class="glyphicon glyphicon-search"></i>
+            </button>
+        </form>
+    </div>
+</div>
+<br>
+
+<!-- This part is for body of the page (Calendar, Table). -->
+<div class="container-fluid">
+    <!-- This part displays the calendar. -->
+    <div class="col-lg-6 col-md-6 calendar">
+        <div id="calendar"></div>
+    </div>
+
+    <!--This is for displaying the course schedule-->
+    <div class="col-lg-6 col-md-6 result_table">
+        <table class="table table-striped nowrap" id="result_table"
+               style="width:100%;">
+            <!-- Set up table headers. -->
+            <thead>
+            <tr>
+                <th></th>
+                <th>Number</th>
+                <th>Title</th>
+                <th id="add_button"></th>
+                <th>Time</th>
+                <th>Instructor</th>
+                <th>CRN</th>
+                <th>Exam</th>
+                <th>Connection</th>
+                <th>Location</th>
+                <th>Textbook</th>
+                <th>Info</th>
+                <th>Seats</th>
+                <th>Special</th>
+                <th>Hidden Days</th>
+            </tr>
+            </thead>
+
+            <!-- Set up table columns. -->
+            <tbody>
+            {% for _, row in selected_data.iterrows() %}
+                <tr>
 
                     <!-- Column of show details button. -->
                     <td class="details-control" id="show_detail"></td>
@@ -143,7 +162,9 @@
                     <td>{{ row["title"] }}</td>
 
                     <!-- Column of add class to calendar button. -->
-                    <td id="add_button"><button class="add_class glyphicon glyphicon-plus"></button></td>
+                    <td id="add_button">
+                        <button class="add_class glyphicon glyphicon-plus"></button>
+                    </td>
 
 
                     <!-- Column of class time. -->
@@ -197,7 +218,8 @@
 
                     <!-- Column of textbook links. -->
                     <td>
-                        <a target="_blank" href={{ row["textbook"] }}>Textbook</a>
+                        <a target="_blank"
+                           href={{ row["textbook"] }}>Textbook</a>
                     </td>
 
                     <!-- Column of class found, div, area info. -->
@@ -226,7 +248,7 @@
                     <!-- Column of special note. -->
                     <td>
                         {% if row["special_info"] %}
-                           _{{ row["special_info"] }}!
+                            _{{ row["special_info"] }}!
                         {% endif %}
                     </td>
 
@@ -234,10 +256,10 @@
                     <td>{{ row["hidden_days"] }}</td>
 
                 </tr>{% endfor %}
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+        </table>
     </div>
+</div>
 </body>
 
 <!-- This part sets the footer of the page. -->
@@ -246,11 +268,20 @@
     <div id="footer">
         <div class="container">
             <div class="row">
-                <br><div class="col-lg-12 col-md-12" style="text-align: center;">
-                    <div class="footer_header"> Wheaton college </div>
-                    <div class ="artist"><a href="https://github.com/Weiqi97/WheatonCourseSelection"><img src="../static/images/github.png" class="contact-icon"> Please visit our Github page</a></div>
-                    <div class ="artist"><img src="../static/images/gmail-icon.png"> feng_weiqi@wheatoncollege.edu & norbu_phuntsho@wheatoncollege.edu </div>
-                    <div class ="artist">&copy 2018 ALL RIGHTS RESERVED</div>
+                <br>
+                <div class="col-lg-12 col-md-12" style="text-align: center;">
+                    <div class="footer_header"> Wheaton college</div>
+                    <div class="artist"><a
+                            href="https://github.com/Weiqi97/WheatonCourseSelection"><img
+                            src="../static/images/github.png"
+                            class="contact-icon"> Please visit our Github page</a>
+                    </div>
+                    <div class="artist"><img
+                            src="../static/images/gmail-icon.png">
+                        feng_weiqi@wheatoncollege.edu &
+                        norbu_phuntsho@wheatoncollege.edu
+                    </div>
+                    <div class="artist">&copy 2018 ALL RIGHTS RESERVED</div>
                 </div>
             </div>
         </div>
@@ -260,150 +291,152 @@
 </html>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-    // Display the data table and hide row child.
-    var data_table = $("#result_table"); // Data table selector.
+    $(document).ready(function () {
+        // Display the data table and hide row child.
+        var data_table = $("#result_table"); // Data table selector.
 
-    // Initialize data table.
-    var table = data_table.DataTable({
-        "scrollY": 643,
-        "scrollX": true,
-        "scrollCollapse": true,
-        "paging": false,
-        "bSort": false,
-        "bInfo": false,
-        "columnDefs": [{
-            "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
-            "visible": false
-        }]
+        // Initialize data table.
+        var table = data_table.DataTable({
+            "scrollY": 643,
+            "scrollX": true,
+            "scrollCollapse": true,
+            "paging": false,
+            "bSort": false,
+            "bInfo": false,
+            "columnDefs": [
+                {
+                    "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
+                    "visible": false
+                },
+            ]
+        });
+
+        // Get proper data for row child.
+        data_table.find("tbody").on("click", "#show_detail", function () {
+            // Set variables for row child display method.
+            var tr = $(this).closest("tr");
+            var row = table.row(tr);
+            // Get all the data from table row.
+            var CRN = table.row(this).data()[6];
+            var Exam = table.row(this).data()[7];
+            var Connection = table.row(this).data()[8];
+            var Location = table.row(this).data()[9];
+            var Textbook = table.row(this).data()[10];
+            var Info = table.row(this).data()[11];
+            var Seats = table.row(this).data()[12];
+            var Special = table.row(this).data()[13];
+
+            // TODO: UGLY. Seeking for fixing method afterwards.
+            // Refine info strings and add connection to it.
+            Info = Info.replace(/_/g, "<td>");
+            Info = Info.replace(/!/g, "</td>");
+            if (Connection !== "") {
+                Info = Info + "<td>" + Connection + "</td>";
+            }
+
+            // Refine seats string.
+            Seats = Seats.replace(/_/g, "<td>");
+            Seats = Seats.replace(/!/g, "</td>");
+
+            // Refine special info string.
+            Special = Special.replace(/_/g, '<td colspan="4"><div>');
+            Special = Special.replace(/!/g, '</td>');
+
+            // This row is already open - close it.
+            if (row.child.isShown()) {
+                $("div.slider", row.child()).slideUp(function () {
+                    row.child.hide();
+                    tr.removeClass("shown");
+                });
+            }
+            // Open this row.
+            else {
+                row.child(format(CRN, Exam, Connection, Location, Textbook,
+                    Info, Seats, Special), "no-padding").show();
+                tr.addClass("shown");
+                $('div.slider', row.child()).slideDown();
+            }
+        });
+
+        // --------- Calendar ---------
+        $("#calendar").fullCalendar({
+            header: {left: "", center: "", right: ""},
+            // Display just full length of weekday, without dates.
+            columnFormat: 'dddd',
+            defaultView: 'agendaWeek',
+            hiddenDays: [0, 6],    // hide Saturday and Sunday
+            weekNumbers: false,  // don't show week numbers
+            minTime: '8:00:00',   // display from 8 to 22
+            maxTime: '22:00:00',
+            slotDuration: '00:30:00', // 15 minutes for each row
+            allDaySlot: false,        // don't show "all day" at the top
+            editable: true,
+            defaultDate: moment('2018-04-02')
+        });
+
+        //color and size of the dropdown for the course selection
+        $('.selectpicker').selectpicker({
+            style: 'btn-info',
+            size: 10
+        });
+
+        // Gets data from the row clicked and insert it into the calendar.
+        // See if this can be simplified.
+        $('.add_class').click(function () {
+            var row = $(this).closest("tr");  // Finds the closest row <tr>
+            var tds = row.find("td");         // Finds all children <td> elements
+            // TODO: unpack td function
+            // Refine the target td.
+            var course_title = $.trim(tds[2].innerHTML);
+            var course_time = $.trim(tds[4].innerHTML);
+
+            console.log(course_time.slice(0, 3));
+
+            // TODO: Use trim
+            // Check if the class has an assigned time.
+            if (course_time.slice(0, 3) === "TBA") {
+                swal({
+                    type: "warning",
+                    title: "This class does not have an assigned time!",
+                    confirmButtonText: "Got it!"
+                });
+            }
+
+            // If has a time, add to calendar.
+            else {
+                course_time = course_time.replace(/\s+/g, "");
+                course_time = course_time.split("<br>");        //deletes the <br>
+                course_time = Array.from(course_time);
+                // TODO: use for (let o of foo())  or List.map()
+                //get the info from the class time array.
+                course_time.forEach(function (each_time) {
+                    var days = [], time = [], k = 0, j = 0;
+                    // Refine days and times.
+                    for (var i = 0; i < each_time.length; i++) {
+                        if (each_time[i].charCodeAt(0) > 64 & each_time[i] !== 'P' & each_time[i] !== 'A' && each_time[i] !== 'r')
+                            days[j++] = each_time[i];
+                        else time[k++] = each_time[i];
+                    }
+                    // makes the time array into a string and trims all the commas.
+                    time = (time.toString()).replace(/,/g, "");
+
+                    // Format time for calendar
+                    time = time.split("-");
+                    // Truncates the last two M from the AM and PM
+                    days = days.slice(0, -2);
+
+                    days.forEach(function (day) {
+                        var newEvent = {
+                            title: course_title,
+                            start: dayConverter(day) + timeConverter(time[0]),
+                            end: dayConverter(day) + timeConverter(time[1]),
+                            allDay: false
+                        };
+                        $("#calendar").fullCalendar("renderEvent", newEvent, "stick");
+                    })
+                });
+            }
+        });
+
     });
-
-    // Get proper data for row child.
-    data_table.find("tbody").on("click", "#show_detail", function() {
-                // Set variables for row child display method.
-                var tr = $(this).closest("tr");
-                var row = table.row(tr);
-                // Get all the data from table row.
-                var CRN = table.row( this ).data()[6];
-                var Exam = table.row( this ).data()[7];
-                var Connection = table.row( this ).data()[8];
-                var Location = table.row( this ).data()[9];
-                var Textbook = table.row( this ).data()[10];
-                var Info = table.row( this ).data()[11];
-                var Seats = table.row( this ).data()[12];
-                var Special = table.row( this ).data()[13];
-
-        // TODO: UGLY. Seeking for fixing method afterwards.
-        // Refine info strings and add connection to it.
-        Info = Info.replace(/_/g, "<td>");
-        Info = Info.replace(/!/g, "</td>");
-        if (Connection !== "") {
-            Info = Info + "<td>" + Connection + "</td>";
-        }
-
-        // Refine seats string.
-        Seats = Seats.replace(/_/g, "<td>");
-        Seats = Seats.replace(/!/g, "</td>");
-
-        // Refine special info string.
-        Special = Special.replace(/_/g, "<td colspan='4'>");
-        Special = Special.replace(/!/g, "</td>");
-
-        // This row is already open - close it.
-        if (row.child.isShown()) {
-            $("div.slider", row.child()).slideUp(function () {
-                row.child.hide();
-                tr.removeClass("shown");
-            });
-        }
-        // Open this row.
-        else {
-            row.child(format(CRN, Exam, Connection, Location, Textbook,
-                Info, Seats, Special), "no-padding").show();
-            tr.addClass("shown");
-            $('div.slider', row.child()).slideDown();
-        }
-    });
-
-    // --------- Calendar ---------
-    $("#calendar").fullCalendar({
-        header: {left: "", center: "", right: ""},
-        // Display just full length of weekday, without dates.
-        columnFormat: 'dddd',
-        defaultView: 'agendaWeek',
-        hiddenDays: [0, 6],    // hide Saturday and Sunday
-        weekNumbers: false,  // don't show week numbers
-        minTime: '8:00:00',   // display from 8 to 22
-        maxTime: '22:00:00',
-        slotDuration: '00:30:00', // 15 minutes for each row
-        allDaySlot: false,        // don't show "all day" at the top
-        editable: true,
-        defaultDate: moment('2018-04-02')
-    });
-
-    //color and size of the dropdown for the course selection
-    $('.selectpicker').selectpicker({
-        style: 'btn-info',
-        size: 10
-    });
-
-    // Gets data from the row clicked and insert it into the calendar.
-    // See if this can be simplified.
-    $('.add_class').click(function() {
-        var row = $(this).closest("tr");  // Finds the closest row <tr>
-        var tds = row.find("td");         // Finds all children <td> elements
-        // TODO: unpack td function
-        // Refine the target td.
-        var course_title = $.trim(tds[2].innerHTML);
-        var course_time = $.trim(tds[4].innerHTML);
-
-        console.log(course_time.slice(0,3));
-
-        // TODO: Use trim
-        // Check if the class has an assigned time.
-        if (course_time.slice(0,3) === "TBA") {
-            swal( {
-                type: "warning",
-                title: "This class does not have an assigned time!",
-                confirmButtonText: "Got it!"
-            } );
-        }
-
-        // If has a time, add to calendar.
-        else {
-            course_time = course_time.replace(/\s+/g, "");
-            course_time = course_time.split("<br>");        //deletes the <br>
-            course_time = Array.from(course_time);
-            // TODO: use for (let o of foo())  or List.map()
-            //get the info from the class time array.
-            course_time.forEach(function (each_time) {
-                var days = [], time = [], k = 0, j = 0;
-                // Refine days and times.
-                for (var i = 0; i < each_time.length; i++) {
-                    if (each_time[i].charCodeAt(0) > 64 & each_time[i] !== 'P' & each_time[i] !== 'A' && each_time[i] !== 'r')
-                        days[j++] = each_time[i];
-                    else time[k++] = each_time[i];
-                }
-                // makes the time array into a string and trims all the commas.
-                time = (time.toString()).replace(/,/g, "");
-
-                // Format time for calendar
-                time = time.split("-");
-                // Truncates the last two M from the AM and PM
-                days = days.slice(0, -2);
-
-                days.forEach(function (day) {
-                    var newEvent = {
-                        title: course_title,
-                        start: dayConverter(day) + timeConverter(time[0]),
-                        end: dayConverter(day) + timeConverter(time[1]),
-                        allDay: false
-                    };
-                    $("#calendar").fullCalendar("renderEvent", newEvent, "stick");
-                })
-            });
-        }
-    } );
-
-});
 </script>
