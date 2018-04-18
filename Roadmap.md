@@ -14,6 +14,7 @@
   - Calendar related :innocent:
     - Add a remove button when class is added to the calendar.
     - Allow users to add their own event.
+    - Save as PDF.
     - Check overlap time. (We need to find a proper solution for this, there are multiple ways.)
   - Relatively easy features :fireworks:
     - A better looking contact us. (In general redesign footer.)
