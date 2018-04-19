@@ -93,36 +93,7 @@ function dayConverter(day) {
 }
 
 
-/**
- * Ready function for full calendar.
- */
-$(function calendarReady() {
-    $("#calendar").fullCalendar({
-        height: 740,
-        header: {left: "", center: "", right: ""},
-        defaultDate: moment('2018-04-02'),  // Set a default start date.
-        defaultView: 'agendaWeek',
-        hiddenDays: [0, 6],          // Hide Saturday and Sunday
-        columnFormat: 'dddd',        // Display without dates.
-        weekNumbers: false,          // Don't show week numbers
-        minTime: '8:00:00',          // Display from 8 to 23
-        maxTime: '23:00:00',
-        slotDuration: '00:30:00',    // 30 minutes for each row
-        allDaySlot: false,           // Don't show "all day" at the top
-        editable: true,              // Allow the program to edit.
-        eventStartEditable: false,   // Prevent users from editing events.
-        eventDurationEditable: false,
 
-        // Delete events on click.
-        eventRender: function (event, element) {
-            element.find('.fc-bg').css('pointer-events", "none');
-            element.append("<div style='position:absolute;bottom:0;right:0'><i class=\"fas fa-trash-alt\" id='deleteEvent'></i></div>");
-            element.find("#deleteEvent").click(function () {
-                $('#calendar').fullCalendar('removeEvents', event._id);
-            });
-        }
-    });
-});
 
 
 /**
@@ -191,6 +162,41 @@ $(function dataTableReady() {
         }
     });
 });
+
+    $(function readyCalendar() {
+
+        // --------- Calendar ---------
+        $("#calendar").fullCalendar({
+            header: {left: "", center: "", right: ""},
+            // Display just full length of weekday, without dates.
+            columnFormat: 'dddd',
+            defaultView: 'agendaWeek',
+            hiddenDays: [0, 6],    // hide Saturday and Sunday
+            weekNumbers: false,  // don't show week numbers
+            minTime: '8:00:00',   // display from 8 to 22
+            maxTime: '22:00:00',
+            slotDuration: '00:30:00', // 15 minutes for each row
+            allDaySlot: false,        // don't show "all day" at the top
+            editable: true,
+            defaultDate: moment('2018-04-02'),
+            eventStartEditable: false,
+            eventDurationEditable: false,
+            // Delete events on click.
+
+
+            eventRender: function (event, element) {
+                element.find(".fc-bg").css("pointer-events", "none");
+                element.append("<div style='position:absolute;bottom:0;right:0' ><button type='button' id='btnDeleteEvent' class='btn btn-block btn-primary btn-flat'>X</button></div>");
+                element.find("#btnDeleteEvent").click(function () {
+                    $('#calendar').fullCalendar('removeEvents', event._id);
+                });
+            }
+
+        });
+        //color and size of the dropdown for the course selection
+
+
+    });
 
 /**
  * Add class from data table to calendar.
