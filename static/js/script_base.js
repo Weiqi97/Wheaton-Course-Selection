@@ -15,16 +15,17 @@ function format(CRN, Exam, Connection, Location, Textbook, Info, Seats, Special)
     return '<div class="slider">' +
         '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
         '<tr>' +
-            '<td width="25%">' + CRN + '</td>' +
-            '<td width="25%">' + Exam + '</td>' +
-            '<td width="25%">' + Location + '</td>' +
-            '<td width="25%">' + Textbook + '</td>' +
+        '<td width="25%">' + CRN + '</td>' +
+        '<td width="25%">' + Exam + '</td>' +
+        '<td width="25%">' + Location + '</td>' +
+        '<td width="25%">' + Textbook + '</td>' +
         '</tr>' +
         '<tr>' + Info + '</tr>' +
         '<tr>' + Seats + '</tr>' +
         '<tr>' + Special + '</tr>' +
         '</table></div>';
 }
+
 
 /**
  * This function will alert user if they left select box empty.
@@ -33,8 +34,6 @@ function format(CRN, Exam, Connection, Location, Textbook, Info, Seats, Special)
 function checkField() {
     // TODO: If possible make the alert box bigger with larger font.
     // Check if subject was empty, if so alert with proper message.
-    var subject = $("#subjects").val();
-    console.log(subject);
     if ($("#subjects").val().length === 0) {
         swal({
             type: 'warning',
@@ -58,6 +57,7 @@ function checkField() {
     }
 }
 
+
 /**
  * Convert time to proper format to display.
  * @param time {string} the refined time.
@@ -78,6 +78,7 @@ function timeConverter(time) {
     }
 }
 
+
 /**
  * Convert day to proper format to display
  * @param day {string} the refined day.
@@ -90,3 +91,165 @@ function dayConverter(day) {
     else if (day === 'R') return '2018-04-05T';
     else if (day === 'F') return '2018-04-06T'
 }
+
+
+/**
+ * Ready function for full calendar.
+ */
+$(function calendarReady() {
+    $("#calendar").fullCalendar({
+        height: 740,
+        header: {left: "", center: "", right: ""},
+        defaultDate: moment('2018-04-02'),  // Set a default start date.
+        defaultView: 'agendaWeek',
+        hiddenDays: [0, 6],          // Hide Saturday and Sunday
+        columnFormat: 'dddd',        // Display without dates.
+        weekNumbers: false,          // Don't show week numbers
+        minTime: '8:00:00',          // Display from 8 to 23
+        maxTime: '23:00:00',
+        slotDuration: '00:30:00',    // 30 minutes for each row
+        allDaySlot: false,           // Don't show "all day" at the top
+        editable: true,              // Allow the program to edit.
+        eventStartEditable: false,   // Prevent users from editing events.
+        eventDurationEditable: false,
+
+        // Delete events on click.
+        eventRender: function (event, element) {
+            element.find('.fc-bg').css('pointer-events", "none');
+            element.append("<div style='position:absolute;bottom:0;right:0'><i class=\"fas fa-trash-alt\" id='deleteEvent'></i></div>");
+            element.find("#deleteEvent").click(function () {
+                $('#calendar').fullCalendar('removeEvents', event._id);
+            });
+        }
+    });
+});
+
+
+/**
+ * Display the data table while hiding the row child.
+ */
+$(function dataTableReady() {
+    var data_table = $("#result_table");
+
+    // Initialize data table.
+    var table = data_table.DataTable({
+        "scrollY": 643,
+        "scrollX": true,
+        "scrollCollapse": true,
+        "paging": false,
+        "bSort": false,
+        "bInfo": false,
+        "columnDefs": [{
+            "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
+            "visible": false
+        }]
+    });
+
+    // Get proper data for row child.
+    data_table.find("tbody").on("click", "#show_detail", function () {
+        // Set variables for row child display method.
+        var tr = $(this).closest("tr");
+        var row = table.row(tr);
+        // Get all the data from table row.
+        var CRN = table.row(this).data()[6];
+        var Exam = table.row(this).data()[7];
+        var Connection = table.row(this).data()[8];
+        var Location = table.row(this).data()[9];
+        var Textbook = table.row(this).data()[10];
+        var Info = table.row(this).data()[11];
+        var Seats = table.row(this).data()[12];
+        var Special = table.row(this).data()[13];
+
+        // TODO: UGLY. Seeking for fixing method afterwards.
+        // Refine info strings and add connection to it.
+        Info = Info.replace(/_/g, "<td>");
+        Info = Info.replace(/!/g, "</td>");
+        if (Connection !== "")
+            Info = Info + "<td>" + Connection + "</td>";
+
+        // Refine seats string.
+        Seats = Seats.replace(/_/g, "<td>");
+        Seats = Seats.replace(/!/g, "</td>");
+
+        // Refine special info string.
+        Special = Special.replace(/_/g, '<td colspan="4"><div>');
+        Special = Special.replace(/!/g, '</td>');
+
+        // This row is already open - close it.
+        if (row.child.isShown()) {
+            $("div.slider", row.child()).slideUp(function () {
+                row.child.hide();
+                tr.removeClass("shown");
+            });
+        }
+        // Open this row.
+        else {
+            row.child(format(CRN, Exam, Connection, Location, Textbook,
+                Info, Seats, Special), "no-padding").show();
+            tr.addClass("shown");
+            $('div.slider', row.child()).slideDown();
+        }
+    });
+});
+
+/**
+ * Add class from data table to calendar.
+ */
+$(function addClassReady() {
+    $('.add_class').click(function () {
+        var row = $(this).closest("tr");  // Finds the closest row <tr>
+        var tds = row.find("td");         // Finds all children <td> elements
+        // TODO: unpack td function
+        // Refine the target td.
+        var course_title = $.trim(tds[2].innerHTML);
+        var course_time = $.trim(tds[4].innerHTML);
+
+        console.log(course_time.slice(0, 3));
+
+        // TODO: Use trim
+        // Check if the class has an assigned time.
+        if (course_time.slice(0, 3) === "TBA") {
+            swal( {
+                type: "warning",
+                title: "This class does not have an assigned time!",
+                confirmButtonText: "Got it!"
+            } );
+        }
+
+        // If has a time, add to calendar.
+        else {
+            course_time = course_time.replace(/\s+/g, "");
+            course_time = course_time.split("<br>");        //deletes the <br>
+            course_time = Array.from(course_time);
+            // TODO: use for (let o of foo())  or List.map()
+            //get the info from the class time array.
+            course_time.forEach(function (each_time) {
+                var days = [], time = [], k = 0, j = 0;
+                // Refine days and times.
+                for (var i = 0; i < each_time.length; i++) {
+                    if (each_time[i].charCodeAt(0) > 64 & each_time[i] !== 'P' & each_time[i] !== 'A' && each_time[i] !== 'r')
+                        days[j++] = each_time[i];
+                    else time[k++] = each_time[i];
+                }
+                // makes the time array into a string and trims all the commas.
+                time = (time.toString()).replace(/,/g, "");
+
+                // Format time for calendar
+                time = time.split("-");
+                // Truncates the last two M from the AM and PM
+                days = days.slice(0, -2);
+
+                days.forEach(function (day) {
+                    var newEvent = {
+                        id: course_title,
+                        title: course_title,
+                        start: dayConverter(day) + timeConverter(time[0]),
+                        end: dayConverter(day) + timeConverter(time[1]),
+                        allDay: false
+                    };
+                    $("#calendar").fullCalendar("renderEvent", newEvent, "stick");
+                } )
+            } );
+        }
+    } );
+} );
