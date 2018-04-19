@@ -33,7 +33,9 @@ function format(CRN, Exam, Connection, Location, Textbook, Info, Seats, Special)
 function checkField() {
     // TODO: If possible make the alert box bigger with larger font.
     // Check if subject was empty, if so alert with proper message.
-    if ($("#subjects").val() === '') {
+    var subject = $("#subjects").val();
+    console.log(subject);
+    if ($("#subjects").val().length === 0) {
         swal({
             type: 'warning',
             title: 'Please select subject(s)!',
@@ -43,7 +45,7 @@ function checkField() {
     }
 
     // Check if subject was empty, if so alert with proper message.
-    else if ($('#semester').val() === '') {
+    else if ($('#semester').val()) {
         swal({
             type: 'warning',
             title: 'Please select a semester!',
@@ -88,13 +90,3 @@ function dayConverter(day) {
     else if (day === 'R') return '2018-04-05T';
     else if (day === 'F') return '2018-04-06T'
 }
-
-
-
-
-
-
-
-
-
-
