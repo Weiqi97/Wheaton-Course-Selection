@@ -127,11 +127,11 @@ ul.inner li {
 }
 /*this is to make the "+" icon rounded in the result table*/
 #add_button .glyphicon{
-    padding: 3px;
+    padding: 5px;
     border-radius: 50%;
     background: #2AA21D;
     color: white;
-    font-size: 12px;
+    font-size: 10px;
 }
 /*hide the additional information about the class*/
 div.slider {
@@ -187,7 +187,7 @@ footer{
 
 /*icon on the footer*/
 .contact-icon{
-    width:30px;
+    width:25px;
     border-radius: 50%;
 }
 /*names of the developer*/
@@ -210,8 +210,69 @@ ul.inner li {
     from{opacity: 0;}
     to{opacity:1;}
 }
-
-
 select option[selected]{
     background-color: #ee6e73;
+}
+.fc-time-grid .fc-slats td {
+    height:1.7em;
+}
+/*semester title for the result table*/
+div.toolbar{
+    margin-top:10px;
+    float:left;
+    padding-top:5px;
+    font-family: 'Nanum Gothic',sans-serif, serif;
+    font-size: 20px;
+    padding-left:10px;
+    color:#0072bc;
+    letter-spacing: 3px;
+}
+/*this is for the search bar in the result table*/
+.dataTables_wrapper .dataTables_filter{
+    margin-top:10px;
+}
+
+.footer-contact{
+    color:white;
+    opacity: 0.9;
+}
+.icons{
+    margin-left: 10px;
+    margin-right:10px;
+}
+.icons a{
+    color:white;
+    -webkit-transition: 200ms ease-in;
+    -moz-transition: 200ms ease-in;
+    -ms-transition: 200ms ease-in;
+    -o-transition: 200ms ease-in;
+    transition: 200ms ease-in;
+}
+.icons a:hover{
+    color: #0072bc;
+    -webkit-transition: 200ms ease-in;
+    -moz-transition: 200ms ease-in;
+    -ms-transition: 200ms ease-in;
+    -o-transition: 200ms ease-in;
+    transition: 200ms ease-in;
+}
+.gmail{
+    margin-left: 10px;
+    margin-right:10px;
+    background:transparent;
+    border:none;
+    -webkit-transition: 200ms ease-in;
+    -moz-transition: 200ms ease-in;
+    -ms-transition: 200ms ease-in;
+    -o-transition: 200ms ease-in;
+    transition: 200ms ease-in;
+}
+.gmail:hover{
+    color: #0072bc;
+    -webkit-transition: 200ms ease-in;
+    -moz-transition: 200ms ease-in;
+    -ms-transition: 200ms ease-in;
+    -o-transition: 200ms ease-in;
+    transition: 200ms ease-in;
+    text-decoration: underline;
 }

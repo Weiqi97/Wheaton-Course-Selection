@@ -41,7 +41,7 @@
 
     <!-- Fonts -->
     <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed">
+          href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed|Nanum+Gothic">
 
     <!-- Project javascript and CSS -->
     <script src="../static/js/script_base.js"></script>
@@ -270,8 +270,9 @@
             <div class="row">
                 <br>
                 <div class="col-lg-12 col-md-12" style="text-align: center;">
-                    <div class="footer_header"> Wheaton college</div>
-                    <div class="artist"><a
+                    <div class="footer_header">Wheaton college</div>
+
+                   <!-- <div class="artist"><a
                             href="https://github.com/Weiqi97/WheatonCourseSelection"><img
                             src="../static/images/github.png"
                             class="contact-icon"> Please visit our Github page</a>
@@ -283,11 +284,18 @@
                         norbu_phuntsho@wheatoncollege.edu
                     </div>
                     <div class="artist">&copy 2018 ALL RIGHTS RESERVED</div>
+                    -->
                 </div>
+
+                <center> <span class="footer-contact">
+                    <span> &copy 2018 ALL RIGHTS RESERVED &nbsp | &nbsp</span>
+                    <span > Contact Us &nbsp | &nbsp</span>
+
+                    <span class="icons"><a href="https://github.com/Weiqi97/WheatonCourseSelection">GitHub</a></span>
+                </span></center>
             </div>
         </div>
     </div>
-    <br>
 </footer>
 </html>
 
@@ -304,6 +312,7 @@
             "paging": false,
             "bSort": false,
             "bInfo": false,
+            "sDom": 'l<"toolbar">frtip',
             "columnDefs": [
                 {
                     "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
@@ -359,6 +368,13 @@
             }
         });
 
+         //function to display the semester title on the result table.
+
+            $("div.toolbar").html('<b>{{ semester}}</b>');
+
+
+
+
         // --------- Calendar ---------
         $("#calendar").fullCalendar({
             header: {left: "", center: "", right: ""},
@@ -368,13 +384,14 @@
             hiddenDays: [0, 6],    // hide Saturday and Sunday
             weekNumbers: false,  // don't show week numbers
             minTime: '8:00:00',   // display from 8 to 22
-            maxTime: '22:00:00',
+            maxTime: '23:00:00',
             slotDuration: '00:30:00', // 15 minutes for each row
             allDaySlot: false,        // don't show "all day" at the top
             editable: true,
             defaultDate: moment('2018-04-02'),
             eventStartEditable: false,
-            eventDurationEditable: false
+            eventDurationEditable: false,
+            height:740
         });
 
         //color and size of the dropdown for the course selection

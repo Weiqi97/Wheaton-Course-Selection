@@ -23,6 +23,7 @@ def drop_down_selections():
 
     if request.method == "GET":
         return render_template("index.html",
+                               semester=fetched_current_semester,
                                fetched_semesters=fetched_semesters,
                                fetched_subjects=fetched_subjects,
                                fetched_foundations=fetched_foundations,
@@ -44,6 +45,7 @@ def drop_down_selections():
                                   area=area)
 
         return render_template("index.html",
+                               semester=semester,
                                fetched_semesters=fetched_semesters,
                                fetched_subjects=fetched_subjects,
                                fetched_foundations=fetched_foundations,
