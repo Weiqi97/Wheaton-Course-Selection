@@ -105,6 +105,7 @@ $(function dataTableReady() {
         "paging": false,
         "bSort": false,
         "bInfo": false,
+        "sDom": 'l<"toolbar">frtip',
         "language": {
             "emptyTable": "No class meets your expectation."
         },
@@ -167,6 +168,7 @@ $(function dataTableReady() {
 $(function readyCalendar() {
     // --------- Calendar ---------
     $("#calendar").fullCalendar({
+        height: 740,
         header: {left: "", center: "", right: ""},
         // Display just full length of weekday, without dates.
         columnFormat: 'dddd',
@@ -174,7 +176,7 @@ $(function readyCalendar() {
         hiddenDays: [0, 6],    // hide Saturday and Sunday
         weekNumbers: false,  // don't show week numbers
         minTime: '8:00:00',   // display from 8 to 22
-        maxTime: '22:00:00',
+        maxTime: '23:00:00',
         slotDuration: '00:30:00', // 15 minutes for each row
         allDaySlot: false,        // don't show "all day" at the top
         editable: true,
@@ -260,3 +262,4 @@ $(function addClassReady() {
         }
     });
 });
+
