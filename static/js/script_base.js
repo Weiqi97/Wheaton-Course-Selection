@@ -93,9 +93,6 @@ function dayConverter(day) {
 }
 
 
-
-
-
 /**
  * Display the data table while hiding the row child.
  */
@@ -163,40 +160,47 @@ $(function dataTableReady() {
     });
 });
 
-    $(function readyCalendar() {
+/**
+ * Display the empty calendar.
+ */
+$(function readyCalendar() {
+    // --------- Calendar ---------
+    $("#calendar").fullCalendar({
+        header: {left: "", center: "", right: ""},
+        // Display just full length of weekday, without dates.
+        columnFormat: 'dddd',
+        defaultView: 'agendaWeek',
+        hiddenDays: [0, 6],    // hide Saturday and Sunday
+        weekNumbers: false,  // don't show week numbers
+        minTime: '8:00:00',   // display from 8 to 22
+        maxTime: '22:00:00',
+        slotDuration: '00:30:00', // 15 minutes for each row
+        allDaySlot: false,        // don't show "all day" at the top
+        editable: true,
+        defaultDate: moment('2018-04-02'),
+        eventStartEditable: false,
+        eventDurationEditable: false,
+        // Delete events on click.
 
-        // --------- Calendar ---------
-        $("#calendar").fullCalendar({
-            header: {left: "", center: "", right: ""},
-            // Display just full length of weekday, without dates.
-            columnFormat: 'dddd',
-            defaultView: 'agendaWeek',
-            hiddenDays: [0, 6],    // hide Saturday and Sunday
-            weekNumbers: false,  // don't show week numbers
-            minTime: '8:00:00',   // display from 8 to 22
-            maxTime: '22:00:00',
-            slotDuration: '00:30:00', // 15 minutes for each row
-            allDaySlot: false,        // don't show "all day" at the top
-            editable: true,
-            defaultDate: moment('2018-04-02'),
-            eventStartEditable: false,
-            eventDurationEditable: false,
-            // Delete events on click.
 
-
-            eventRender: function (event, element) {
-                element.find(".fc-bg").css("pointer-events", "none");
-                element.append("<div style='position:absolute;bottom:0;right:0' ><button type='button' id='btnDeleteEvent' class='btn btn-block btn-primary btn-flat'>X</button></div>");
-                element.find("#btnDeleteEvent").click(function () {
-                    $('#calendar').fullCalendar('removeEvents', event._id);
-                });
-            }
-
-        });
-        //color and size of the dropdown for the course selection
-
+        eventRender: function (event, element) {
+            element.find(".fc-bg").css("pointer-events", "none");
+            element.append(
+                "<div style='position:absolute;bottom:0;right:0'>" +
+                    "<button type='button' class='btn btn-warning' id='deleteEvent'>" +
+                        "<span class='glyphicon glyphicon-trash'></span>" +
+                    "</button>" +
+                "</div>");
+            element.find("#deleteEvent").click(function () {
+                $('#calendar').fullCalendar('removeEvents', event._id);
+            });
+        }
 
     });
+    //color and size of the dropdown for the course selection
+
+
+});
 
 /**
  * Add class from data table to calendar.
@@ -215,11 +219,11 @@ $(function addClassReady() {
         // TODO: Use trim
         // Check if the class has an assigned time.
         if (course_time.slice(0, 3) === "TBA") {
-            swal( {
+            swal({
                 type: "warning",
                 title: "This class does not have an assigned time!",
                 confirmButtonText: "Got it!"
-            } );
+            });
         }
 
         // If has a time, add to calendar.
@@ -254,8 +258,8 @@ $(function addClassReady() {
                         allDay: false
                     };
                     $("#calendar").fullCalendar("renderEvent", newEvent, "stick");
-                } )
-            } );
+                })
+            });
         }
-    } );
-} );
+    });
+});
