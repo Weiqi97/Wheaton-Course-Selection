@@ -44,7 +44,7 @@ function checkField() {
     }
 
     // Check if subject was empty, if so alert with proper message.
-    else if ($('#semester').val()) {
+    else if ($('#semester').val() === '') {
         swal({
             type: 'warning',
             title: 'Please select a semester!',
@@ -52,9 +52,7 @@ function checkField() {
         });
         return false;
     }
-    else {
-        return true;
-    }
+    else return true;
 }
 
 
@@ -107,6 +105,9 @@ $(function dataTableReady() {
         "paging": false,
         "bSort": false,
         "bInfo": false,
+        "language": {
+            "emptyTable": "No class meets your expectation."
+        },
         "columnDefs": [{
             "targets": [6, 7, 8, 9, 10, 11, 12, 13, 14],
             "visible": false
@@ -180,9 +181,8 @@ $(function readyCalendar() {
         defaultDate: moment('2018-04-02'),
         eventStartEditable: false,
         eventDurationEditable: false,
+
         // Delete events on click.
-
-
         eventRender: function (event, element) {
             element.find(".fc-bg").css("pointer-events", "none");
             element.append(
@@ -197,9 +197,6 @@ $(function readyCalendar() {
         }
 
     });
-    //color and size of the dropdown for the course selection
-
-
 });
 
 /**
