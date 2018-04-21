@@ -55,4 +55,4 @@ def drop_down_selections():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(threaded=True)
