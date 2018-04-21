@@ -270,31 +270,16 @@
     <div id="footer">
         <div class="container">
             <div class="row">
-                <br>
                 <div class="col-lg-12 col-md-12" style="text-align: center;">
                     <div class="footer_header">Wheaton college</div>
-
-                   <!-- <div class="artist"><a
-                            href="https://github.com/Weiqi97/WheatonCourseSelection"><img
-                            src="../static/images/github.png"
-                            class="contact-icon"> Please visit our Github page</a>
-                    </div>
-                    <div class="artist"><img
-                            src="../static/images/gmail-icon.png"
-                            class="contact-icon">
-                        feng_weiqi@wheatoncollege.edu &
-                        norbu_phuntsho@wheatoncollege.edu
-                    </div>
-                    <div class="artist">&copy 2018 ALL RIGHTS RESERVED</div>
-                    -->
                 </div>
-
-                <center> <span class="footer-contact">
-                    <span> &copy 2018 ALL RIGHTS RESERVED &nbsp | &nbsp</span>
-                    <span > Contact Us &nbsp | &nbsp</span>
-
-                    <span class="icons"><a href="https://github.com/Weiqi97/WheatonCourseSelection">GitHub</a></span>
-                </span></center>
+                <div class="col-lg-12 col-md-12" style="text-align: center;">
+                    <span class="footer-contact">
+                        <span> &copy 2018 ALL RIGHTS RESERVED &nbsp | &nbsp</span>
+                        <span>Contact Us &nbsp | &nbsp</span>
+                        <span><a href="https://github.com/Weiqi97/WheatonCourseSelection">GitHub Repo</a></span>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
@@ -302,6 +287,8 @@
 </html>
 
 <script type="text/javascript">
+    // Display the semester searched.
+    $(function() { $("div.toolbar").html('<b>{{ semester }}</b>'); } );
     // Change the style of drop downs.
     $('.selectpicker').selectpicker({
         style: 'btn-info',
