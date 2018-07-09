@@ -7,8 +7,8 @@
     "bootstrap-select": "^1.13.1",
     "jquery-confirm": "^3.3.2",
     "fullcalendar": "^3.9.0",
-    "bootstrap": "^4.1.1",
     "popper.js": "^1.14.3",
+    "bootstrap": "^4.1.1",
     "jquery": "^3.3.1"
   },
   "author": "Weiqi",
