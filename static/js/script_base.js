@@ -189,9 +189,9 @@ $(function readyCalendar() {
             element.find(".fc-bg").css("pointer-events", "none");
             element.append(
                 "<div style='position:absolute;bottom:0;right:0'>" +
-                    "<button type='button' class='btn btn-warning' id='deleteEvent'>" +
-                        "<span class='glyphicon glyphicon-trash'></span>" +
-                    "</button>" +
+                "<button type='button' class='btn btn-warning' id='deleteEvent'>" +
+                "<span class='glyphicon glyphicon-trash'></span>" +
+                "</button>" +
                 "</div>");
             element.find("#deleteEvent").click(function () {
                 $('#calendar').fullCalendar('removeEvents', event._id);
@@ -200,6 +200,7 @@ $(function readyCalendar() {
 
     });
 });
+
 
 /**
  * Add class from data table to calendar.
@@ -263,3 +264,19 @@ $(function addClassReady() {
     });
 });
 
+function checkSelectedSubjects() {
+    const subjects = $('#subjects').val();
+    if (subjects.length === 0) {
+        $.confirm(
+            {
+                theme: 'supervan',
+                title: 'Alert!',
+                content: 'Simple alert!'
+            }
+        )
+    }
+}
+
+$(function () {
+    $('#submit').click(checkSelectedSubjects)
+});
