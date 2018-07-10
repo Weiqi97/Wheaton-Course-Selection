@@ -23,7 +23,7 @@ def drop_down_selections():
 
     if request.method == "GET":
         return render_template("index.html",
-                               semester=fetched_current_semester,
+                               current_semester=fetched_current_semester,
                                fetched_semesters=fetched_semesters,
                                fetched_subjects=fetched_subjects,
                                fetched_foundations=fetched_foundations,
