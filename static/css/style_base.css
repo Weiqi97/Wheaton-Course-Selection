@@ -1,254 +1,292 @@
-body{
-    background: url("../images/whea.jpg") center;
+/* ---------------------- Page background settings ----------------------- */
+body {
+    background: url("../images/wheaton-campus-clear.jpg") center;
     background-size: cover;
 }
 
-.header{
+/* ----------------------------------------------------------------------- */
+
+/* ---------------------- Page header settings --------------------------- */
+.header {
     background-color: #0072bc;
     padding: 5px;
-    opacity:0.8;
+    opacity: 0.8;
 }
-.college_header{
+
+#header-content {
+    margin-bottom: 5px;
     font-family: 'Questrial', sans-serif, serif;
-    font-size: 3.5vw;
-    color:white;
-    text-align: center;margin-bottom:5px;
-}
-#add_button{
     text-align: center;
+    font-size: 3.5vw;
+    color: white;
 }
-.course-picker{
-    background-color: rgba(0,114,188,0.8);
+
+/* ----------------------------------------------------------------------- */
+
+/* ---------------------- Page selector settings ------------------------- */
+#course-picker {
+    background-color: rgba(0, 114, 188, 0.8);
 }
+
+/* Details for the search button. */
+#submit {
+    color: #EE6551;
+    font-weight: bold;
+    text-align: center;
+    background: transparent;
+    border: 2px solid #EE6E73;
+    font-family: sans-serif, serif;
+    transition: ease-in-out 300ms;
+    -o-transition: ease-in-out 300ms;
+    -moz-transition: ease-in-out 300ms;
+    -webkit-transition: ease-in-out 300ms;
+}
+
+#submit:hover {
+    color: white;
+    border: 2px solid #2AA21D;
+    transition: ease-in-out 300ms;
+    -o-transition: ease-in-out 300ms;
+    -moz-transition: ease-in-out 300ms;
+    -webkit-transition: ease-in-out 300ms;
+}
+
 .bootstrap-select .btn {
     background: transparent;
     color: white;
     -webkit-transition: ease-in-out 500ms;
     -moz-transition: ease-in-out 500ms;
-    -ms-transition: ease-in-out 500ms;
     -o-transition: ease-in-out 500ms;
     transition: ease-in-out 500ms;
-    font-family:sans-serif,serif ;
+    font-family: sans-serif, serif;
 }
+
 /*make the placeholder color for semesters and subjects white */
-.bootstrap-select.btn-group .dropdown-toggle .filter-option{
-    color:white;
+.bootstrap-select.btn-group .dropdown-toggle .filter-option {
+    color: white;
 }
+
 .bootstrap-select .dropdown-menu {
     margin: 0;
     -webkit-transition: ease-in-out 500ms;
     -moz-transition: ease-in-out 500ms;
-    -ms-transition: ease-in-out 500ms;
     -o-transition: ease-in-out 500ms;
     transition: ease-in-out 500ms;
 }
+
 ul.inner li {
     opacity: 0;
     animation-name: menu1;
     animation-duration: 400ms;
-    animation-fill-mode:forwards;
+    animation-fill-mode: forwards;
 }
+
 @keyframes menu1 {
-    from{opacity: 0;}
-    to{opacity:1;}
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
-/*search button for course selction on the header*/
-#submit{
-    width:7%;
-    padding-top:2px;
-    padding-bottom: 4px;
-    font-family:sans-serif,serif ;
+#add_button {
     text-align: center;
-    margin-left:5%;
-    color: #ee6551;
-    height:38px;
-    font-weight: bold;
-    background:transparent;
-    border: 1px solid #ee6e73;
-    border-radius:10px;
-    -webkit-transition: ease-in-out 300ms;
-    -moz-transition: ease-in-out 300ms;
-    -ms-transition: ease-in-out 300ms;
-    -o-transition: ease-in-out 300ms;
-    transition: ease-in-out 300ms;
-    margin-bottom:5px;
 }
 
-#submit:hover {
-    border: 2px solid #ee6e73;
-    -webkit-transition: ease-in-out 300ms;
-    -moz-transition: ease-in-out 300ms;
-    -ms-transition: ease-in-out 300ms;
-    -o-transition: ease-in-out 300ms;
-    transition: ease-in-out 300ms;
-    color:white;
-    border-radius:0px;
-    padding-top:2px;
-    padding-bottom: 4px;
-}
+
+
 /*the search icon beside the search/submit bar on the header*/
-#submit:hover .glyphicon-search{
+#submit:hover .fa-search {
     transform: rotateY(360deg);
     -webkit-transition: ease-in-out 500ms;
     -moz-transition: ease-in-out 500ms;
-    -ms-transition: ease-in-out 500ms;
     -o-transition: ease-in-out 500ms;
     transition: ease-in-out 500ms;
 }
+
 /*___________________________________________________*/
 
 /*sets the height of both the calendar and the result table*/
-.col-lg-6{
+.col-lg-6 {
     height: 750px;
 }
+
 /*___________________________________________________*/
 
 /*the table containing all the courses*/
-.result_table{
+.result_table {
     border: 1px solid black;
-    background:white;
+    background: white;
 }
-#result_table tr{
+
+#result_table tr {
     transition: all 150ms ease-in;
 }
-#result_table tr:hover{
+
+#result_table tr:hover {
     transition: all 150ms ease-in;
-    background: rgba(80,90,70,0.2);
-    );
+    background: rgba(80, 90, 70, 0.2);
+);
 }
+
 /*for the table header in result table*/
-.dataTables_scrollHead{
+.dataTables_scrollHead {
     border: 1px solid black;
 }
+
 /*"+" icon in the result table*/
-#add_button{
+#add_button {
     text-align: center;
 }
+
 /*this is to make the "+" icon rounded in the result table*/
-#add_button .glyphicon{
+#add_button .glyphicon {
     padding: 5px;
     border-radius: 50%;
     background: #2AA21D;
     color: white;
     font-size: 10px;
 }
+
 /*hide the additional information about the class*/
 div.slider {
     display: none;
 }
+
 table.dataTable tbody td.no-padding {
     padding: 0;
 }
+
 /*icon button for additional information about the class*/
 td.details-control {
     background: url("../images/angle-down.svg") no-repeat center center;
     background-size: 40% auto;
     cursor: pointer;
 }
+
 /*icon button for additional information about the class*/
 tr.shown td.details-control {
     background: url("../images/angle-up.svg") no-repeat center center;
     background-size: 40% auto;
     cursor: pointer;
-    opacity:0.4;
+    opacity: 0.4;
 }
+
 /*___________________________________________________*/
 
 /*outer/bigger body of the calendar*/
-.calendar{
-    background-color: rgba(255, 255, 255,0.9);
-    color:black;
+.calendar {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: black;
     border: 1px solid black;
 }
+
 /*for the calendar title*/
-.selected_semester{
+.selected_semester {
     text-align: center;
 }
+
 /*___________________________________________________*/
 
 /*the whole footer box*/
-footer{
-    margin-top:20px;
-    background:black;
-    opacity:0.8;
+footer {
+    margin-top: 20px;
+    background: black;
+    opacity: 0.8;
 }
+
 /*second inside footer box*/
-#footer{
-    padding-top:5px;
+#footer {
+    padding-top: 5px;
     margin-bottom: 0px;
 }
+
 /*footer header: Wheaton College*/
 .footer_header {
-    font-family: 'Questrial',sans-serif,serif;
+    font-family: 'Questrial', sans-serif, serif;
     font-size: 50px;
-   color: #0072bc;
+    color: #0072bc;
 }
 
 /*icon on the footer*/
-.contact-icon{
-    width:25px;
+.contact-icon {
+    width: 25px;
     border-radius: 50%;
 }
+
 /*names of the developer*/
-.artist{
+.artist {
     color: white;
 }
-.calendar{
-    background-color: rgba(255, 255, 255,0.9);
-    color:black;
+
+.calendar {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: black;
     border-color: black;
 }
+
 ul.inner li {
     opacity: 0;
     animation-name: menu1;
     animation-duration: 400ms;
-    animation-fill-mode:forwards;
+    animation-fill-mode: forwards;
 }
 
 @keyframes menu1 {
-    from{opacity: 0;}
-    to{opacity:1;}
-}
-select option[selected]{
-    background-color: #ee6e73;
-}
-.fc-time-grid .fc-slats td {
-    height:1.7em;
-}
-/*semester title for the result table*/
-div.toolbar{
-    margin-top:10px;
-    float:left;
-    padding-top:5px;
-    font-family: 'Nanum Gothic',sans-serif, serif;
-    font-size: 20px;
-    padding-left:10px;
-    color:#0072bc;
-    letter-spacing: 3px;
-}
-/*this is for the search bar in the result table*/
-.dataTables_wrapper .dataTables_filter{
-    margin-top:10px;
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
-.footer-contact{
-    color:white;
+select option[selected] {
+    background-color: #ee6e73;
+}
+
+.fc-time-grid .fc-slats td {
+    height: 1.7em;
+}
+
+/*semester title for the result table*/
+div.toolbar {
+    margin-top: 10px;
+    float: left;
+    padding-top: 5px;
+    font-family: 'Nanum Gothic', sans-serif, serif;
+    font-size: 20px;
+    padding-left: 10px;
+    color: #0072bc;
+    letter-spacing: 3px;
+}
+
+/*this is for the search bar in the result table*/
+.dataTables_wrapper .dataTables_filter {
+    margin-top: 10px;
+}
+
+.footer-contact {
+    color: white;
     opacity: 0.9;
 }
-.icons{
+
+.icons {
     margin-left: 10px;
-    margin-right:10px;
+    margin-right: 10px;
 }
-.icons a{
-    color:white;
+
+.icons a {
+    color: white;
     -webkit-transition: 200ms ease-in;
     -moz-transition: 200ms ease-in;
     -ms-transition: 200ms ease-in;
     -o-transition: 200ms ease-in;
     transition: 200ms ease-in;
 }
-.icons a:hover{
+
+.icons a:hover {
     color: #0072bc;
     -webkit-transition: 200ms ease-in;
     -moz-transition: 200ms ease-in;
@@ -256,18 +294,20 @@ div.toolbar{
     -o-transition: 200ms ease-in;
     transition: 200ms ease-in;
 }
-.gmail{
+
+.gmail {
     margin-left: 10px;
-    margin-right:10px;
-    background:transparent;
-    border:none;
+    margin-right: 10px;
+    background: transparent;
+    border: none;
     -webkit-transition: 200ms ease-in;
     -moz-transition: 200ms ease-in;
     -ms-transition: 200ms ease-in;
     -o-transition: 200ms ease-in;
     transition: 200ms ease-in;
 }
-.gmail:hover{
+
+.gmail:hover {
     color: #0072bc;
     -webkit-transition: 200ms ease-in;
     -moz-transition: 200ms ease-in;
