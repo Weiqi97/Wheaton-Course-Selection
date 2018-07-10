@@ -35,7 +35,7 @@ body {
     font-weight: bold;
     text-align: center;
     background: transparent;
-    border: 2px solid #EE6E73;
+    border: 1px solid #EE6E73;
     font-family: sans-serif, serif;
     transition: ease-in-out 300ms;
     -o-transition: ease-in-out 300ms;
@@ -45,7 +45,7 @@ body {
 
 #submit:hover {
     color: white;
-    border: 2px solid #2AA21D;
+    border: 1px solid #2AA21D;
 }
 
 #submit:hover .fa-search {
