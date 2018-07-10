@@ -4,7 +4,7 @@ body {
     background-size: cover;
 }
 
-/* ----------------------------------------------------------------------- */
+/* _______________________________________________________________________ */
 
 /* ---------------------- Page header settings --------------------------- */
 .header {
@@ -21,9 +21,10 @@ body {
     color: white;
 }
 
-/* ----------------------------------------------------------------------- */
+/* _______________________________________________________________________ */
 
 /* ---------------------- Page selector settings ------------------------- */
+/* Set the background. */
 #course-picker {
     background-color: rgba(0, 114, 188, 0.8);
 }
@@ -45,67 +46,37 @@ body {
 #submit:hover {
     color: white;
     border: 2px solid #2AA21D;
+}
+
+#submit:hover .fa-search {
+    transform: rotateY(360deg);
     transition: ease-in-out 300ms;
     -o-transition: ease-in-out 300ms;
     -moz-transition: ease-in-out 300ms;
     -webkit-transition: ease-in-out 300ms;
 }
 
+/* Set drop down details. */
 .bootstrap-select .btn {
+    color: white;
     background: transparent;
-    color: white;
-    -webkit-transition: ease-in-out 500ms;
-    -moz-transition: ease-in-out 500ms;
-    -o-transition: ease-in-out 500ms;
-    transition: ease-in-out 500ms;
     font-family: sans-serif, serif;
+    transition: ease-in-out 300ms;
+    -o-transition: ease-in-out 300ms;
+    -moz-transition: ease-in-out 300ms;
+    -webkit-transition: ease-in-out 300ms;
 }
 
-/*make the placeholder color for semesters and subjects white */
-.bootstrap-select.btn-group .dropdown-toggle .filter-option {
+/* Make the placeholder color always white. */
+.bootstrap-select .dropdown-toggle .filter-option-inner-inner {
     color: white;
 }
 
-.bootstrap-select .dropdown-menu {
-    margin: 0;
-    -webkit-transition: ease-in-out 500ms;
-    -moz-transition: ease-in-out 500ms;
-    -o-transition: ease-in-out 500ms;
-    transition: ease-in-out 500ms;
-}
-
-ul.inner li {
-    opacity: 0;
-    animation-name: menu1;
-    animation-duration: 400ms;
-    animation-fill-mode: forwards;
-}
-
-@keyframes menu1 {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
+/* _______________________________________________________________________ */
 
 #add_button {
     text-align: center;
 }
-
-
-
-/*the search icon beside the search/submit bar on the header*/
-#submit:hover .fa-search {
-    transform: rotateY(360deg);
-    -webkit-transition: ease-in-out 500ms;
-    -moz-transition: ease-in-out 500ms;
-    -o-transition: ease-in-out 500ms;
-    transition: ease-in-out 500ms;
-}
-
-/*___________________________________________________*/
 
 /*sets the height of both the calendar and the result table*/
 .col-lg-6 {
