@@ -1,24 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Head of the file. -->
+<!-------------------------- Packages for the project. ----------------------->
 <head>
     <meta charset="UTF-8">
     <title>Course Selection</title>
-
     <!-- Jquery -->
     <script src="../static/node_modules/jquery/dist/jquery.min.js"></script>
 
     <!-- Bootstrap -->
+    <script src="../static/node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="../static/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet"
           href="../static/node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet"
-          href="../static/node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
-
-    <!-- Sweet alert -->
-    <script src="../static/node_modules/sweetalert2/dist/sweetalert2.js"></script>
-    <link rel="stylesheet"
-          href="../static/node_modules/sweetalert2/dist/sweetalert2.css">
 
     <!-- Bootstrap Select -->
     <script src="../static/node_modules/bootstrap-select/dist/js/bootstrap-select.js"></script>
@@ -26,18 +19,18 @@
           href="../static/node_modules/bootstrap-select/dist/css/bootstrap-select.css">
 
     <!-- Data Table -->
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
     <link rel="stylesheet"
-          href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+          href="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.2/b-colvis-1.5.1/r-2.2.2/sc-1.5.0/datatables.min.css"/>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.2/b-colvis-1.5.1/r-2.2.2/sc-1.5.0/datatables.min.js"></script>
 
     <!-- Full Calendar -->
     <script src='../static/node_modules/moment/min/moment.min.js'></script>
     <script src='../static/node_modules/fullcalendar/dist/fullcalendar.js'></script>
     <link rel='stylesheet'
           href='../static/node_modules/fullcalendar/dist/fullcalendar.css'/>
-    <link rel='stylesheet'
-          href='../static/node_modules/fullcalendar/dist/fullcalendar.print.css'
-          media="print"/>
+    <link rel='stylesheet' media="print"
+          href='../static/node_modules/fullcalendar/dist/fullcalendar.print.css'/>
 
     <!-- Fonts -->
     <link rel="stylesheet"
@@ -49,13 +42,15 @@
     <script src="../static/js/script_base.js"></script>
     <link rel="stylesheet" href="../static/css/style_base.css">
 </head>
+<!---------------------------------------------------------------------------->
 
+<!-------------------------- Body of the file. ------------------------------->
 <body>
-<!-- Header of the page. -->
+<!-- Header of the file. -->
 <div class="container-fluid header">
     <br>
     <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 college_header">
+        <div class="col" id="header-content">
             <b>Wheaton College</b>
             <sub> - The right tool to help you pick classes</sub>
         </div>
@@ -64,65 +59,63 @@
 </div>
 
 <!-- Selection drop downs. -->
-<div class="container-fluid course-picker">
+<div class="container-fluid" id="course-picker">
     <div class="row">
-        <form name="Selections" method="post">
-            <select class="selectpicker col-lg-2 col-md-2" id="semester"
-                    name="semester" title="Semesters">
-                {% for name in fetched_semesters.index %}
-                    <option value="{{ name }}">{{ name }}</option>"
-                {% endfor %}
-            </select>
+        <select class="selectpicker col"
+                id="semester" name="semester" title="Semesters">
+            {% for name in fetched_semesters.index %}
+                <option value="{{ name }}">{{ name }}</option>"
+            {% endfor %}
+        </select>
 
-            <select class="selectpicker col-lg-2 col-md-2"
-                    data-live-search="true" id="subjects" name="subjects"
-                    title="Subject(s)" multiple="multiple">
-                {% for name, value in fetched_subjects.iteritems() %}
-                    <option value="{{ value }}">{{ name }}</option>"
-                {% endfor %}
-            </select>
+        <select class="selectpicker col"
+                data-live-search="true" id="subjects" name="subjects"
+                title="Subject(s)" multiple="multiple">
+            {% for name, value in fetched_subjects.iteritems() %}
+                <option value="{{ value }}">{{ name }}</option>"
+            {% endfor %}
+        </select>
 
-            <label for="foundation"></label>
-            <select class="selectpicker col-lg-2 col-md-2" id="foundation"
-                    name="foundation">
-                {% for name, value in fetched_foundations.iteritems() %}
-                    <option value="{{ value }}">{{ name }}</option>"
-                {% endfor %}
-            </select>
+        <label for="foundation"></label>
+        <select class="selectpicker col" id="foundation"
+                name="foundation">
+            {% for name, value in fetched_foundations.iteritems() %}
+                <option value="{{ value }}">{{ name }}</option>"
+            {% endfor %}
+        </select>
 
-            <label for="division"></label>
-            <select class="selectpicker col-lg-2 col-md-2" id="division"
-                    name="division">
-                {% for name, value in fetched_divisions.iteritems() %}
-                    <option value="{{ value }}">{{ name }}</option>"
-                {% endfor %}
-            </select>
+        <label for="division"></label>
+        <select class="selectpicker col" id="division" name="division">
+            {% for name, value in fetched_divisions.iteritems() %}
+                <option value="{{ value }}">{{ name }}</option>"
+            {% endfor %}
+        </select>
 
-            <label for="area"></label>
-            <select class="selectpicker col-lg-2 col-md-2" id="area"
-                    name="area">
-                {% for name, value in fetched_areas.iteritems() %}
-                    <option value="{{ value }}">{{ name }}</option>"
-                {% endfor %}
-            </select>
+        <label for="area"></label>
+        <select class="selectpicker col" id="area" name="area">
+            {% for name, value in fetched_areas.iteritems() %}
+                <option value="{{ value }}">{{ name }}</option>"
+            {% endfor %}
+        </select>
 
-            <button type="submit" id="submit" onclick="return checkField()">
-                Search <i class="glyphicon glyphicon-search"></i>
+        <div class="col text-center">
+            <button class="btn btn-danger" type="submit" id="submit">
+                Search <i class="fas fa-search"></i>
             </button>
-        </form>
+        </div>
     </div>
 </div>
 <br>
 
 <!-- This part is for body of the page (Calendar, Table). -->
-<div class="container-fluid">
+<div class="container-fluid row">
     <!-- This part displays the calendar. -->
-    <div class="col-lg-6 col-md-6 calendar">
+    <div class="col">
         <div id="calendar"></div>
     </div>
 
     <!--This is for displaying the course schedule-->
-    <div class="col-lg-6 col-md-6 result_table">
+    <div class="col result_table">
         <table class="table table-striped nowrap" id="result_table"
                style="width:100%;">
             <!-- Set up table headers. -->
