@@ -64,7 +64,10 @@
         <select class="selectpicker col"
                 id="semester" name="semester" title="Semesters">
             {% for name in fetched_semesters.index %}
-                <option value="{{ name }}">{{ name }}</option>"
+                <option value="{{ name }}"
+                        {{ "selected" if name == current_semester }}>
+                    {{ name }}
+                </option>
             {% endfor %}
         </select>
 
@@ -104,8 +107,9 @@
             </button>
         </div>
     </div>
+    <br>
 </div>
-<br>
+
 
 <!-- This part is for body of the page (Calendar, Table). -->
 <div class="container-fluid row">
@@ -284,11 +288,11 @@
 <script type="text/javascript">
     // Display the semester searched.
     $(function () {
-        $("div.toolbar").html('<b>{{ semester }}</b>');
+        // Change the style of drop downs.
+        $('.selectpicker').selectpicker({
+            style: 'btn-info'
+        });
+        $("div.toolbar").html('<b>{{ current_semester }}</b>');
     });
-    // Change the style of drop downs.
-    $('.selectpicker').selectpicker({
-        style: 'btn-info',
-        size: 10
-    });
+
 </script>
