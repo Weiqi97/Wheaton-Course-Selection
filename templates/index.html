@@ -168,34 +168,22 @@
                     <td class="details-control" id="show_detail"></td>
 
                     <!-- Column of class number. -->
-                    <td>
-                        <a target="_blank" href={{ row["number"].link }}>
-                            {{ row["number"].num }}</a>
-                    </td>
+                    <td>{{ row["number"] }}</td>
 
                     <!-- Column of class title. -->
                     <td>{{ row["title"] }}</td>
 
                     <!-- Column of add class to calendar button. -->
                     <td id="add_button">
-                        <button class="add_class fas fa-plus-circle"></button>
+                        <button class="add-class fas fa-plus-circle"></button>
                     </td>
 
 
                     <!-- Column of class time. -->
-                    <td>
-                        {% for time in row["time"] %}
-                            {{ time }}<br>
-                        {% endfor %}
-                    </td>
+                    <td>{{ row["time"] }}</td>
 
                     <!-- Column of class instructor(s). -->
-                    <td>
-                        {% for instructor in row["instructor"] %}
-                            <a target="_blank" href={{ instructor.link }}>
-                                {{ instructor.name }}</a><br>
-                        {% endfor %}
-                    </td>
+                    <td>{{ row["instructor"] }}</td>
 
 
                     <!-- Column of class CRN. -->
@@ -203,39 +191,27 @@
 
                     <!-- Column of exam. -->
                     <td>
-                        {% if row["exam"].link %}
-                            Exam:
-                            <a target="_blank" href={{ row["exam"].link }}>
-                                {{ row["exam"].letter }}</a>
+                        {% if row["exam"] %}
+                            Exam:{{ row["exam"] }}
                         {% endif %}
                     </td>
 
                     <!-- Column of connection. -->
                     <td>
                         {% if row["connection"] %}
-                            Connection(s):
-                            {% for connection in row["connection"] %}
-                                <a target="_blank" href={{ connection.link }}>
-                                    {{ connection.num }}</a>
-                            {% endfor %}
+                            Connection(s): {{ connection }}
                         {% endif %}
                     </td>
 
                     <!-- Column of class location. -->
                     <td>
                         {% if row["location"] %}
-                            Location:
-                            {% for location in row["location"] %}
-                                {{ location }}
-                            {% endfor %}
+                            Location: {{ location }}
                         {% endif %}
                     </td>
 
                     <!-- Column of textbook links. -->
-                    <td>
-                        <a target="_blank"
-                           href={{ row["textbook"] }}>Textbook</a>
-                    </td>
+                    <td>{{ row["textbook"] }}</td>
 
                     <!-- Column of class found, div, area info. -->
                     <td>

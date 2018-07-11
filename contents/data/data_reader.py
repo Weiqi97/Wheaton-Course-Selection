@@ -4,8 +4,11 @@
 import pandas as pd
 
 
-def read_data(semester: str, subjects: list, foundation: str, division: str,
-              area: str) -> pd.DataFrame:
+def read_data(area: str,
+              semester: str,
+              subjects: list,
+              division: str,
+              foundation: str) -> str:
     """Read data from saved file and return values based on users request.
 
     :param semester: User selected semester value.
@@ -46,7 +49,7 @@ def read_data(semester: str, subjects: list, foundation: str, division: str,
         data_frame = data_frame.loc[data_frame["area"] == area]
 
     # Return refined data frame.
-    return data_frame
+    return data_frame.to_html
 
 
 def read_subjects() -> pd.Series:
