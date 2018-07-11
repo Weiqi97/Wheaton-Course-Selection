@@ -240,10 +240,7 @@ def get_seats_info(seat_max: str,
     :param seat_wait: Number of wait list of the class.
     :return: A HTML formatted string holds all input information.
     """
-    return f"<td>{seat_max}</td>" \
-           f"<td>{seat_taken}</td>" \
-           f"<td>{seat_available}</td>" \
-           f"<td>{seat_wait}</td>"
+    return f"{seat_max} {seat_taken} {seat_available} {seat_wait}"
 
 
 def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
@@ -255,17 +252,16 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
     """
     # Set data frame that holds all class information.
     class_info_frame = pd.DataFrame(
-        columns=["", "subject", "number", "exam", "title", "CRN", "time",
-                 "seats",
-                 "location", "instructor", "foundation", "division", "area",
-                 "connection", "textbook", "special_info", "hidden_days"]
+        columns=["Subject", "Course Number", "Title", "Time", "Exam", "Seats",
+                 "CRN", "Location", "Instructor", "Foundation", "Division",
+                 "Area", "Connection", "Textbook", "Special", "Hidden"]
     )
 
     # Get class seats information and store in the data frame..
     class_seats_info = [each_class[-1].find_all("td")
                         for each_class in class_info_list]
 
-    class_info_frame["seats"] = [
+    class_info_frame["Seats"] = [
         get_seats_info(
             seat_max=str(each_class[1].contents[0]),
             seat_taken=str(each_class[2].contents[0]),
@@ -276,7 +272,7 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
         for each_class in class_seats_info]
 
     # Get class special information, if any stores in the data frame.
-    class_info_frame["special_info"] = [
+    class_info_frame["Special"] = [
         each_class[1].find_all("td")[1].contents[0].replace("\n", "")
         if len(each_class) > 2 else ""
         for each_class in class_info_list
@@ -287,52 +283,52 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
                         for each_class in class_info_list]
 
     # Set all basic information.
-    class_info_frame["subject"] = subject
+    class_info_frame["Subject"] = subject
 
-    class_info_frame["number"] = \
+    class_info_frame["Course Number"] = \
         get_number_info(class_basic_info=class_basic_info)
 
-    class_info_frame["exam"] = \
+    class_info_frame["Exam"] = \
         get_exam_info(class_basic_info=class_basic_info)
 
-    class_info_frame["title"] = [str(each_class[2].contents[0])
+    class_info_frame["Title"] = [str(each_class[2].contents[0])
                                  for each_class in class_basic_info]
 
     class_info_frame["CRN"] = [str(each_class[3].contents[0])
                                for each_class in class_basic_info]
 
-    class_info_frame["time"] = \
+    class_info_frame["Time"] = \
         get_time_info(class_basic_info=class_basic_info)
 
-    class_info_frame["location"] = \
+    class_info_frame["Location"] = \
         get_location_info(class_basic_info=class_basic_info)
 
-    class_info_frame["instructor"] = \
+    class_info_frame["Instructor"] = \
         get_instructor_info(class_basic_info=class_basic_info)
 
-    class_info_frame["foundation"] = \
+    class_info_frame["Foundation"] = \
         [each_class[6].contents[0].replace("\n", "")
          for each_class in class_basic_info]
 
-    class_info_frame["division"] = \
+    class_info_frame["Division"] = \
         [each_class[7].contents[0].replace("\n", "")
          for each_class in class_basic_info]
 
-    class_info_frame["area"] = \
+    class_info_frame["Area"] = \
         [each_class[8].contents[0].replace("\n", "")
          for each_class in class_basic_info]
 
-    class_info_frame["connection"] = \
+    class_info_frame["Connection"] = \
         [get_connection_info(each_class=each_class)
          for each_class in class_basic_info]
 
-    class_info_frame["textbook"] = \
+    class_info_frame["Textbook"] = \
         [to_html_link(title="Textbook",
                       link=each_class[10].find("a")['href'])
          for each_class in class_basic_info]
 
-    class_info_frame["hidden_days"] = \
-        get_hidden_days_info(class_info_frame["time"])
+    class_info_frame["Hidden"] = \
+        get_hidden_days_info(class_info_frame["Time"])
 
     return class_info_frame
 
