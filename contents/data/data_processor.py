@@ -4,7 +4,8 @@
 import pandas as pd
 from bs4 import BeautifulSoup
 from typing import List, Optional
-from contents.constants import base_url, SKIP_BEGINNING, TIME_FILTER
+from contents.constants import BASE_URL, SKIP_BEGINNING, TIME_FILTER, \
+    TO_CALENDAR
 from contents.data.data_fetcher import fetch_semesters, fetch_subjects, \
     fetch_web_content
 
@@ -78,7 +79,7 @@ def get_number_info(class_basic_info: list) -> List[str]:
         """
         number_info = each_class[0].find("a")
         return to_html_link(title=str(number_info.contents[0]),
-                            link=base_url + number_info["href"])
+                            link=BASE_URL + number_info["href"])
 
     return [
         number_info_helper(each_class) for each_class in class_basic_info
@@ -103,7 +104,7 @@ def get_exam_info(class_basic_info: list) -> List[str]:
         # Error checking.
         if exam_info.contents:
             return to_html_link(title=str(exam_info.contents[0]),
-                                link=base_url + exam_info['href'])
+                                link=BASE_URL + exam_info['href'])
         else:
             return ""
 
@@ -197,7 +198,7 @@ def get_connection_info(each_class: BeautifulSoup) -> str:
     connection_info = each_class[9].find_all("a")
     return " ".join(
         [to_html_link(title=str(each_class_info.contents[0]),
-                      link=base_url + each_class_info['href'])
+                      link=BASE_URL + each_class_info['href'])
          for each_class_info in connection_info if connection_info]
     )
 
@@ -249,9 +250,9 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
     """
     # Set data frame that holds all class information.
     class_info_frame = pd.DataFrame(
-        columns=["Subject", "Course Number", "Title", "Time", "Exam", "CRN",
-                 "Location", "Instructor", "Foundation", "Division", "Seat",
-                 "Area", "Connection", "Textbook", "Special", "Hidden"]
+        columns=["", "Subject", "Course Number", "Title", "Time", "Exam",
+                 "CRN", "Location", "Instructor", "Foundation", "Division",
+                 "Seat", "Area", "Connection", "Textbook", "Special", "Hidden"]
     )
 
     # Get class seats information and store in the data frame..
@@ -280,6 +281,8 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
                         for each_class in class_info_list]
 
     # Set all basic information.
+    class_info_frame[""] = TO_CALENDAR
+
     class_info_frame["Subject"] = subject
 
     class_info_frame["Course Number"] = \

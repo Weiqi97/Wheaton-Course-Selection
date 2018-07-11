@@ -3,7 +3,7 @@
 
 import pandas as pd
 import mechanicalsoup
-from contents.constants import url, SEMESTER_NUMBER
+from contents.constants import URL, SEMESTER_NUMBER
 
 
 def fetch_web_content(subject: str, semester: str) -> str:
@@ -15,7 +15,7 @@ def fetch_web_content(subject: str, semester: str) -> str:
     """
     # Set up the fake browser object and open the target website.
     browser = mechanicalsoup.StatefulBrowser()
-    web = browser.open(url)
+    web = browser.open(URL)
 
     # Remove all submit button but the one called "Search Schedule"
     for each_input in web.soup.find_all("input"):
@@ -44,7 +44,7 @@ def fetch_semesters() -> pd.Series:
     """
     # Set up the fake browser object and open the target website.
     browser = mechanicalsoup.StatefulBrowser()
-    web_soup = browser.open(url).soup
+    web_soup = browser.open(URL).soup
 
     # Find the correct select tag.
     select_box = web_soup.find("select", {"name": "schedule_beginterm"})
@@ -69,7 +69,7 @@ def fetch_subjects() -> pd.Series:
     """
     # Set up the fake browser object and open the target website.
     browser = mechanicalsoup.StatefulBrowser()
-    web_soup = browser.open(url).soup
+    web_soup = browser.open(URL).soup
 
     # Find the correct select tag.
     select_box = web_soup.find("select", {"name": "subject_sch"})
@@ -94,7 +94,7 @@ def fetch_foundations() -> pd.Series:
     """
     # Set up the fake browser object and open the target website.
     browser = mechanicalsoup.StatefulBrowser()
-    web_soup = browser.open(url).soup
+    web_soup = browser.open(URL).soup
 
     # Find the correct select tag.
     select_box = web_soup.find("select", {"name": "foundation_sch"})
@@ -119,7 +119,7 @@ def fetch_divisions() -> pd.Series:
     """
     # Set up the fake browser object and open the target website.
     browser = mechanicalsoup.StatefulBrowser()
-    web_soup = browser.open(url).soup
+    web_soup = browser.open(URL).soup
 
     # Find the correct select tag.
     select_box = web_soup.find("select", {"name": "division_sch"})
@@ -144,7 +144,7 @@ def fetch_areas() -> pd.Series:
     """
     # Set up the fake browser object and open the target website.
     browser = mechanicalsoup.StatefulBrowser()
-    web_soup = browser.open(url).soup
+    web_soup = browser.open(URL).soup
 
     # Find the correct select tag.
     select_box = web_soup.find("select", {"name": "area_sch"})
@@ -167,7 +167,7 @@ def fetch_current_semester() -> pd.Series:
     """
     # Set up the fake browser object and open the target website.
     browser = mechanicalsoup.StatefulBrowser()
-    web_soup = browser.open(url).soup
+    web_soup = browser.open(URL).soup
 
     # Find the correct select tag.
     select_box = web_soup.find("select", {"name": "schedule_beginterm"})
