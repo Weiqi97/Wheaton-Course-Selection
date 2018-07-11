@@ -38,15 +38,16 @@ function format(CRN, Exam, Connection, Location, Textbook, Info, Seats, Special)
 function timeConverter(time) {
   if (time.includes('A')) {
     if (time[2] === ':')
-      return time.slice(0, 5) + ':00';
+      return `${time.slice(0, 5)}:00`;
     else
-      return '0' + time.slice(0, 4) + ':00';
+      return `0${time.slice(0, 4)}:00`;
   }
   else {
     if (Number(time.slice(0, 2)) !== 12) {
-      return String(Number(time.slice(0, 1)) + 12) + time.slice(1, 4) + ':00';
+      // Todo: What does the string number do?
+      return `${String(Number(time.slice(0, 1)) + 12)}${time.slice(1, 4)}:00`;
     }
-    return time.slice(0, 5) + ':00';
+    return `${time.slice(0, 5)}:00`;
   }
 }
 
@@ -136,51 +137,50 @@ function dayConverter(day) {
 //   });
 // });
 //
-// /**
-//  * Display the empty calendar.
-//  */
-// $(function readyCalendar() {
-//   // --------- Calendar ---------
-//   $("#calendar").fullCalendar({
-//     height: 740,
-//     header: {left: "", center: "", right: ""},
-//     // Display just full length of weekday, without dates.
-//     columnFormat: 'dddd',
-//     defaultView: 'agendaWeek',
-//     hiddenDays: [0, 6],    // hide Saturday and Sunday
-//     weekNumbers: false,  // don't show week numbers
-//     minTime: '8:00:00',   // display from 8 to 22
-//     maxTime: '23:00:00',
-//     slotDuration: '00:30:00', // 15 minutes for each row
-//     allDaySlot: false,        // don't show "all day" at the top
-//     editable: true,
-//     defaultDate: moment('2018-04-02'),
-//     eventStartEditable: false,
-//     eventDurationEditable: false,
-//
-//     // Delete events on click.
-//     eventRender: function (event, element) {
-//       element.find(".fc-bg").css("pointer-events", "none");
-//       element.append(
-//         "<div style='position:absolute;bottom:0;right:0'>" +
-//         "<button type='button' class='btn btn-warning' id='deleteEvent'>" +
-//         "<span class='glyphicon glyphicon-trash'></span>" +
-//         "</button>" +
-//         "</div>");
-//       element.find("#deleteEvent").click(function () {
-//         $('#calendar').fullCalendar('removeEvents', event._id);
-//       });
-//     }
-//
-//   });
-// });
+/**
+ * Display the empty calendar.
+ */
+$(function readyCalendar() {
+  // --------- Calendar ---------
+  $("#calendar").fullCalendar({
+    height: 740,
+    header: {left: "", center: "", right: ""},
+    // Display just full length of weekday, without dates.
+    columnFormat: 'dddd',
+    defaultView: 'agendaWeek',
+    hiddenDays: [0, 6],    // hide Saturday and Sunday
+    weekNumbers: false,  // don't show week numbers
+    minTime: '8:00:00',   // display from 8 to 22
+    maxTime: '23:00:00',
+    slotDuration: '00:30:00', // 15 minutes for each row
+    allDaySlot: false,        // don't show "all day" at the top
+    editable: true,
+    defaultDate: moment('2018-04-02'),
+    eventStartEditable: false,
+    eventDurationEditable: false,
+
+    // Delete events on click.
+    eventRender: function (event, element) {
+      element.find(".fc-bg").css("pointer-events", "none");
+      element.append(
+        `<div style='position: absolute; bottom: 1px; right: 1px'>
+            <button id='deleteEvent' class='fas fa-trash-alt'></button>
+        </div>`
+      );
+      element.find("#deleteEvent").click(function () {
+        $('#calendar').fullCalendar('removeEvents', event._id);
+      });
+    }
+
+  });
+});
 
 
 /**
  * Add class from data table to calendar.
  */
 $(function addClassReady() {
-  $('.add_class').click(function () {
+  $('.to-calendar').click(function () {
     var row = $(this).closest("tr");  // Finds the closest row <tr>
     var tds = row.find("td");         // Finds all children <td> elements
     // TODO: unpack td function
@@ -242,14 +242,14 @@ $(function addClassReady() {
  * Run these functions when HTML finish loading.
  */
 $(function () {
+  // On click check for submit.
   $('#submit').click(utility.checkSelectedSubjects);
   utility.sendAjaxRequest('/classes', utility.jsonifyForm())
     .done(
       function (response) {
-        console.log(response);
-        const tableHolder = $('#class-table');
+        const tableHolder = $('#course-container');
         tableHolder.html(response);
-        classTable.convertDataTable(tableHolder.children())
+        classTable.convertDataTable(tableHolder.children());
       }
     )
 });
