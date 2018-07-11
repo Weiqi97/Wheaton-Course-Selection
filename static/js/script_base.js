@@ -235,7 +235,11 @@ $(function addClassReady() {
     });
 });
 
+/**
+ * Check if any subject was selected.
+ */
 function checkSelectedSubjects() {
+    // Get selected subjects from the drop down.
     const subjects = $('#subjects').val();
     // Check if no subject was selected.
     if (subjects.length === 0) {
@@ -258,6 +262,9 @@ function checkSelectedSubjects() {
     }
 }
 
+/**
+ * Run these functions when HTML finish loading.
+ */
 $(function () {
     $('#submit').click(checkSelectedSubjects)
 });
