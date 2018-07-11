@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 from contents.data.data_reader import read_data, read_semesters, \
     read_subjects, read_foundations, read_divisions, read_areas, \
     read_current_semester
@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.debug = True
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET"])
 def main():
     """Render the main HTML page.
 

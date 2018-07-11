@@ -55,7 +55,9 @@
           href="https://fonts.googleapis.com/css?family=Questrial|Roboto+Condensed|Nanum+Gothic">
 
     <!-- Project javascript and CSS -->
-    <script type="text/javascript" src="../static/js/script_base.js"></script>
+    <script type="module" src="../static/js/script_base.js"></script>
+    <script type="module" src="../static/js/class_table.js"></script>
+    <script type="module" src="../static/js/utility.js"></script>
     <link rel="stylesheet" href="../static/css/style_base.css">
 </head>
 <!---------------------------------------------------------------------------->
@@ -129,132 +131,15 @@
 
 <!-- This part is for body of the page (Calendar, Table). -->
 <div class="container-fluid row">
-    <!-- This part displays the calendar. -->
-    <div class="col">
-        <div id="calendar"></div>
-    </div>
+    <!-- This part holds the calendar. -->
+    <div class="col-6" id="calendar"></div>
 
-    <!--This is for displaying the course schedule-->
-    <div class="col result_table">
-        <table class="table table-striped nowrap" id="result_table"
-               style="width:100%;">
-            <!-- Set up table headers. -->
-            <thead>
-            <tr>
-                <th></th>
-                <th>Number</th>
-                <th>Title</th>
-                <th id="add_button"></th>
-                <th>Time</th>
-                <th>Instructor</th>
-                <th>CRN</th>
-                <th>Exam</th>
-                <th>Connection</th>
-                <th>Location</th>
-                <th>Textbook</th>
-                <th>Info</th>
-                <th>Seats</th>
-                <th>Special</th>
-                <th>Hidden Days</th>
-            </tr>
-            </thead>
-
-            <!-- Set up table columns. -->
-            <tbody>
-            {% for _, row in selected_data.iterrows() %}
-                <tr>
-
-                    <!-- Column of show details button. -->
-                    <td class="details-control" id="show_detail"></td>
-
-                    <!-- Column of class number. -->
-                    <td>{{ row["number"] }}</td>
-
-                    <!-- Column of class title. -->
-                    <td>{{ row["title"] }}</td>
-
-                    <!-- Column of add class to calendar button. -->
-                    <td id="add_button">
-                        <button class="add-class fas fa-plus-circle"></button>
-                    </td>
-
-
-                    <!-- Column of class time. -->
-                    <td>{{ row["time"] }}</td>
-
-                    <!-- Column of class instructor(s). -->
-                    <td>{{ row["instructor"] }}</td>
-
-
-                    <!-- Column of class CRN. -->
-                    <td>CRN: {{ row["CRN"] }}</td>
-
-                    <!-- Column of exam. -->
-                    <td>
-                        {% if row["exam"] %}
-                            Exam:{{ row["exam"] }}
-                        {% endif %}
-                    </td>
-
-                    <!-- Column of connection. -->
-                    <td>
-                        {% if row["connection"] %}
-                            Connection(s): {{ connection }}
-                        {% endif %}
-                    </td>
-
-                    <!-- Column of class location. -->
-                    <td>
-                        {% if row["location"] %}
-                            Location: {{ location }}
-                        {% endif %}
-                    </td>
-
-                    <!-- Column of textbook links. -->
-                    <td>{{ row["textbook"] }}</td>
-
-                    <!-- Column of class found, div, area info. -->
-                    <td>
-                        {% if row["foundation"] %}
-                            _Foundation: {{ row["foundation"] }}!
-                        {% endif %}
-
-                        {% if row["division"] %}
-                            _Division: {{ row["division"] }}!
-                        {% endif %}
-
-                        {% if row["area"] %}
-                            _Area: {{ row["area"] }}!
-                        {% endif %}
-                    </td>
-
-                    <!-- Column of seats info. -->
-                    <td>
-                        _{{ row["seats"].max }}!
-                        _{{ row["seats"].taken }}!
-                        _{{ row["seats"].avail }}!
-                        _{{ row["seats"].wait_list }}!
-                    </td>
-
-                    <!-- Column of special note. -->
-                    <td>
-                        {% if row["special_info"] %}
-                            _{{ row["special_info"] }}!
-                        {% endif %}
-                    </td>
-
-                    <!-- Column of hidden days. -->
-                    <td>{{ row["hidden_days"] }}</td>
-
-                </tr>{% endfor %}
-            </tbody>
-        </table>
-    </div>
+    <!--This part holds the course schedule. -->
+    <div class="col-6" id="class-table"></div>
 </div>
 </body>
 
 <!-- This part sets the footer of the page. -->
-<br>
 <footer>
     <div id="footer">
         <div class="container">

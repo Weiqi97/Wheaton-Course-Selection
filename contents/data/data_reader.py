@@ -49,7 +49,7 @@ def read_data(area: str,
         data_frame = data_frame.loc[data_frame["area"] == area]
 
     # Return refined data frame.
-    return data_frame.to_html
+    return data_frame.to_html(classes="table table-striped table-bordered")
 
 
 def read_subjects() -> pd.Series:

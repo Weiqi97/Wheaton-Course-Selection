@@ -1,11 +1,10 @@
 # coding=utf-8
 """This file will process web content to human readable data."""
 
-import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
 from typing import List, Optional
-from contents.constants import base_url, SeatInfo, SKIP_BEGINNING, TIME_FILTER
+from contents.constants import base_url, SKIP_BEGINNING, TIME_FILTER
 from contents.data.data_fetcher import fetch_semesters, fetch_subjects, \
     fetch_web_content
 
@@ -61,7 +60,7 @@ def to_html_link(title: str, link: str) -> str:
     :param link: Url of the link.
     :return: HTML formatted link.
     """
-    return f"<a target='_blank' href='{link}'>{title}</a>"
+    return f'<a target="_blank" href="{link}">{title}</a>'
 
 
 def get_number_info(class_basic_info: list) -> List[str]:
@@ -191,7 +190,7 @@ def get_instructor_info(class_basic_info: list) -> List[str]:
     ]
 
 
-def get_conx_info(each_class: BeautifulSoup) -> str:
+def get_connection_info(each_class: BeautifulSoup) -> str:
     """Get class connection information.
 
     :param each_class: A beautiful soup object that contains class information.
@@ -229,6 +228,24 @@ def get_hidden_days_info(class_times: List[list]) -> List[str]:
             for class_time in class_times]
 
 
+def get_seats_info(seat_max: str,
+                   seat_taken: str,
+                   seat_available: str,
+                   seat_wait: str) -> str:
+    """Convert seats info to HTML format.
+
+    :param seat_max: Number of max seats of the class.
+    :param seat_taken: Number of taken seats of the class.
+    :param seat_available: Number of available seats of the class.
+    :param seat_wait: Number of wait list of the class.
+    :return: A HTML formatted string holds all input information.
+    """
+    return f"<td>{seat_max}</td>" \
+           f"<td>{seat_taken}</td>" \
+           f"<td>{seat_available}</td>" \
+           f"<td>{seat_wait}</td>"
+
+
 def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
     """
     This function will refine class information from the web page.
@@ -249,10 +266,12 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
                         for each_class in class_info_list]
 
     class_info_frame["seats"] = [
-        SeatInfo(max=str(each_class[1].contents[0]),
-                 taken=str(each_class[2].contents[0]),
-                 avail=str(each_class[3].contents[0]),
-                 wait_list=str(each_class[4].contents[0]))
+        get_seats_info(
+            seat_max=str(each_class[1].contents[0]),
+            seat_taken=str(each_class[2].contents[0]),
+            seat_available=str(each_class[3].contents[0]),
+            seat_wait=str(each_class[4].contents[0])
+        )
         if each_class else ""
         for each_class in class_seats_info]
 
@@ -303,8 +322,9 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
         [each_class[8].contents[0].replace("\n", "")
          for each_class in class_basic_info]
 
-    class_info_frame["connection"] = [get_conx_info(each_class=each_class)
-                                      for each_class in class_basic_info]
+    class_info_frame["connection"] = \
+        [get_connection_info(each_class=each_class)
+         for each_class in class_basic_info]
 
     class_info_frame["textbook"] = \
         [to_html_link(title="Textbook",
