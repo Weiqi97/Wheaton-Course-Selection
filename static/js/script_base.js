@@ -28,35 +28,6 @@ function format(CRN, Exam, Connection, Location, Textbook, Info, Seats, Special)
 
 
 /**
- * This function will alert user if they left select box empty.
- * @returns {boolean} to onclick.
- */
-function checkField() {
-    // TODO: If possible make the alert box bigger with larger font.
-    // Check if subject was empty, if so alert with proper message.
-    if ($("#subjects").val().length === 0) {
-        swal({
-            type: 'warning',
-            title: 'Please select subject(s)!',
-            confirmButtonText: 'Got it!'
-        });
-        return false;
-    }
-
-    // Check if subject was empty, if so alert with proper message.
-    else if ($('#semester').val() === '') {
-        swal({
-            type: 'warning',
-            title: 'Please select a semester!',
-            confirmButtonText: 'Got it!'
-        });
-        return false;
-    }
-    else return true;
-}
-
-
-/**
  * Convert time to proper format to display.
  * @param time {string} the refined time.
  * @returns {string} time in format of "HH:MM:SS"
