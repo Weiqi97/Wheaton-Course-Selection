@@ -266,12 +266,22 @@ $(function addClassReady() {
 
 function checkSelectedSubjects() {
     const subjects = $('#subjects').val();
+    // Check if no subject was selected.
     if (subjects.length === 0) {
+        // Specify the alert details.
         $.confirm(
             {
+                type: 'red',
+                icon: 'fa fa-warning',
                 theme: 'supervan',
-                title: 'Alert!',
-                content: 'Simple alert!'
+                title: 'No subject selected!',
+                content: `Please click on the subject(s) drop down and select at least one subject.`,
+                buttons: {
+                    confirm: {
+                        text: 'Got it!',
+                        btnClass: 'btn-success'
+                    }
+                }
             }
         )
     }
