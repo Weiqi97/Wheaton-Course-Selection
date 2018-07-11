@@ -3,6 +3,9 @@
 
 import pandas as pd
 
+# This has to be set, otherwise long string will get concatenated.
+pd.set_option("display.max_colwidth", -1)
+
 
 def read_data(area: str,
               semester: str,
@@ -48,8 +51,12 @@ def read_data(area: str,
     else:
         data_frame = data_frame.loc[data_frame["area"] == area]
 
-    # Return refined data frame.
-    return data_frame.to_html(classes="table table-striped table-bordered")
+    # Convert refined data frame to html format.
+    return data_frame.to_html(
+        index=False,
+        escape=False,
+        classes="table table-striped table-bordered nowrap"
+    )
 
 
 def read_subjects() -> pd.Series:
