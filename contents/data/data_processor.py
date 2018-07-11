@@ -81,8 +81,7 @@ def get_number_info(class_basic_info: list) -> List[str]:
                             link=base_url + number_info["href"])
 
     return [
-        number_info_helper(each_class)
-        for each_class in class_basic_info
+        number_info_helper(each_class) for each_class in class_basic_info
     ]
 
 
@@ -128,13 +127,12 @@ def get_time_info(class_basic_info: list) -> List[str]:
         """
         return "<br>".join(
             [" ".join(content.replace("\n", "").split())
-             if index % 4 == 0 else ""
-             for index, content in enumerate(each_class[4].contents)]
+             for index, content in enumerate(each_class[4].contents)
+             if index % 4 == 0]
         )
 
     return [
         time_info_helper(each_class=each_class)
-        if time_info_helper(each_class=each_class) is not None else ""
         for each_class in class_basic_info
     ]
 
@@ -153,8 +151,8 @@ def get_location_info(class_basic_info: list) -> List[str]:
         """
         return " ".join(
             [" ".join(content.replace("\n", "").split())
-             if index % 4 != 0 and index % 2 == 0 else ""
-             for index, content in enumerate(each_class[4].contents)]
+             for index, content in enumerate(each_class[4].contents)
+             if index % 4 != 0 and index % 2 == 0]
         )
 
     return [
@@ -171,7 +169,7 @@ def get_instructor_info(class_basic_info: list) -> List[str]:
     :return: A list of list of class instructor(s) information.
     """
 
-    def _instructor_info_helper(each_class: list) -> str:
+    def instructor_info_helper(each_class: list) -> str:
         """Helper function for getting the class instructor information.
 
         :param each_class: information of one class.
@@ -181,12 +179,12 @@ def get_instructor_info(class_basic_info: list) -> List[str]:
         return "<br>".join(
             [to_html_link(title=str(each_class_info.contents[0]),
                           link=each_class_info['href'])
-             if instructor_info else to_html_link(title="DEPT", link="")
+             if instructor_info else "DEPT"
              for each_class_info in instructor_info]
         )
 
     return [
-        _instructor_info_helper(each_class) for each_class in class_basic_info
+        instructor_info_helper(each_class) for each_class in class_basic_info
     ]
 
 
@@ -200,8 +198,7 @@ def get_connection_info(each_class: BeautifulSoup) -> str:
     return " ".join(
         [to_html_link(title=str(each_class_info.contents[0]),
                       link=base_url + each_class_info['href'])
-         if connection_info else ""
-         for each_class_info in connection_info]
+         for each_class_info in connection_info if connection_info]
     )
 
 
@@ -212,7 +209,7 @@ def get_hidden_days_info(class_times: List[list]) -> List[str]:
     :return: List of strings with substituted full week day names.
     """
 
-    def _hidden_days_info_helper(class_time: list) -> str:
+    def hidden_days_info_helper(class_time: list) -> str:
         """Hidden values helper.
 
         :param class_time: list of time of each class.
@@ -224,7 +221,7 @@ def get_hidden_days_info(class_times: List[list]) -> List[str]:
 
         return info_str
 
-    return [_hidden_days_info_helper(class_time=class_time)
+    return [hidden_days_info_helper(class_time=class_time)
             for class_time in class_times]
 
 
@@ -252,8 +249,8 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
     """
     # Set data frame that holds all class information.
     class_info_frame = pd.DataFrame(
-        columns=["Subject", "Course Number", "Title", "Time", "Exam", "Seats",
-                 "CRN", "Location", "Instructor", "Foundation", "Division",
+        columns=["Subject", "Course Number", "Title", "Time", "Exam", "CRN",
+                 "Location", "Instructor", "Foundation", "Division", "Seat",
                  "Area", "Connection", "Textbook", "Special", "Hidden"]
     )
 
@@ -261,7 +258,7 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
     class_seats_info = [each_class[-1].find_all("td")
                         for each_class in class_info_list]
 
-    class_info_frame["Seats"] = [
+    class_info_frame["Seat"] = [
         get_seats_info(
             seat_max=str(each_class[1].contents[0]),
             seat_taken=str(each_class[2].contents[0]),
