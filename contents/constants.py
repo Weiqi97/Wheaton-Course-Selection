@@ -2,16 +2,6 @@
 """This file contains needed constants."""
 
 import pandas as pd
-from typing import NamedTuple
-
-
-# Struct constants
-class SeatInfo(NamedTuple):
-    """Struct for seats information."""
-    max: str
-    taken: str
-    avail: str
-    wait_list: str
 
 
 # Web url constants
