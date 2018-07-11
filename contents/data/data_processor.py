@@ -61,7 +61,7 @@ def to_html_link(title: str, link: str) -> str:
     :param link: Url of the link.
     :return: HTML formatted link.
     """
-    return f"<a target='_blank' href={link}>{title}</a>"
+    return f"<a target='_blank' href='{link}'>{title}</a>"
 
 
 def get_number_info(class_basic_info: list) -> List[str]:
@@ -71,7 +71,7 @@ def get_number_info(class_basic_info: list) -> List[str]:
     :return: A list of refined class number information.
     """
 
-    def _number_info_helper(each_class: list) -> str:
+    def number_info_helper(each_class: list) -> str:
         """
         Helper function for getting the class number information.
         :param each_class: information of one class.
@@ -81,20 +81,22 @@ def get_number_info(class_basic_info: list) -> List[str]:
         return to_html_link(title=str(number_info.contents[0]),
                             link=base_url + number_info["href"])
 
-    return [_number_info_helper(each_class)
-            for each_class in class_basic_info]
+    return [
+        number_info_helper(each_class)
+        for each_class in class_basic_info
+    ]
 
 
 def get_exam_info(class_basic_info: list) -> List[str]:
-    """
-    Get class exam information.
+    """Get class exam information.
+
     :param class_basic_info: A list of class basic information.
     :return: A list of refined class exam information.
     """
 
-    def _exam_info_helper(each_class: list) -> str:
-        """
-        Helper function for getting the class exam information.
+    def exam_info_helper(each_class: list) -> str:
+        """Helper function for getting the class exam information.
+
         :param each_class: information of one class.
         :return: a ClassExam object.
         """
@@ -107,102 +109,113 @@ def get_exam_info(class_basic_info: list) -> List[str]:
         else:
             return ""
 
-    return [_exam_info_helper(each_class)
-            for each_class in class_basic_info]
+    return [
+        exam_info_helper(each_class) for each_class in class_basic_info
+    ]
 
 
-def get_time_info(class_basic_info: list) -> List[List[str]]:
-    """
-    Get class time information.
+def get_time_info(class_basic_info: list) -> List[str]:
+    """Get class time information.
+
     :param class_basic_info: A list of class basic information.
     :return: A list of lists, where each each contains class time information.
     """
 
-    def _time_info_helper(each_class: list) -> List[str]:
+    def time_info_helper(each_class: list) -> str:
         """
         Helper function for getting the class time information.
         :param each_class: information of one class.
         :return: a list of class time information.
         """
-        return [" ".join(content.replace("\n", "").split())
-                if index % 4 == 0 else None
-                for index, content in enumerate(each_class[4].contents)]
+        return "<br>".join(
+            [" ".join(content.replace("\n", "").split())
+             if index % 4 == 0 else ""
+             for index, content in enumerate(each_class[4].contents)]
+        )
 
-    return [list(filter(None, _time_info_helper(each_class=each_class)))
-            if _time_info_helper(each_class=each_class) is not None else ""
-            for each_class in class_basic_info]
+    return [
+        time_info_helper(each_class=each_class)
+        if time_info_helper(each_class=each_class) is not None else ""
+        for each_class in class_basic_info
+    ]
 
 
-def get_location_info(class_basic_info: list) -> List[List[str]]:
-    """
-    Get class location information.
+def get_location_info(class_basic_info: list) -> List[str]:
+    """Get class location information.
+
     :param class_basic_info: A list of class basic information.
     :return: A list of lists, where each each contains class loc information.
     """
 
-    def _location_info_helper(each_class: list) -> List[str]:
-        """
-        Helper function for getting the class time information.
+    def location_info_helper(each_class: list) -> str:
+        """Helper function for getting the class time information.
         :param each_class: information of one class.
         :return: a list of class time information.
         """
-        return [" ".join(content.replace("\n", "").split())
-                if index % 4 != 0 and index % 2 == 0 else None
-                for index, content in enumerate(each_class[4].contents)]
+        return " ".join(
+            [" ".join(content.replace("\n", "").split())
+             if index % 4 != 0 and index % 2 == 0 else ""
+             for index, content in enumerate(each_class[4].contents)]
+        )
 
-    return \
-        [list(set(filter(None, _location_info_helper(each_class=each_class))))
-         if _location_info_helper(each_class=each_class) is not None else ""
-         for each_class in class_basic_info]
+    return [
+        location_info_helper(each_class=each_class)
+        if location_info_helper(each_class=each_class) is not None else ""
+        for each_class in class_basic_info
+    ]
 
 
-def get_instructor_info(class_basic_info: list) -> List[List[str]]:
-    """
-    Get class instructor information.
+def get_instructor_info(class_basic_info: list) -> List[str]:
+    """Get class instructor information.
+
     :param class_basic_info: A list of class basic information.
     :return: A list of list of class instructor(s) information.
     """
 
-    def _instructor_info_helper(each_class: list) -> List[str]:
-        """
-        Helper function for getting the class instructor information.
+    def _instructor_info_helper(each_class: list) -> str:
+        """Helper function for getting the class instructor information.
+
         :param each_class: information of one class.
         :return: a list of class information.
         """
         instructor_info = each_class[5].find_all("a")
-        return [to_html_link(title=str(each_class_info.contents[0]),
-                             link=each_class_info['href'])
-                if instructor_info
-                else to_html_link(title="DEPT", link="")
-                for each_class_info in instructor_info]
+        return "<br>".join(
+            [to_html_link(title=str(each_class_info.contents[0]),
+                          link=each_class_info['href'])
+             if instructor_info else to_html_link(title="DEPT", link="")
+             for each_class_info in instructor_info]
+        )
 
-    return [_instructor_info_helper(each_class)
-            for each_class in class_basic_info]
+    return [
+        _instructor_info_helper(each_class) for each_class in class_basic_info
+    ]
 
 
-def get_conx_info(each_class: BeautifulSoup) -> List[str]:
-    """
-    Get class connection information.
+def get_conx_info(each_class: BeautifulSoup) -> str:
+    """Get class connection information.
+
     :param each_class: A beautiful soup object that contains class information.
     :return: A list of class connection information.
     """
     connection_info = each_class[9].find_all("a")
-    return [to_html_link(title=str(each_class_info.contents[0]),
-                         link=base_url + each_class_info['href'])
-            if connection_info else None
-            for each_class_info in connection_info]
+    return " ".join(
+        [to_html_link(title=str(each_class_info.contents[0]),
+                      link=base_url + each_class_info['href'])
+         if connection_info else ""
+         for each_class_info in connection_info]
+    )
 
 
 def get_hidden_days_info(class_times: List[list]) -> List[str]:
-    """
-    Get hidden class information time.
+    """Get hidden class information time.
+
     :param class_times: List of class times.
     :return: List of strings with substituted full week day names.
     """
 
     def _hidden_days_info_helper(class_time: list) -> str:
-        """
-        Hidden values helper.
+        """Hidden values helper.
+
         :param class_time: list of time of each class.
         :return: a string that contains exact class day time.
         """
@@ -225,9 +238,8 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
     """
     # Set data frame that holds all class information.
     class_info_frame = pd.DataFrame(
-        data=0,
-        index=np.arange(len(class_info_list)),
-        columns=["subject", "number", "exam", "title", "CRN", "time", "seats",
+        columns=["", "subject", "number", "exam", "title", "CRN", "time",
+                 "seats",
                  "location", "instructor", "foundation", "division", "area",
                  "connection", "textbook", "special_info", "hidden_days"]
     )
@@ -295,7 +307,9 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
                                       for each_class in class_basic_info]
 
     class_info_frame["textbook"] = \
-        [each_class[10].find("a")['href'] for each_class in class_basic_info]
+        [to_html_link(title="Textbook",
+                      link=each_class[10].find("a")['href'])
+         for each_class in class_basic_info]
 
     class_info_frame["hidden_days"] = \
         get_hidden_days_info(class_info_frame["time"])
