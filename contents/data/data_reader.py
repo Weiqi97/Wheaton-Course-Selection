@@ -2,6 +2,7 @@
 """This file reads the data and select right query based on users request."""
 
 import pandas as pd
+from bs4 import BeautifulSoup
 
 # This has to be set, otherwise long string will get concatenated.
 pd.set_option("display.max_colwidth", -1)
@@ -52,11 +53,19 @@ def read_data(area: str,
         data_frame = data_frame.loc[data_frame["area"] == area]
 
     # Convert refined data frame to html format.
-    return data_frame.to_html(
+    table = data_frame.to_html(
         index=False,
         escape=False,
-        classes="table table-striped table-bordered nowrap"
+        classes="table course-table table-striped table-bordered nowrap"
     )
+
+    # Parse the HTML table to beautiful soup object.
+    table_soup = BeautifulSoup(table, "html.parser")
+    # Set the width to 100%.
+    table_soup.find('table')['style'] = 'width: 100%'
+
+    # Return beautiful soup as string.
+    return table_soup.prettify()
 
 
 def read_subjects() -> pd.Series:
