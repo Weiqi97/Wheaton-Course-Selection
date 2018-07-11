@@ -6,30 +6,6 @@ from typing import NamedTuple
 
 
 # Struct constants
-class ClassNumber(NamedTuple):
-    """Struct for class number information."""
-    num: str
-    link: str
-
-
-class ClassExam(NamedTuple):
-    """Struct for class exam information."""
-    letter: str
-    link: str
-
-
-class ClassInstructor(NamedTuple):
-    """Struct for class instructor information."""
-    name: str
-    link: str
-
-
-class ClassConx(NamedTuple):
-    """Struct for class connection information."""
-    num: str
-    link: str
-
-
 class SeatInfo(NamedTuple):
     """Struct for seats information."""
     max: str
