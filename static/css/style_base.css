@@ -78,32 +78,19 @@ body {
     text-align: center;
 }
 
-/*sets the height of both the calendar and the result table*/
-.col-lg-6 {
-    height: 750px;
-}
-
 /*___________________________________________________*/
-
-/*the table containing all the courses*/
-.result_table {
-    border: 1px solid black;
-    background: white;
+.table th {
+  text-align: left;
 }
 
-#result_table tr {
+#course-container {
+    width: 100%;
+    background-color: white;
+}
+
+.course-table tr:hover {
     transition: all 150ms ease-in;
-}
-
-#result_table tr:hover {
-    transition: all 150ms ease-in;
-    background: rgba(80, 90, 70, 0.2);
-);
-}
-
-/*for the table header in result table*/
-.dataTables_scrollHead {
-    border: 1px solid black;
+    background-color: beige;
 }
 
 /*"+" icon in the result table*/
