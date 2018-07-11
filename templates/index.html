@@ -56,8 +56,6 @@
 
     <!-- Project javascript and CSS -->
     <script type="module" src="../static/js/script_base.js"></script>
-{#    <script type="module" src="../static/js/class_table.js"></script>#}
-{#    <script type="module" src="../static/js/utility.js"></script>#}
     <link rel="stylesheet" href="../static/css/style_base.css">
 </head>
 <!---------------------------------------------------------------------------->
@@ -79,7 +77,7 @@
 <!-- Selection drop downs. -->
 <div class="container-fluid" id="course-picker">
     <div class="row">
-        <select class="selectpicker col"
+        <select class="selectpicker col" data-style="btn-info"
                 id="semester" name="semester" title="Semesters">
             {% for name in fetched_semesters.index %}
                 <option value="{{ name }}"
@@ -89,31 +87,33 @@
             {% endfor %}
         </select>
 
-        <select class="selectpicker col"
+        <select class="selectpicker col" data-style="btn-info"
                 data-live-search="true" id="subjects" name="subjects"
-                title="Subject(s)" multiple="multiple">
+                title="Subject(s)" multiple>
             {% for name, value in fetched_subjects.iteritems() %}
                 <option value="{{ value }}">{{ name }}</option>"
             {% endfor %}
         </select>
 
         <label for="foundation"></label>
-        <select class="selectpicker col" id="foundation"
-                name="foundation">
+        <select class="selectpicker col" data-style="btn-info"
+                id="foundation" name="foundation">
             {% for name, value in fetched_foundations.iteritems() %}
                 <option value="{{ value }}">{{ name }}</option>"
             {% endfor %}
         </select>
 
         <label for="division"></label>
-        <select class="selectpicker col" id="division" name="division">
+        <select class="selectpicker col" data-style="btn-info"
+                id="division" name="division">
             {% for name, value in fetched_divisions.iteritems() %}
                 <option value="{{ value }}">{{ name }}</option>"
             {% endfor %}
         </select>
 
         <label for="area"></label>
-        <select class="selectpicker col" id="area" name="area">
+        <select class="selectpicker col" data-style="btn-info"
+                id="area" name="area">
             {% for name, value in fetched_areas.iteritems() %}
                 <option value="{{ value }}">{{ name }}</option>"
             {% endfor %}
@@ -132,10 +132,11 @@
 <!-- This part is for body of the page (Calendar, Table). -->
 <div class="container-fluid row">
     <!-- This part holds the calendar. -->
+    <div class="col-12"><span><i class="fas fa-plus-circle" id="test"></i></span></div>
     <div class="col-6" id="calendar"></div>
 
     <!--This part holds the course schedule. -->
-    <div class="col-6" id="class-table"></div>
+    <div class="col-6" id="course-container"></div>
 </div>
 </body>
 
@@ -144,10 +145,10 @@
     <div id="footer">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 col-md-12" style="text-align: center;">
+                <div class="col-12" style="text-align: center;">
                     <div class="footer_header">Wheaton college</div>
                 </div>
-                <div class="col-lg-12 col-md-12" style="text-align: center;">
+                <div class="col-12" style="text-align: center;">
                     <span class="footer-contact">
                         <span> &copy 2018 ALL RIGHTS RESERVED &nbsp | &nbsp</span>
                         <span>Contact Us &nbsp | &nbsp</span>
@@ -162,14 +163,3 @@
 </footer>
 </html>
 
-<script type="text/javascript">
-    // Display the semester searched.
-    $(function () {
-        // Change the style of drop downs.
-        $('.selectpicker').selectpicker({
-            style: 'btn-info'
-        });
-        $("div.toolbar").html('<b>{{ current_semester }}</b>');
-    });
-
-</script>
