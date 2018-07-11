@@ -243,9 +243,10 @@ $(function addClassReady() {
  */
 $(function () {
   $('#submit').click(utility.checkSelectedSubjects);
-  utility.sendAjaxRequest("/classes", utility.jsonifyForm())
+  utility.sendAjaxRequest('/classes', utility.jsonifyForm())
     .done(
       function (response) {
+        console.log(response);
         const tableHolder = $('#class-table');
         tableHolder.html(response);
         classTable.convertDataTable(tableHolder.children())
