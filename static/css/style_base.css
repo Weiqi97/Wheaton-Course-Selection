@@ -120,20 +120,7 @@ table.dataTable tbody td.no-padding {
     padding: 0;
 }
 
-/*icon button for additional information about the class*/
-span.show-detail {
-    background: url("../images/angle-down.svg") no-repeat center center;
-    background-size: 40% auto;
-    cursor: pointer;
-}
 
-/*icon button for additional information about the class*/
-tr.shown span.show-detail {
-    background: url("../images/angle-up.svg") no-repeat center center;
-    background-size: 40% auto;
-    cursor: pointer;
-    opacity: 0.4;
-}
 
 /*___________________________________________________*/
 
@@ -142,11 +129,6 @@ tr.shown span.show-detail {
     background-color: rgba(255, 255, 255, 0.9);
     color: black;
     border: 1px solid black;
-}
-
-/*for the calendar title*/
-.selected_semester {
-    text-align: center;
 }
 
 /*___________________________________________________*/

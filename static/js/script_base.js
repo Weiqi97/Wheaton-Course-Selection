@@ -63,8 +63,6 @@ function expandDataRow() {
     tr.addClass("shown");
     $('div.slider', row.child()).slideDown();
   }
-
-
 }
 
 /**
