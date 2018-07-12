@@ -79,9 +79,15 @@ body {
 }
 
 /*___________________________________________________*/
+#course-table {
+    width: 100% !important;
+}
+
 .table th {
   text-align: left;
 }
+
+
 
 #course-container {
     width: 100%;
@@ -117,14 +123,14 @@ table.dataTable tbody td.no-padding {
 }
 
 /*icon button for additional information about the class*/
-td.details-control {
+span.show-detail {
     background: url("../images/angle-down.svg") no-repeat center center;
     background-size: 40% auto;
     cursor: pointer;
 }
 
 /*icon button for additional information about the class*/
-tr.shown td.details-control {
+tr.shown span.show-detail {
     background: url("../images/angle-up.svg") no-repeat center center;
     background-size: 40% auto;
     cursor: pointer;
