@@ -56,14 +56,13 @@ def read_data(area: str,
     table = data_frame.to_html(
         index=False,
         escape=False,
-        classes="table course-table table-striped table-bordered nowrap"
+        classes="table table-striped table-bordered nowrap"
     )
 
     # Parse the HTML table to beautiful soup object.
     table_soup = BeautifulSoup(table, "html.parser")
-    # Set the width to 100%.
-    table_soup.find('table')['style'] = 'width: 100%'
-
+    # Give the table an ID for easier access.
+    table_soup.find("table")["id"] = "course-table"
     # Return beautiful soup as string.
     return table_soup.prettify()
 
