@@ -1,22 +1,21 @@
-
 install:
-  # install anaconda
+  # Install anaconda
   - choco install anaconda3
 
-  # add anaconda to path
+  # Add anaconda to path
   - SET PATH=C:\\tools\\Anaconda3\\scripts\\;C:\\tools\\Anaconda3\\;%PATH%
 
-  # log debug info
+  # Log debug info
   - conda info -a
 
-  # install dependency
+  # Install dependency
   - pip install -r ./requirements.txt
   - pip install -r ./dev_requirements.txt
 
-  # install npm
+  # Install npm
   - choco install nodejs
 
-  # use npm to install all the dependencies (including dev)
+  # Use npm to install all the dependencies (including dev)
   - cd ./lexos/static
   - npm install
   - cd ../..
@@ -26,8 +25,8 @@ branches:
     - master
 
 test_script:
-  # test for python static analysis
-  # including code style, doc style, and basic code analysis
-  - flake8 --count .
+  # Test for python static analysis with flake8 and pydocstyle.
+  - flake8
+  - pydocstyle
 
 build: off
