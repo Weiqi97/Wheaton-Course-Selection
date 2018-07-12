@@ -58,11 +58,17 @@ function timeConverter(time) {
  * @returns {string} The corresponding date.
  */
 function dayConverter(day) {
-  if (day === 'M') return '2018-04-02T';
-  else if (day === 'T') return '2018-04-03T';
-  else if (day === 'W') return '2018-04-04T';
-  else if (day === 'R') return '2018-04-05T';
-  else if (day === 'F') return '2018-04-06T'
+  if (day === 'M') {
+    return '2018-04-02T';
+  } else if (day === 'T') {
+    return '2018-04-03T';
+  } else if (day === 'W') {
+    return '2018-04-04T';
+  } else if (day === 'R') {
+    return '2018-04-05T';
+  } else if (day === 'F') {
+    return '2018-04-06T'
+  }
 }
 
 //
@@ -188,25 +194,18 @@ function toCalendar() {
   const title = rowData[3];
   const time = rowData[4];
 
-  // TODO: unpack td function
-  // Refine the target td.
-  var course_title = $.trim(tds[2].innerHTML);
-  var course_time = $.trim(tds[4].innerHTML);
-
-  console.log(course_time.slice(0, 3));
+  console.log(title);
+  console.log(time);
 
   // TODO: Use trim
   // Check if the class has an assigned time.
-  if (course_time.slice(0, 3) === "TBA") {
+  if (time.slice(0, 3) === "TBA") {
     swal({
       type: "warning",
       title: "This class does not have an assigned time!",
       confirmButtonText: "Got it!"
     });
-  }
-
-  // If has a time, add to calendar.
-  else {
+  } else {
     course_time = course_time.replace(/\s+/g, "");
     course_time = course_time.split("<br>");        //deletes the <br>
     course_time = Array.from(course_time);

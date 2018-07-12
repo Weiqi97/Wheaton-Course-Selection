@@ -74,20 +74,18 @@ body {
 
 /* _______________________________________________________________________ */
 
-#add_button {
-    text-align: center;
-}
-
-/*___________________________________________________*/
+/* ---------------------- Course table settings -------------------------- */
+/* Make the width always take all possible space. */
 #course-table {
     width: 100% !important;
 }
 
+/* Make table head left aligned. */
 .table th {
-  text-align: left;
+    text-align: left;
 }
 
-
+/* _______________________________________________________________________ */
 
 #course-container {
     width: 100%;
@@ -163,7 +161,7 @@ footer {
 /*second inside footer box*/
 #footer {
     padding-top: 5px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 /*footer header: Wheaton College*/
@@ -245,7 +243,6 @@ div.toolbar {
     color: white;
     -webkit-transition: 200ms ease-in;
     -moz-transition: 200ms ease-in;
-    -ms-transition: 200ms ease-in;
     -o-transition: 200ms ease-in;
     transition: 200ms ease-in;
 }
@@ -254,7 +251,6 @@ div.toolbar {
     color: #0072bc;
     -webkit-transition: 200ms ease-in;
     -moz-transition: 200ms ease-in;
-    -ms-transition: 200ms ease-in;
     -o-transition: 200ms ease-in;
     transition: 200ms ease-in;
 }
@@ -266,7 +262,6 @@ div.toolbar {
     border: none;
     -webkit-transition: 200ms ease-in;
     -moz-transition: 200ms ease-in;
-    -ms-transition: 200ms ease-in;
     -o-transition: 200ms ease-in;
     transition: 200ms ease-in;
 }
@@ -275,7 +270,6 @@ div.toolbar {
     color: #0072bc;
     -webkit-transition: 200ms ease-in;
     -moz-transition: 200ms ease-in;
-    -ms-transition: 200ms ease-in;
     -o-transition: 200ms ease-in;
     transition: 200ms ease-in;
     text-decoration: underline;
