@@ -2,22 +2,22 @@
 ###### (Stuff below are listed by priority [High to Low])
 - :exclamation: **Bugfix**
   - Data Table related :sleepy: (EXTREMELY IMPORTANT)
-    - Wrap special information when it is too long.
-    - Consider fix length of all columns, so the table does not change when content changes.
+    - [ ] Wrap special information when it is too long.
+    - [x] Fix length of all columns, so the table does not change when content changes.
   - Front-end appearance :dizzy:
-    - Background shifts when sweet alert pops up. (Because sweet alert hides the scroll bar.)
-  - Back-end code :muscle:
-    - Move javascript code to separate file. (KIND OF DONE!)
-    - Clean up CSS and document. 
+    - [x] Background shifts when sweet alert pops up. (Because sweet alert hides the scroll bar - Switched to jQuery Confirm.)
+  - Front-end code :muscle:
+    - [x] Move javascript code to separate file.
+    - [ ] Clean up CSS and document. 
 - :star2: **Features**
   - Calendar related :innocent:
-    - Add a remove button when class is added to the calendar. (DONE!)
-    - Allow users to add their own event.
-    - Save as PDF.
-    - Check overlap time. (We need to find a proper solution for this, there are multiple ways.) (IMPORTANT)
+    - [x] Add a remove button when class is added to the calendar. (DONE!)
+    - [ ] Allow users to add their own event.
+    - [ ] Save as PDF.
+    - [ ] Check overlap time. (We need to find a proper solution for this, there are multiple ways.) (IMPORTANT)
   - Relatively easy features :fireworks:
-    - A better looking contact us. (In general redesign footer.)
-    - Give users an option to choose two modes. (One with calendar, one without.)
+    - [ ] A better looking contact us. (In general redesign footer.)
+    - [ ] Give users an option to choose two modes. (One with calendar, one without.)
 - :alien: **Future work**
   - A mobile friendly version. (Contains only search functionality. Thanks to bootstrap, this should be quite trivial.)
   - If a class has related lab session, add the lab session as well when user choose to add the class to calendar.
