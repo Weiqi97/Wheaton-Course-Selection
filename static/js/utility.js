@@ -27,6 +27,7 @@ export function sendAjaxRequest(url, form) {
 
 /**
  * Check if any subject was selected.
+ * @returns {void}: This function has no return.
  */
 export function checkSelectedSubjects() {
   // Get selected subjects from the drop down.
@@ -34,20 +35,18 @@ export function checkSelectedSubjects() {
   // Check if no subject was selected.
   if (subjects.length === 0) {
     // Specify the alert details.
-    $.confirm(
-      {
-        type: 'red',
-        icon: 'fa fa-warning',
-        theme: 'supervan',
-        title: 'No subject selected!',
-        content: `Please click on the subject(s) drop down and select at least one subject.`,
-        buttons: {
-          confirm: {
-            text: 'Got it!',
-            btnClass: 'btn-success'
-          }
+    $.confirm({
+      type: 'red',
+      icon: 'fa fa-warning',
+      theme: 'supervan',
+      title: 'No subject selected!',
+      content: 'Please click on the subject(s) drop down and select at least one subject.',
+      buttons: {
+        confirm: {
+          text: 'Got it!',
+          btnClass: 'btn-success'
         }
       }
-    )
+    })
   }
 }
