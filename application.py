@@ -1,3 +1,5 @@
+"""This is the flask application that connects backend and frontend."""
+
 from flask import Flask, render_template, request
 from contents.data.data_reader import read_data, read_semesters, \
     read_subjects, read_foundations, read_divisions, read_areas, \
