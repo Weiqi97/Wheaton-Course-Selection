@@ -1,5 +1,11 @@
+/**
+ * Convert HTML table to data table.
+ * @param {string} table: HTML table that needs to be converted to data table.
+ * @returns {void}: This function has no return.
+ */
 export function convertDataTable(table) {
-  table.DataTable({
+  // Convert input HTML table to data table.
+  table.dataTable({
     bInfo: false,
     bSort: false,
     paging: false,
@@ -10,9 +16,15 @@ export function convertDataTable(table) {
     language: {
       emptyTable: "Sorry, no class meets your expectation."
     },
-    columnDefs: [{
-      targets: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
-      visible: false
-    }]
+    columnDefs: [
+      {
+        targets: 1,
+        className: "text-center"
+      },
+      {
+        targets: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+        visible: false
+      }
+    ]
   });
 }
