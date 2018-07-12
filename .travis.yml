@@ -17,6 +17,15 @@ install:
   - pip install -r requirements.txt
   - pip install -r dev_requirements.txt
 
+  # install nodejs 10. Remember to change this when nodejs updated!
+  - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+  - sudo apt-get install -y nodejs
+
+  # use npm to install all the dependencies (including dev)
+  - cd ./static
+  - npm install
+  - cd ..
+
 script:
   # Test for python static analysis with flake8 and pydocstyle.
   - flake8

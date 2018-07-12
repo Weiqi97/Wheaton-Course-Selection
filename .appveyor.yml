@@ -16,9 +16,9 @@ install:
   - choco install nodejs
 
   # Use npm to install all the dependencies (including dev)
-  - cd ./lexos/static
+  - cd ./static
   - npm install
-  - cd ../..
+  - cd ..
 
 branches:
   only:
