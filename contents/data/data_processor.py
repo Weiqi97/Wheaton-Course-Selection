@@ -11,7 +11,7 @@ from contents.data.data_fetcher import fetch_semesters, fetch_subjects, \
 
 
 def extract_class_info(web_content: str) -> Optional[List[list]]:
-    """This function will extract class information from the given web page.
+    """Extract class information from the given web page.
 
     :param web_content: A string that contains web page information.
     :return: A list of lists, where each list holds information for one class.
@@ -70,10 +70,9 @@ def get_number_info(class_basic_info: list) -> List[str]:
     :param class_basic_info: A list of class basic information.
     :return: A list of refined class number information.
     """
-
     def number_info_helper(each_class: list) -> str:
-        """
-        Helper function for getting the class number information.
+        """Get the class number information.
+
         :param each_class: information of one class.
         :return: a ClassNumber object.
         """
@@ -92,9 +91,8 @@ def get_exam_info(class_basic_info: list) -> List[str]:
     :param class_basic_info: A list of class basic information.
     :return: A list of refined class exam information.
     """
-
     def exam_info_helper(each_class: list) -> str:
-        """Helper function for getting the class exam information.
+        """Get the class exam information.
 
         :param each_class: information of one class.
         :return: a ClassExam object.
@@ -119,10 +117,9 @@ def get_time_info(class_basic_info: list) -> List[str]:
     :param class_basic_info: A list of class basic information.
     :return: A list of lists, where each each contains class time information.
     """
-
     def time_info_helper(each_class: list) -> str:
-        """
-        Helper function for getting the class time information.
+        """Get the class time information.
+
         :param each_class: information of one class.
         :return: a list of class time information.
         """
@@ -144,9 +141,9 @@ def get_location_info(class_basic_info: list) -> List[str]:
     :param class_basic_info: A list of class basic information.
     :return: A list of lists, where each each contains class loc information.
     """
-
     def location_info_helper(each_class: list) -> str:
-        """Helper function for getting the class time information.
+        """Get the class time information.
+
         :param each_class: information of one class.
         :return: a list of class time information.
         """
@@ -169,9 +166,8 @@ def get_instructor_info(class_basic_info: list) -> List[str]:
     :param class_basic_info: A list of class basic information.
     :return: A list of list of class instructor(s) information.
     """
-
     def instructor_info_helper(each_class: list) -> str:
-        """Helper function for getting the class instructor information.
+        """Get the class instructor information.
 
         :param each_class: information of one class.
         :return: a list of class information.
@@ -209,9 +205,8 @@ def get_hidden_days_info(class_times: List[str]) -> List[str]:
     :param class_times: List of class times.
     :return: List of strings with substituted full week day names.
     """
-
     def hidden_days_info_helper(class_time: str) -> str:
-        """Hidden values helper.
+        """Hide values helper.
 
         :param class_time: list of time of each class.
         :return: a string that contains exact class day time.
@@ -241,8 +236,8 @@ def get_seats_info(seat_max: str,
 
 
 def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
-    """
-    This function will refine class information from the web page.
+    """Refine class information from the web page.
+
     :param class_info_list: A list that contains all class web pages.
     :param subject: Name of the subject.
     :return: A pandas data frame that has all class information.
@@ -355,7 +350,7 @@ def get_specific_class_info(subject: str, semester: str) -> pd.DataFrame:
 
 
 def save_one_semester(semester_name: str, semester_value: str):
-    """This function will get class information for one semester.
+    """Get class information for one semester.
 
     :param semester_name: Name of the desired semester to be fetched.
     :param semester_value: HTML value of the desired semester to be fetched.
@@ -377,7 +372,7 @@ def save_one_semester(semester_name: str, semester_value: str):
 
 
 def save_all_semesters():
-    """This function will get class information for all existing subjects."""
+    """Get class information for all existing subjects."""
     semesters = fetch_semesters()
     for semester_name, semester_value in semesters.iteritems():
         save_one_semester(semester_name=semester_name,
