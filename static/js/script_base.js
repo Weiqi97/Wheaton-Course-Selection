@@ -179,64 +179,68 @@ $(function readyCalendar() {
 /**
  * Add class from data table to calendar.
  */
-$(function addClassReady() {
-  $('.to-calendar').click(function () {
-    var row = $(this).closest("tr");  // Finds the closest row <tr>
-    var tds = row.find("td");         // Finds all children <td> elements
-    // TODO: unpack td function
-    // Refine the target td.
-    var course_title = $.trim(tds[2].innerHTML);
-    var course_time = $.trim(tds[4].innerHTML);
+function toCalendar() {
+  // Get the row with the add button clicked.
+  const clickedRow = $(event.currentTarget).closest("tr");
+  // Get the data within the row.
+  const rowData = $('#course-table').dataTable().fnGetData(clickedRow);
+  // Unpack data from the row, we need title and time only.
+  const title = rowData[3];
+  const time = rowData[4];
 
-    console.log(course_time.slice(0, 3));
+  // TODO: unpack td function
+  // Refine the target td.
+  var course_title = $.trim(tds[2].innerHTML);
+  var course_time = $.trim(tds[4].innerHTML);
 
-    // TODO: Use trim
-    // Check if the class has an assigned time.
-    if (course_time.slice(0, 3) === "TBA") {
-      swal({
-        type: "warning",
-        title: "This class does not have an assigned time!",
-        confirmButtonText: "Got it!"
-      });
-    }
+  console.log(course_time.slice(0, 3));
 
-    // If has a time, add to calendar.
-    else {
-      course_time = course_time.replace(/\s+/g, "");
-      course_time = course_time.split("<br>");        //deletes the <br>
-      course_time = Array.from(course_time);
-      // TODO: use for (let o of foo())  or List.map()
-      //get the info from the class time array.
-      course_time.forEach(function (each_time) {
-        var days = [], time = [], k = 0, j = 0;
-        // Refine days and times.
-        for (var i = 0; i < each_time.length; i++) {
-          if (each_time[i].charCodeAt(0) > 64 & each_time[i] !== 'P' & each_time[i] !== 'A' && each_time[i] !== 'r')
-            days[j++] = each_time[i];
-          else time[k++] = each_time[i];
-        }
-        // makes the time array into a string and trims all the commas.
-        time = (time.toString()).replace(/,/g, "");
+  // TODO: Use trim
+  // Check if the class has an assigned time.
+  if (course_time.slice(0, 3) === "TBA") {
+    swal({
+      type: "warning",
+      title: "This class does not have an assigned time!",
+      confirmButtonText: "Got it!"
+    });
+  }
 
-        // Format time for calendar
-        time = time.split("-");
-        // Truncates the last two M from the AM and PM
-        days = days.slice(0, -2);
+  // If has a time, add to calendar.
+  else {
+    course_time = course_time.replace(/\s+/g, "");
+    course_time = course_time.split("<br>");        //deletes the <br>
+    course_time = Array.from(course_time);
+    // TODO: use for (let o of foo())  or List.map()
+    //get the info from the class time array.
+    course_time.forEach(function (each_time) {
+      var days = [], time = [], k = 0, j = 0;
+      // Refine days and times.
+      for (var i = 0; i < each_time.length; i++) {
+        if (each_time[i].charCodeAt(0) > 64 & each_time[i] !== 'P' & each_time[i] !== 'A' && each_time[i] !== 'r')
+          days[j++] = each_time[i];
+        else time[k++] = each_time[i];
+      }
+      // makes the time array into a string and trims all the commas.
+      time = (time.toString()).replace(/,/g, "");
 
-        days.forEach(function (day) {
-          var newEvent = {
-            id: course_title,
-            title: course_title,
-            start: dayConverter(day) + timeConverter(time[0]),
-            end: dayConverter(day) + timeConverter(time[1]),
-            allDay: false
-          };
-          $("#calendar").fullCalendar("renderEvent", newEvent, "stick");
-        })
-      });
-    }
-  });
-});
+      // Format time for calendar
+      time = time.split("-");
+      // Truncates the last two M from the AM and PM
+      days = days.slice(0, -2);
+
+      days.forEach(function (day) {
+        var newEvent = {
+          id: course_title,
+          title: course_title,
+          start: dayConverter(day) + timeConverter(time[0]),
+          end: dayConverter(day) + timeConverter(time[1]),
+          allDay: false
+        };
+        $("#calendar").fullCalendar("renderEvent", newEvent, "stick");
+      })
+    });
+  }
+}
 
 /**
  * Run these functions when HTML finish loading.
@@ -250,6 +254,7 @@ $(function () {
         const tableHolder = $('#course-container');
         tableHolder.html(response);
         classTable.convertDataTable(tableHolder.children());
+        $('.to-calendar').click(toCalendar);
       }
     )
 });
