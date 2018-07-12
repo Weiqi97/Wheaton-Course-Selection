@@ -56,3 +56,24 @@ export function subjectsError() {
     }
   })
 }
+
+/**
+ * Alert users when then add a class with no assigned time to calendar.
+ * @returns {void}: This function has no return.
+ */
+export function classTimeTBAError() {
+  // Specify the alert details.
+  $.confirm({
+    type: 'red',
+    icon: 'fa fa-warning',
+    theme: 'modern',
+    title: 'Error!',
+    content: 'This class does not have an assigned time.',
+    buttons: {
+      confirm: {
+        text: 'Got it!',
+        btnClass: 'btn-info'
+      }
+    }
+  })
+}
