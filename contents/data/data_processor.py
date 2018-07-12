@@ -5,7 +5,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from typing import List, Optional
 from contents.constants import BASE_URL, SKIP_BEGINNING, TIME_FILTER, \
-    TO_CALENDAR
+    TO_CALENDAR, SHOW_DETAIL
 from contents.data.data_fetcher import fetch_semesters, fetch_subjects, \
     fetch_web_content
 
@@ -203,24 +203,23 @@ def get_connection_info(each_class: BeautifulSoup) -> str:
     )
 
 
-def get_hidden_days_info(class_times: List[list]) -> List[str]:
+def get_hidden_days_info(class_times: List[str]) -> List[str]:
     """Get hidden class information time.
 
     :param class_times: List of class times.
     :return: List of strings with substituted full week day names.
     """
 
-    def hidden_days_info_helper(class_time: list) -> str:
+    def hidden_days_info_helper(class_time: str) -> str:
         """Hidden values helper.
 
         :param class_time: list of time of each class.
         :return: a string that contains exact class day time.
         """
-        info_str = " ".join(class_time)
         for original, replace in TIME_FILTER.iteritems():
-            info_str = info_str.replace(original, replace)
+            class_time = class_time.replace(original, replace)
 
-        return info_str
+        return class_time
 
     return [hidden_days_info_helper(class_time=class_time)
             for class_time in class_times]
@@ -250,9 +249,9 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
     """
     # Set data frame that holds all class information.
     class_info_frame = pd.DataFrame(
-        columns=["", "Subject", "Course Number", "Title", "Time", "Exam",
-                 "CRN", "Location", "Instructor", "Foundation", "Division",
-                 "Seat", "Area", "Connection", "Textbook", "Special", "Hidden"]
+        columns=["", "Add", "Subject", "Course Number", "Title", "Time", "CRN",
+                 "Location", "Instructor", "Exam", "Foundation", "Division",
+                 "Area", "Connection", "Seat", "Textbook", "Special", "Hidden"]
     )
 
     # Get class seats information and store in the data frame..
@@ -281,7 +280,8 @@ def refine_class_info(class_info_list: list, subject: str) -> pd.DataFrame:
                         for each_class in class_info_list]
 
     # Set all basic information.
-    class_info_frame[""] = TO_CALENDAR
+    class_info_frame[""] = SHOW_DETAIL
+    class_info_frame["Add"] = TO_CALENDAR
 
     class_info_frame["Subject"] = subject
 
@@ -374,10 +374,6 @@ def save_one_semester(semester_name: str, semester_value: str):
 
     # Save it as a pickle file.
     semester_frame.to_pickle(f"course_data/pickle_data/{semester_name}.pkl")
-
-    # Save to CSV in order to easily compare with web page.
-    # Turned off since this is mainly for testing purpose.
-    # semester_frame.to_csv(f"course_data/csv_data/{semester_name}.csv")
 
 
 def save_all_semesters():
