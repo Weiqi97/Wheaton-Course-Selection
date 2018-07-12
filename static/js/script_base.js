@@ -236,20 +236,20 @@ function toCalendar() {
           end: dayConverter(day) + timeConverter(time[1]),
           allDay: false
         };
-        $("#calendar").fullCalendar("renderEvent", newEvent, "stick");
+        $("#calendar").fullCalendar('renderEvent', newEvent, 'stick');
       })
     });
   }
 }
 
 /**
- * Run these functions when HTML finish loading.
+ * Get all class information.
+ * @returns {void}: This function has no return.
  */
-$(function () {
-  // On click check for submit.
-  $('#submit').click(utility.checkSelectedSubjects);
-  utility.sendAjaxRequest('/classes', utility.jsonifyForm())
-    .done(
+function getClassTable() {
+  // Send the ajax request.
+  utility.sendAjaxRequest('/all_class', utility.jsonifyForm())
+    .done( // If no errors.
       function (response) {
         const tableHolder = $('#course-container');
         tableHolder.html(response);
@@ -257,4 +257,51 @@ $(function () {
         $('.to-calendar').click(toCalendar);
       }
     )
+    .fail( // If something went wrong.
+      function () {
+        $.alert({
+          type: `red`,
+          icon: 'fa fa-warning',
+          theme: 'modern',
+          title: 'Error!',
+          content: 'Something went wrong while getting the class information, please try again later.'
+        })
+      }
+    )
+}
+
+
+/**
+ * Fill user's selection into a hidden form for back end.
+ * @returns {void}: This function has no return.
+ */
+function fillHiddenData() {
+  $('#area-value').val($('#area').val());
+  $('#division-value').val($('#division').val());
+  $('#semester-value').val($('#semester').val());
+  $('#subjects-value').val($('#subjects').val());
+  $('#foundation-value').val($('#foundation').val());
+}
+
+/**
+ * Run these functions when HTML finish loading.
+ */
+$(function () {
+  // When document finishes loading, fill in default data.
+  // Then get all classes by default.
+  fillHiddenData();
+  getClassTable();
+
+  // When user clicks on submit.
+  $('#submit').click(function () {
+    // Get possible error when submitting.
+    const error = utility.checkSelectedSubjects();
+    if (error) {
+      utility.subjectsError();
+    } else {
+      // Fill in users selection and refine classes.
+      fillHiddenData();
+      getClassTable();
+    }
+  })
 });
