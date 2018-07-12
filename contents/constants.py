@@ -19,25 +19,32 @@ TIME_FILTER = pd.Series(
 )
 
 # Icon for add class to calendar.
-TO_CALENDAR = '<i id="to-calendar" class="fas fa-plus-circle fa-lg" ' \
-              'style="color: green"></i>'
+TO_CALENDAR = '<span class="to-calendar">' \
+              '<i class="fas fa-plus-circle fa-lg" style="color: green"></i>' \
+              '</span>'
+
+# Span for show details.
+SHOW_DETAIL = '<span class="show-detail">' \
+              '<i class="fas fa-angle-down fa-lg"></i>' \
+              '</span>'
 
 
+# TODO: This should be used.. Really..
 # Helper constants to slice the data frame.
 class ColIndex(Enum):
-    subject = 0
-    course_number = 1
-    title = 2
-    time = 3
-    exam = 4
-    CRN = 5
-    location = 6
-    instructor = 7
-    foundation = 8
-    division = 9
-    seat = 10
-    area = 11
-    connection = 12
-    textbook = 13
-    special = 14
-    hidden = 15
+    subject = 2
+    course_number = 3
+    title = 4
+    time = 5
+    CRN = 6
+    location = 7
+    instructor = 8
+    exam = 9
+    foundation = 10
+    division = 11
+    area = 12
+    connection = 13
+    seat = 14
+    textbook = 15
+    special = 16
+    hidden = 17
