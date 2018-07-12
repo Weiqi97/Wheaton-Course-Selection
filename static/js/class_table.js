@@ -22,7 +22,7 @@ export function convertDataTable(table) {
         className: "text-center"
       },
       {
-        targets: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+        targets: [6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17],
         visible: false
       }
     ]
