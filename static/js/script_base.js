@@ -44,8 +44,7 @@ function timeConverter(time) {
   }
   else {
     if (Number(time.slice(0, 2)) !== 12) {
-      // Todo: What does the string number do?
-      return `${String(Number(time.slice(0, 1)) + 12)}${time.slice(1, 4)}:00`;
+      return `${Number(time.slice(0, 1)) + 12}${time.slice(1, 4)}:00`;
     }
     return `${time.slice(0, 5)}:00`;
   }
@@ -169,7 +168,7 @@ $(function readyCalendar() {
     eventRender: function (event, element) {
       element.find(".fc-bg").css("pointer-events", "none");
       element.append(
-        `<div style='position: absolute; bottom: 1px; right: 1px'>
+        `<div style='position: absolute; bottom: 1px; right: 2px'>
             <button id='deleteEvent' class='fas fa-trash-alt'></button>
         </div>`
       );
@@ -184,59 +183,37 @@ $(function readyCalendar() {
 
 /**
  * Add class from data table to calendar.
+ * @returns {void}: This function has no return.
  */
 function toCalendar() {
   // Get the row with the add button clicked.
-  const clickedRow = $(event.currentTarget).closest("tr");
+  const clickedRow = $(event.currentTarget).closest('tr');
   // Get the data within the row.
   const rowData = $('#course-table').dataTable().fnGetData(clickedRow);
   // Unpack data from the row, we need title and time only.
-  const title = rowData[3];
-  const time = rowData[4];
+  const courseTitle = rowData[4];
+  const courseTime = rowData[5];
 
-  console.log(title);
-  console.log(time);
-
-  // TODO: Use trim
   // Check if the class has an assigned time.
-  if (time.slice(0, 3) === "TBA") {
-    swal({
-      type: "warning",
-      title: "This class does not have an assigned time!",
-      confirmButtonText: "Got it!"
-    });
+  if (courseTime === "TBA") {
+    utility.classTimeTBAError()
   } else {
-    course_time = course_time.replace(/\s+/g, "");
-    course_time = course_time.split("<br>");        //deletes the <br>
-    course_time = Array.from(course_time);
-    // TODO: use for (let o of foo())  or List.map()
-    //get the info from the class time array.
-    course_time.forEach(function (each_time) {
-      var days = [], time = [], k = 0, j = 0;
-      // Refine days and times.
-      for (var i = 0; i < each_time.length; i++) {
-        if (each_time[i].charCodeAt(0) > 64 & each_time[i] !== 'P' & each_time[i] !== 'A' && each_time[i] !== 'r')
-          days[j++] = each_time[i];
-        else time[k++] = each_time[i];
-      }
-      // makes the time array into a string and trims all the commas.
-      time = (time.toString()).replace(/,/g, "");
-
-      // Format time for calendar
-      time = time.split("-");
-      // Truncates the last two M from the AM and PM
-      days = days.slice(0, -2);
-
-      days.forEach(function (day) {
-        var newEvent = {
-          id: course_title,
-          title: course_title,
-          start: dayConverter(day) + timeConverter(time[0]),
-          end: dayConverter(day) + timeConverter(time[1]),
+    // Split times. It is possible that one class has two different times.
+    const timeList = courseTime.split("<br>");
+    // Use a map function to fill all class times in the calendar.
+    timeList.map(function (time) {
+      const days = time.replace(/AM|PM|[0-9]|-|:|\s/g, '').split('');
+      const startEndTime = time.replace(/[MTWRF]|\s/g, '').split('-');
+      for (let day of days) {
+        const newEvent = {
+          id: courseTitle,
+          title: courseTitle,
+          start: dayConverter(day) + timeConverter(startEndTime[0]),
+          end: dayConverter(day) + timeConverter(startEndTime[1]),
           allDay: false
         };
         $("#calendar").fullCalendar('renderEvent', newEvent, 'stick');
-      })
+      }
     });
   }
 }
