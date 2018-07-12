@@ -112,7 +112,7 @@ function format(CRN, Exam, Connection, Location, Textbook, Info, Seats, Special)
  */
 function getClassTable() {
   // Send the ajax request.
-  utility.sendAjaxRequest('/all_class', utility.jsonifyForm())
+  utility.sendAjaxRequest('/course_table', utility.jsonifyForm())
     .done( // If no errors.
       function (response) {
         const tableHolder = $('#course-container');

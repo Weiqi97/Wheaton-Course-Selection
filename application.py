@@ -25,7 +25,7 @@ def main():
     )
 
 
-@app.route("/all_class", methods=["POST"])
+@app.route("/course_table", methods=["POST"])
 def get_all_class():
     """Get all course information.
 
