@@ -169,8 +169,10 @@ $(function readyCalendar() {
       element.find(".fc-bg").css("pointer-events", "none");
       element.append(
         `<div style='position: absolute; bottom: 1px; right: 2px'>
-            <button id='deleteEvent' class='fas fa-trash-alt'></button>
-        </div>`
+             <span id='deleteEvent'>
+                 <i  class='fas fa-trash-alt fa-lg' style='color: orangered'></i>
+             </span>
+         </div>`
       );
       element.find("#deleteEvent").click(function () {
         $('#calendar').fullCalendar('removeEvents', event._id);
