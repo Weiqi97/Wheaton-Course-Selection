@@ -32,6 +32,8 @@ SHOW_DETAIL = '<span class="show-detail">' \
 # TODO: This should be used.. Really..
 # Helper constants to slice the data frame.
 class ColIndex(Enum):
+    """Indexes for columns in pandas data frame."""
+
     subject = 2
     course_number = 3
     title = 4
