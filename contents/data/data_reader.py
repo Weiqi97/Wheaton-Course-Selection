@@ -9,9 +9,9 @@ pd.set_option("display.max_colwidth", -1)
 
 
 def read_data(area: str,
+              division: str,
               semester: str,
               subjects: list,
-              division: str,
               foundation: str) -> str:
     """Read data from saved file and return values based on users request.
 
@@ -27,10 +27,10 @@ def read_data(area: str,
         pd.read_pickle(f"contents/data/course_data/pickle_data/{semester}.pkl")
 
     # If choose all subject, pass, otherwise select desired rows.
-    if "%" in subjects:
+    if "%" in subjects or "" in subjects:
         pass
     else:
-        data_frames = [data_frame.loc[data_frame["subject"] == subject]
+        data_frames = [data_frame.loc[data_frame["Subject"] == subject]
                        for subject in subjects]
         data_frame = pd.DataFrame(pd.concat(data_frames))
 
@@ -38,19 +38,19 @@ def read_data(area: str,
     if foundation == "%":
         pass
     else:
-        data_frame = data_frame.loc[data_frame["foundation"] == foundation]
+        data_frame = data_frame.loc[data_frame["Foundation"] == foundation]
 
     # If choose all divisions, pass, otherwise select desired rows.
     if division == "%":
         pass
     else:
-        data_frame = data_frame.loc[data_frame["division"] == division]
+        data_frame = data_frame.loc[data_frame["Division"] == division]
 
     # If choose all areas, pass, otherwise select desired rows.
     if area == "%":
         pass
     else:
-        data_frame = data_frame.loc[data_frame["area"] == area]
+        data_frame = data_frame.loc[data_frame["Area"] == area]
 
     # Convert refined data frame to html format.
     table = data_frame.to_html(
