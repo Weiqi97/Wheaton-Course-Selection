@@ -138,7 +138,7 @@ tr.shown span.show-detail {
 /*___________________________________________________*/
 
 /*outer/bigger body of the calendar*/
-.calendar {
+#calendar {
     background-color: rgba(255, 255, 255, 0.9);
     color: black;
     border: 1px solid black;
