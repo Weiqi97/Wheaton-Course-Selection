@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from contents.data.data_reader import read_data, read_semesters, \
     read_subjects, read_foundations, read_divisions, read_areas, \
     read_current_semester
@@ -25,18 +25,18 @@ def main():
     )
 
 
-@app.route("/classes", methods=["POST"])
-def get_refined_data_table():
-    """Get the course information based on user's selection.
+@app.route("/all_class", methods=["POST"])
+def get_all_class():
+    """Get all course information.
 
     :return: A html formatted table.
     """
     return read_data(
-        semester=read_current_semester(),
-        subjects=["%"],
-        foundation="%",
-        division="%",
-        area="%"
+        area=request.json["area"],
+        division=request.json["division"],
+        subjects=request.json["subjects"].split(","),
+        semester=request.json["semester"],
+        foundation=request.json["foundation"]
     )
 
 
