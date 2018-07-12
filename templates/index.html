@@ -125,7 +125,19 @@
             </button>
         </div>
     </div>
-    <br>
+    <!-- This part will hold values needed for backend. -->
+    <form>
+        <label for="area-value"></label>
+        <input id="area-value" name="area" type="hidden">
+        <label for="division-value"></label>
+        <input id="division-value" name="division" type="hidden">
+        <label for="semester-value"></label>
+        <input id="semester-value" name="semester" type="hidden">
+        <label for="subjects-value"></label>
+        <input id="subjects-value" name="subjects" type="hidden">
+        <label for="foundation-value"></label>
+        <input id="foundation-value" name="foundation" type="hidden">
+    </form>
 </div>
 
 
@@ -133,7 +145,6 @@
 <div class="container-fluid row">
     <!-- This part holds the calendar. -->
     <div class="col-6" id="calendar"></div>
-
     <!--This part holds the course schedule. -->
     <div class="col-6" id="course-container"></div>
 </div>
@@ -141,21 +152,19 @@
 
 <!-- This part sets the footer of the page. -->
 <footer>
-    <div id="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-12" style="text-align: center;">
-                    <div class="footer_header">Wheaton college</div>
-                </div>
-                <div class="col-12" style="text-align: center;">
-                    <span class="footer-contact">
-                        <span> &copy 2018 ALL RIGHTS RESERVED &nbsp | &nbsp</span>
-                        <span>Contact Us &nbsp | &nbsp</span>
-                        <span>
-                            <a href="https://github.com/Weiqi97/WheatonCourseSelection">GitHub Repo</a>
-                        </span>
+    <div id="footer" class="container-fluid">
+        <div class="row">
+            <div class="col-12" style="text-align: center;">
+                <div class="footer_header">Wheaton college</div>
+            </div>
+            <div class="col-12" style="text-align: center;">
+                <span class="footer-contact">
+                    <span> &copy 2018 ALL RIGHTS RESERVED &nbsp | &nbsp</span>
+                    <span>Contact Us &nbsp | &nbsp</span>
+                    <span>
+                        <a href="https://github.com/Weiqi97/WheatonCourseSelection">GitHub Repo</a>
                     </span>
-                </div>
+                </span>
             </div>
         </div>
     </div>
