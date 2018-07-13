@@ -55,13 +55,15 @@ function expandDataRow() {
   if (row.child.isShown()) {
     $('div.slider', row.child()).slideUp(function () {
       row.child.hide();
-      tr.removeClass("shown");
+      tr.removeClass('shown');
     });
+    $(event.currentTarget).html(`<i class="fas fa-angle-double-down fa-lg"></i>`);
   } else {
     // If not shown, display it.
-    row.child(formattedRow, "no-padding").show();
-    tr.addClass("shown");
+    row.child(formattedRow, 'no-padding').show();
+    tr.addClass('shown');
     $('div.slider', row.child()).slideDown();
+    $(event.currentTarget).html(`<i class="fas fa-angle-double-up fa-lg"></i>`);
   }
 }
 
@@ -95,17 +97,7 @@ function getClassTable() {
 }
 
 
-/**
- * Fill user's selection into a hidden form for back end.
- * @returns {void}: This function has no return.
- */
-function fillHiddenData() {
-  $('#area-value').val($('#area').val());
-  $('#division-value').val($('#division').val());
-  $('#semester-value').val($('#semester').val());
-  $('#subjects-value').val($('#subjects').val());
-  $('#foundation-value').val($('#foundation').val());
-}
+
 
 /**
  * Run these functions when HTML finish loading.
@@ -114,7 +106,7 @@ $(function () {
   // When document finishes loading, fill in default data.
   // Then get all classes by default.
   calendar.readyCalendar();
-  fillHiddenData();
+  utility.fillHiddenData();
   getClassTable();
 
   // When user clicks on submit.
