@@ -1,5 +1,5 @@
 flask
-beautifulsoup4
 numpy
-mechanicalsoup
 pandas
+beautifulsoup4
+mechanicalsoup

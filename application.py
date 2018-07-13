@@ -1,3 +1,5 @@
+"""This is the flask application that connects backend and frontend."""
+
 from flask import Flask, render_template, request
 from contents.data.data_reader import read_data, read_semesters, \
     read_subjects, read_foundations, read_divisions, read_areas, \
@@ -7,51 +9,37 @@ app = Flask(__name__)
 app.debug = True
 
 
-@app.route("/", methods=["GET", "POST"])
-def drop_down_selections():
-    fetched_semesters = read_semesters()
-    fetched_subjects = read_subjects()
-    fetched_foundations = read_foundations()
-    fetched_divisions = read_divisions()
-    fetched_areas = read_areas()
-    fetched_current_semester = read_current_semester()
-    selected_data = read_data(semester=fetched_current_semester,
-                              subjects=["%"],
-                              foundation="%",
-                              division="%",
-                              area="%")
+@app.route("/", methods=["GET"])
+def main():
+    """Render the main HTML page.
 
-    if request.method == "GET":
-        return render_template("index.html",
-                               semester=fetched_current_semester,
-                               fetched_semesters=fetched_semesters,
-                               fetched_subjects=fetched_subjects,
-                               fetched_foundations=fetched_foundations,
-                               fetched_divisions=fetched_divisions,
-                               fetched_areas=fetched_areas,
-                               selected_data=selected_data)
+    Get the data for all the select drop downs.
+    :return: A rendered template with desired information.
+    """
+    return render_template(
+        "index.html",
+        fetched_areas=read_areas(),
+        fetched_subjects=read_subjects(),
+        fetched_semesters=read_semesters(),
+        fetched_divisions=read_divisions(),
+        fetched_foundations=read_foundations(),
+        current_semester=read_current_semester()
+    )
 
-    if request.method == "POST":
-        semester = request.form["semester"]
-        subjects = request.form.getlist("subjects")
-        foundation = request.form["foundation"]
-        division = request.form["division"]
-        area = request.form["area"]
 
-        selected_data = read_data(semester=semester,
-                                  subjects=subjects,
-                                  foundation=foundation,
-                                  division=division,
-                                  area=area)
+@app.route("/course_table", methods=["POST"])
+def get_all_class():
+    """Get all course information.
 
-        return render_template("index.html",
-                               semester=semester,
-                               fetched_semesters=fetched_semesters,
-                               fetched_subjects=fetched_subjects,
-                               fetched_foundations=fetched_foundations,
-                               fetched_divisions=fetched_divisions,
-                               fetched_areas=fetched_areas,
-                               selected_data=selected_data)
+    :return: A html formatted table.
+    """
+    return read_data(
+        area=request.json["area"],
+        division=request.json["division"],
+        subjects=request.json["subjects"].split(","),
+        semester=request.json["semester"],
+        foundation=request.json["foundation"]
+    )
 
 
 if __name__ == "__main__":

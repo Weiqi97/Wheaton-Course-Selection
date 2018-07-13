@@ -3,22 +3,19 @@
 
 import pandas as pd
 import mechanicalsoup
-
-
-# TODO: Careful about LAB. How to deal with them? (This might take longer...)
-from contents.constants import url, SEMESTER_NUMBER
+from contents.constants import URL, SEMESTER_NUMBER
 
 
 def fetch_web_content(subject: str, semester: str) -> str:
-    """
-    This function will submit the form based on the two inputs.
+    """Submit the form based on desired subject and semester.
+
     :param subject: Desired subject users want to search for.
     :param semester: Desired semester users want to search for.
     :return: A string that contains web page information.
     """
     # Set up the fake browser object and open the target website.
     browser = mechanicalsoup.StatefulBrowser()
-    web = browser.open(url)
+    web = browser.open(URL)
 
     # Remove all submit button but the one called "Search Schedule"
     for each_input in web.soup.find_all("input"):
@@ -39,15 +36,15 @@ def fetch_web_content(subject: str, semester: str) -> str:
 
 
 def fetch_semesters() -> pd.Series:
-    """
-    Fetch all existing semester values and names.
+    """Fetch all existing semester values and names from the HTML.
+
     :return: A pandas series, where
             - Index are semester names, ie "Spring 2018"
             - Data are corresponding semester values, ie "201820"
     """
     # Set up the fake browser object and open the target website.
     browser = mechanicalsoup.StatefulBrowser()
-    web_soup = browser.open(url).soup
+    web_soup = browser.open(URL).soup
 
     # Find the correct select tag.
     select_box = web_soup.find("select", {"name": "schedule_beginterm"})
@@ -64,15 +61,15 @@ def fetch_semesters() -> pd.Series:
 
 
 def fetch_subjects() -> pd.Series:
-    """
-    Fetch all existing subject names.
+    """Fetch all existing subject names.
+
     :return: A pandas series, where
             - index are subject names.
             - Data are corresponding subject values.
     """
     # Set up the fake browser object and open the target website.
     browser = mechanicalsoup.StatefulBrowser()
-    web_soup = browser.open(url).soup
+    web_soup = browser.open(URL).soup
 
     # Find the correct select tag.
     select_box = web_soup.find("select", {"name": "subject_sch"})
@@ -89,15 +86,15 @@ def fetch_subjects() -> pd.Series:
 
 
 def fetch_foundations() -> pd.Series:
-    """
-    Fetch all existing foundation names.
+    """Fetch all existing foundation names.
+
     :return: A pandas series, where
             - index are foundation names.
             - Data are corresponding foundation values.
     """
     # Set up the fake browser object and open the target website.
     browser = mechanicalsoup.StatefulBrowser()
-    web_soup = browser.open(url).soup
+    web_soup = browser.open(URL).soup
 
     # Find the correct select tag.
     select_box = web_soup.find("select", {"name": "foundation_sch"})
@@ -114,15 +111,15 @@ def fetch_foundations() -> pd.Series:
 
 
 def fetch_divisions() -> pd.Series:
-    """
-    Fetch all existing foundation names.
+    """Fetch all existing foundation names.
+
     :return: A pandas series, where
             - index are division names.
             - Data are corresponding division values.
     """
     # Set up the fake browser object and open the target website.
     browser = mechanicalsoup.StatefulBrowser()
-    web_soup = browser.open(url).soup
+    web_soup = browser.open(URL).soup
 
     # Find the correct select tag.
     select_box = web_soup.find("select", {"name": "division_sch"})
@@ -139,15 +136,15 @@ def fetch_divisions() -> pd.Series:
 
 
 def fetch_areas() -> pd.Series:
-    """
-    Fetch all existing foundation names.
+    """Fetch all existing foundation names.
+
     :return: A pandas series, where
             - index are area names.
             - Data are corresponding area values.
     """
     # Set up the fake browser object and open the target website.
     browser = mechanicalsoup.StatefulBrowser()
-    web_soup = browser.open(url).soup
+    web_soup = browser.open(URL).soup
 
     # Find the correct select tag.
     select_box = web_soup.find("select", {"name": "area_sch"})
@@ -164,13 +161,13 @@ def fetch_areas() -> pd.Series:
 
 
 def fetch_current_semester() -> pd.Series:
-    """
-    Fetch the current selected semester.
+    """Fetch the current selected semester.
+
     :return: A pandas series contains desired value.
     """
     # Set up the fake browser object and open the target website.
     browser = mechanicalsoup.StatefulBrowser()
-    web_soup = browser.open(url).soup
+    web_soup = browser.open(URL).soup
 
     # Find the correct select tag.
     select_box = web_soup.find("select", {"name": "schedule_beginterm"})
@@ -182,13 +179,10 @@ def fetch_current_semester() -> pd.Series:
 
 
 def save_fetched_data():
-    """
-    This function fetches all the selection drop down data from the website
-    and save them.
-    """
-    fetch_semesters().to_pickle("web_data/semesters.pkl")
-    fetch_subjects().to_pickle("web_data/subjects.pkl")
-    fetch_foundations().to_pickle("web_data/foundations.pkl")
-    fetch_divisions().to_pickle("web_data/divisions.pkl")
+    """Fetch all the selection drop down data from the web and save them."""
     fetch_areas().to_pickle("web_data/areas.pkl")
+    fetch_subjects().to_pickle("web_data/subjects.pkl")
+    fetch_divisions().to_pickle("web_data/divisions.pkl")
+    fetch_semesters().to_pickle("web_data/semesters.pkl")
+    fetch_foundations().to_pickle("web_data/foundations.pkl")
     fetch_current_semester().to_pickle("web_data/current_semester.pkl")

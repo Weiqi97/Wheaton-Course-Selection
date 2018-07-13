@@ -1,0 +1,32 @@
+install:
+  # Install anaconda
+  - choco install anaconda3
+
+  # Add anaconda to path
+  - SET PATH=C:\\tools\\Anaconda3\\scripts\\;C:\\tools\\Anaconda3\\;%PATH%
+
+  # Log debug info
+  - conda info -a
+
+  # Install dependency
+  - pip install -r ./requirements.txt
+  - pip install -r ./dev_requirements.txt
+
+  # Install npm
+  - choco install nodejs
+
+  # Use npm to install all the dependencies (including dev)
+  - cd ./static
+  - npm install
+  - cd ..
+
+branches:
+  only:
+    - master
+
+test_script:
+  # Test for python static analysis with flake8 and pydocstyle.
+  - flake8
+  - pydocstyle
+
+build: off

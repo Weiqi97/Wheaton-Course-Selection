@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "Run npm install to install all needed denpendencies.",
   "dependencies": {
-    "jquery": "^3.3.1",
-    "bootstrap": "^3.3.7",
-    "popper.js": "^1.14.0",
-    "sweetalert2": "^7.15.1",
+    "@fortawesome/fontawesome-free": "^5.1.0",
+    "bootstrap-select": "^1.13.1",
+    "jquery-confirm": "^3.3.2",
     "fullcalendar": "^3.9.0",
-    "bootstrap-select": "^1.12.4"
+    "popper.js": "^1.14.3",
+    "bootstrap": "^4.1.1",
+    "jquery": "^3.3.1"
   },
   "author": "Weiqi",
   "license": "ISC"

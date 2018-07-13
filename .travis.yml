@@ -3,8 +3,7 @@ language: python
 # command to install dependencies
 install:
   - sudo apt-get update
-  # We do this conditionally because it saves us some downloading if the
-  # version is the same.
+  # Get the newest mini conda and install anaconda.
   - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
@@ -18,7 +17,16 @@ install:
   - pip install -r requirements.txt
   - pip install -r dev_requirements.txt
 
+  # install nodejs 10. Remember to change this when nodejs updated!
+  - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+  - sudo apt-get install -y nodejs
+
+  # use npm to install all the dependencies (including dev)
+  - cd ./static
+  - npm install
+  - cd ..
+
 script:
-  # test for python static analysis
-  # including code style, doc style, and basic code analysis
-  - flake8 --count .
+  # Test for python static analysis with flake8 and pydocstyle.
+  - flake8
+  - pydocstyle
