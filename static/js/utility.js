@@ -56,7 +56,7 @@ export function subjectsError() {
   // Specify the alert details.
   $.confirm({
     type: 'red',
-    icon: 'fa fa-warning',
+    icon: 'fas fa-exclamation-triangle',
     theme: 'modern',
     title: 'No subject selected!',
     content: 'Please click on the subject(s) drop down and select at least one subject.',
@@ -77,7 +77,7 @@ export function classTimeTBAError() {
   // Specify the alert details.
   $.confirm({
     type: 'red',
-    icon: 'fa fa-warning',
+    icon: 'fas fa-exclamation-triangle',
     theme: 'modern',
     title: 'Error!',
     content: 'This class does not have an assigned time.',
