@@ -28,5 +28,7 @@ test_script:
   # Test for python static analysis with flake8 and pydocstyle.
   - flake8
   - pydocstyle
+  # Test for JavaScript file styles.
+  - ./static/node_modules/.bin/eslint ./static/js/
 
 build: off
