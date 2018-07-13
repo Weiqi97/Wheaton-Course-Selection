@@ -29,6 +29,6 @@ test_script:
   - flake8
   - pydocstyle
   # Test for JavaScript file styles.
-  - ./node_modules/.bin/eslint js
+  - ./static/node_modules/.bin/eslint ./static/js/
 
 build: off
