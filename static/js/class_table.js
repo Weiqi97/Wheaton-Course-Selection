@@ -94,6 +94,6 @@ export function expandDataRow() {
     row.child(formattedRow, 'no-padding').show();
     tr.addClass('shown');
     $('div.slider', row.child()).slideDown();
-    $(event.currentTarget).html(`<i class="fas fa-angle-up fa-lg" style="color: orangered;"></i>`);
+    $(event.currentTarget).html(`<i class="fas fa-angle-up fa-lg" style="color: darkcyan;"></i>`);
   }
 }
