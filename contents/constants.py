@@ -25,7 +25,7 @@ TO_CALENDAR = '<span class="to-calendar">' \
 
 # Span for show details.
 SHOW_DETAIL = '<span class="show-detail">' \
-              '<i class="fas fa-angle-down fa-lg"></i>' \
+              '<i class="fas fa-angle-double-down fa-lg"></i>' \
               '</span>'
 
 
