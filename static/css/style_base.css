@@ -111,137 +111,43 @@ table.dataTable tbody td.no-padding {
 
 /* _______________________________________________________________________ */
 
-/*___________________________________________________*/
-
-/*outer/bigger body of the calendar*/
+/* ---------------------- Calendar settings ------------------------------ */
+/* Format body of the calendar. */
 #calendar {
-    background-color: rgba(255, 255, 255, 0.9);
     color: black;
     border: 1px solid black;
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
-/*___________________________________________________*/
+/* _______________________________________________________________________ */
 
-/*the whole footer box*/
+/* ---------------------- Page footer settings --------------------------- */
+/* Settings for the whole footer box. */
 footer {
+    opacity: 0.8;
     margin-top: 20px;
     background: black;
-    opacity: 0.8;
 }
 
-/*second inside footer box*/
+/* Inner footer box. */
 #footer {
     padding-top: 5px;
     margin-bottom: 0;
 }
 
-/*footer header: Wheaton College*/
-.footer_header {
-    font-family: 'Questrial', sans-serif, serif;
+/* Title of the footer. */
+#footer-title {
+    color: #0072bc;
     font-size: 50px;
-    color: #0072bc;
+    text-align: center;
+    font-family: 'Questrial', sans-serif, serif;
 }
 
-/*icon on the footer*/
-.contact-icon {
-    width: 25px;
-    border-radius: 50%;
-}
-
-/*names of the developer*/
-.artist {
-    color: white;
-}
-
-.calendar {
-    background-color: rgba(255, 255, 255, 0.9);
-    color: black;
-    border-color: black;
-}
-
-ul.inner li {
-    opacity: 0;
-    animation-name: menu1;
-    animation-duration: 400ms;
-    animation-fill-mode: forwards;
-}
-
-@keyframes menu1 {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-select option[selected] {
-    background-color: #ee6e73;
-}
-
-.fc-time-grid .fc-slats td {
-    height: 1.7em;
-}
-
-/*semester title for the result table*/
-div.toolbar {
-    margin-top: 10px;
-    float: left;
-    padding-top: 5px;
-    font-family: 'Nanum Gothic', sans-serif, serif;
-    font-size: 20px;
-    padding-left: 10px;
-    color: #0072bc;
-    letter-spacing: 3px;
-}
-
-/*this is for the search bar in the result table*/
-.dataTables_wrapper .dataTables_filter {
-    margin-top: 10px;
-}
-
-.footer-contact {
+/* Contact session of the footer. */
+#footer-contact {
     color: white;
     opacity: 0.9;
+    text-align: center;
 }
 
-.icons {
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.icons a {
-    color: white;
-    -webkit-transition: 200ms ease-in;
-    -moz-transition: 200ms ease-in;
-    -o-transition: 200ms ease-in;
-    transition: 200ms ease-in;
-}
-
-.icons a:hover {
-    color: #0072bc;
-    -webkit-transition: 200ms ease-in;
-    -moz-transition: 200ms ease-in;
-    -o-transition: 200ms ease-in;
-    transition: 200ms ease-in;
-}
-
-.gmail {
-    margin-left: 10px;
-    margin-right: 10px;
-    background: transparent;
-    border: none;
-    -webkit-transition: 200ms ease-in;
-    -moz-transition: 200ms ease-in;
-    -o-transition: 200ms ease-in;
-    transition: 200ms ease-in;
-}
-
-.gmail:hover {
-    color: #0072bc;
-    -webkit-transition: 200ms ease-in;
-    -moz-transition: 200ms ease-in;
-    -o-transition: 200ms ease-in;
-    transition: 200ms ease-in;
-    text-decoration: underline;
-}
+/* _______________________________________________________________________ */
