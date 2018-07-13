@@ -19,14 +19,16 @@ TIME_FILTER = pd.Series(
 )
 
 # Icon for add class to calendar.
-TO_CALENDAR = '<span class="to-calendar">' \
-              '<i class="fas fa-plus-circle fa-lg" style="color: green"></i>' \
-              '</span>'
+TO_CALENDAR = \
+    '<span class="to-calendar">' \
+    '<i class="fas fa-plus-circle fa-lg" style="color: green"></i>' \
+    '</span>'
 
 # Span for show details.
-SHOW_DETAIL = '<span class="show-detail">' \
-              '<i class="fas fa-angle-double-down fa-lg"></i>' \
-              '</span>'
+SHOW_DETAIL = \
+    '<span class="show-detail">' \
+    '<i class="fas fa-angle-down fa-lg" style="color: #EE6551"></i>' \
+    '</span>'
 
 
 # TODO: This should be used.. Really..
