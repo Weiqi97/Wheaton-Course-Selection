@@ -26,6 +26,18 @@ export function sendAjaxRequest(url, form) {
 }
 
 /**
+ * Fill user's selection into a hidden form for back end.
+ * @returns {void}: This function has no return.
+ */
+export function fillHiddenData() {
+  $('#area-value').val($('#area').val());
+  $('#division-value').val($('#division').val());
+  $('#semester-value').val($('#semester').val());
+  $('#subjects-value').val($('#subjects').val());
+  $('#foundation-value').val($('#foundation').val());
+}
+
+/**
  * Check if any subject was selected.
  * @returns {boolean}: True if no subject selected, otherwise false.
  */
