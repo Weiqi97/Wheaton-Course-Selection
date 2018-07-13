@@ -46,7 +46,7 @@ function dayConverter(day) {
 export function readyCalendar() {
   // Create the full calendar object.
   $("#calendar").fullCalendar({
-    height: 740,
+    height: 800,
     header: {left: "", center: "", right: ""},
     editable: true,                    // Make the calendar editable.
     allDaySlot: false,                 // Hide "all day" at the top.
