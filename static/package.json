@@ -14,7 +14,7 @@
   "devDependencies": {
     "eslint": "^5.1.0",
     "babel-eslint": "^8.2.6"
-  }
+  },
   "author": "Weiqi",
   "license": "ISC"
 }
