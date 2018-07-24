@@ -83,9 +83,10 @@ export function readyCalendar () {
 
 /**
  * Add class from data table to calendar.
+ * @param event - The event object that was clicked.
  * @returns {void} - This function has no return.
  */
-export function toCalendar () {
+export function toCalendar (event) {
   // Get the row with the add button clicked.
   const clickedRow = $(event.currentTarget).closest('tr')
   // Get the data within the row.
