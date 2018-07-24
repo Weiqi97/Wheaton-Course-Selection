@@ -66,9 +66,10 @@ export function convertDataTable (table) {
 
 /**
  * This function sets expand data row when click.
+ * @param event - The event object that was clicked.
  * @returns {void} - This function has no return.
  */
-export function expandDataRow () {
+export function expandDataRow (event) {
   // Get the data table selector.
   const courseTable = $('#course-table')
   // Get the data table object.
