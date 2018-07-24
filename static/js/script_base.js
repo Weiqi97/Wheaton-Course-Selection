@@ -14,8 +14,12 @@ function getClassTable () {
         const tableHolder = $('#course-container')
         tableHolder.html(response)
         classTable.convertDataTable(tableHolder.children())
-        $('.to-calendar').click(calendar.toCalendar)
-        $('.show-detail').click(classTable.expandDataRow)
+        $('.to-calendar').click(function (event) {
+          calendar.toCalendar(event)
+        })
+        $('.show-detail').click(function (event) {
+          classTable.expandDataRow(event)
+        })
       }
     )
     .fail( // If something went wrong.
