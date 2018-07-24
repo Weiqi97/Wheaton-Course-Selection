@@ -1,0 +1,25 @@
+# Top-most EditorConfig file.
+root = true
+
+# Unix-style general file settings.
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Python language indentation settings.
+[*.py]
+indent_size = 4
+indent_style = space
+
+# Javascript language indentation settings.
+[*.js]
+indent_size = 2
+indent_style = space
+
+# All json or yml files.
+[{package.json,.travis.yml}]
+indent_size = 2
+indent_style = space
+
