@@ -4,18 +4,18 @@ import * as classTable from './class_table.js'
 
 /**
  * Get all class information.
- * @returns {void}: This function has no return.
+ * @returns {void} This function has no return.
  */
-function getClassTable() {
+function getClassTable () {
   // Send the ajax request.
   utility.sendAjaxRequest('/course_table', utility.jsonifyForm())
     .done( // If no errors.
       function (response) {
-        const tableHolder = $('#course-container');
-        tableHolder.html(response);
-        classTable.convertDataTable(tableHolder.children());
-        $('.to-calendar').click(calendar.toCalendar);
-        $('.show-detail').click(classTable.expandDataRow);
+        const tableHolder = $('#course-container')
+        tableHolder.html(response)
+        classTable.convertDataTable(tableHolder.children())
+        $('.to-calendar').click(calendar.toCalendar)
+        $('.show-detail').click(classTable.expandDataRow)
       }
     )
     .fail( // If something went wrong.
@@ -37,20 +37,20 @@ function getClassTable() {
 $(function () {
   // When document finishes loading, fill in default data.
   // Then get all classes by default.
-  calendar.readyCalendar();
-  utility.fillHiddenData();
-  getClassTable();
+  calendar.readyCalendar()
+  utility.fillHiddenData()
+  getClassTable()
 
   // When user clicks on submit.
   $('#submit').click(function () {
     // Get possible error when submitting.
-    const error = utility.checkSelectedSubjects();
+    const error = utility.checkSelectedSubjects()
     if (error) {
-      utility.subjectsError();
+      utility.subjectsError()
     } else {
       // Fill in users selection and refine classes.
-      utility.fillHiddenData();
-      getClassTable();
+      utility.fillHiddenData()
+      getClassTable()
     }
   })
-});
+})
