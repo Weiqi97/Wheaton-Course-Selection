@@ -40,6 +40,11 @@ function dayConverter (day) {
   }
 }
 
+/**
+ *
+ * @param {json} newEvent - The new event that needs to be added to calendar.
+ * @returns {boolean}
+ */
 function eventIsOverlap (newEvent) {
   const format = 'YYYY-MM-DD HH:mm:ss'
   const newEventStart = moment(newEvent.start).format(format)
