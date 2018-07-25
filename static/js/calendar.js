@@ -40,6 +40,38 @@ function dayConverter (day) {
   }
 }
 
+function eventIsOverlap (newEvent) {
+  const format = 'YYYY-MM-DD HH:mm:ss'
+  const newEventStart = moment(newEvent.start).format(format)
+  const newEventEnd = moment(newEvent.end).format(format)
+  const allEvents = $('#calendar').fullCalendar('clientEvents')
+  for (let event of allEvents) {
+    if (moment(newEventStart).isBetween(event.start.format(format), event.end.format(format))) {
+      return true
+    } else if (moment(newEventEnd).isBetween(event.start.format(format), event.end.format(format))) {
+      return true
+    }
+  }
+  return false
+}
+
+
+function overlapAlert () {
+  $.confirm({
+    type: 'red',
+    icon: 'fas fa-exclamation-triangle',
+    theme: 'modern',
+    title: 'Cannot add this class.',
+    content: 'There is an existing class in the calendar that is overlapping with this class.',
+    buttons: {
+      confirm: {
+        text: 'Got it.',
+        btnClass: 'btn-info'
+      }
+    }
+  })
+}
+
 /**
  * This function creates the full calendar object.
  * @returns {void} - This function has no return.
@@ -105,15 +137,29 @@ export function toCalendar (event) {
     timeList.map(function (time) {
       const days = time.replace(/AM|PM|[0-9]|-|:|\s/g, '').split('')
       const startEndTime = time.replace(/[MTWRF]|\s/g, '').split('-')
-      for (let day of days) {
-        const newEvent = {
+      // Get all formatted events.
+      const events = days.map(function (day) {
+        return {
           id: courseTitle,
           title: courseTitle,
           start: dayConverter(day) + timeConverter(startEndTime[0]),
           end: dayConverter(day) + timeConverter(startEndTime[1]),
           allDay: false
         }
-        $('#calendar').fullCalendar('renderEvent', newEvent, 'stick')
+      })
+      // Check if there is any overlapping.
+      const eventsOverlap = events.map(function (event) {
+        return eventIsOverlap(event)
+      })
+      console.log(eventsOverlap)
+      // If no overlapping, render all events.
+      if (eventsOverlap.indexOf(true) === -1) {
+        events.map(function (event) {
+          $('#calendar').fullCalendar('renderEvent', event, 'stick')
+        })
+      } else {
+        // If overlapping detected, alert the user.
+        overlapAlert()
       }
     })
   }
