@@ -41,9 +41,9 @@ function dayConverter (day) {
 }
 
 /**
- *
- * @param {json} newEvent - The new event that needs to be added to calendar.
- * @returns {boolean}
+ * Check if there is an existing event that overlaps with the new event.
+ * @param {object} newEvent - The new event that needs to be added to calendar.
+ * @returns {boolean} - If overlapping, return true, otherwise return false.
  */
 function eventIsOverlap (newEvent) {
   const format = 'YYYY-MM-DD HH:mm:ss'
@@ -60,7 +60,10 @@ function eventIsOverlap (newEvent) {
   return false
 }
 
-
+/**
+ * Alert user when events overlapping is detected.
+ * @returns {void} - This function has no return.
+ */
 function overlapAlert () {
   $.confirm({
     type: 'red',
