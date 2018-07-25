@@ -27,7 +27,7 @@ function getClassTable () {
         $.alert({
           type: `red`,
           icon: 'fas fa-exclamation-triangle',
-          theme: 'modern',
+          theme: 'supervan',
           title: 'Error!',
           content: 'Something went wrong while getting the class information, please try again later.'
         })
