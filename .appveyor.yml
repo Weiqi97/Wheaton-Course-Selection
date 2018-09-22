@@ -1,47 +1,29 @@
-# Set up environment for multiple languages.
+# Set up environment.
 environment:
+  # Run for both architecture for python 3.7.x
   matrix:
-    # Run for both architecture for python 3.7.x
     - PYTHON: "C:\\Python37"
-      PYTHON_ARCH: "32"
       PYTHON_VERSION: "3.7"
-      init:
-        # Set python path.
-        - set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
-      install:
-        # Upgrade pip to the latest version and install dev requirement.
-        - python -m pip install --upgrade pip
-        - pip install -r dev_requirements.txt
-      test_script:
-        # Test for python styles.
-        - flake8
-        - pydocstyle
+      PYTHON_ARCH: "32"
 
     - PYTHON: "C:\\Python37-x64"
-      PYTHON_ARCH: "64"
       PYTHON_VERSION: "3.7"
-      init:
-        # Set python path.
-        - set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
-      install:
-        # Upgrade pip to the latest version and install dev requirement.
-        - python -m pip install --upgrade pip
-        - pip install -r dev_requirements.txt
-      test_script:
-        # Test for python styles.
-        - flake8
-        - pydocstyle
+      PYTHON_ARCH: "64"
 
-#    # Run for node_js checks.
-#    - nodejs_version: "10"
-#      install:
-#        # Install the required npm packages.
-#        - cd ./static
-#        - npm install
-#        - cd ..
-#      test_script:
-#        # ESLint to check styles.
-#        - ./static/node_modules/.bin/eslint ./static/js/
+# Set python path.
+init:
+  - set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
 
-# Turn off build.
+# Installations.
+install:
+  # Upgrade pip to the latest version.
+  - python -m pip install --upgrade pip
+  - pip install -r dev_requirements.txt
+
+# Testing script.
+test_script:
+  # Test for python styles.
+  - flake8
+  - pydocstyle
+
 build: off
