@@ -66,7 +66,7 @@ export function convertDataTable (table) {
 
 /**
  * This function sets expand data row when click.
- * @param event - The event object that was clicked.
+ * @param {Object} event - The event object that was clicked.
  * @returns {void} - This function has no return.
  */
 export function expandDataRow (event) {

@@ -42,7 +42,7 @@ function dayConverter (day) {
 
 /**
  * Check if there is an existing event that overlaps with the new event.
- * @param {object} newEvent - The new event that needs to be added to calendar.
+ * @param {Object} newEvent - The new event that needs to be added to calendar.
  * @returns {boolean} - If overlapping, return true, otherwise return false.
  */
 function eventIsOverlap (newEvent) {
@@ -88,7 +88,7 @@ export function readyCalendar () {
   // Create the full calendar object.
   $('#calendar').fullCalendar({
     height: 800,
-    header: {left: '', center: '', right: ''},
+    header: { left: '', center: '', right: '' },
     editable: true, // Make the calendar editable.
     allDaySlot: false, // Hide "all day" at the top.
     defaultView: 'agendaWeek', // Display as weeks.
@@ -123,7 +123,7 @@ export function readyCalendar () {
 
 /**
  * Add class from data table to calendar.
- * @param event - The event object that was clicked.
+ * @param {Object} event - The event object that was clicked.
  * @returns {void} - This function has no return.
  */
 export function toCalendar (event) {
