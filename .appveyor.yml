@@ -32,16 +32,16 @@ environment:
         - flake8
         - pydocstyle
 
-    # Run for node_js checks.
-    - nodejs_version: "10"
-      install:
-        # Install the required npm packages.
-        - cd ./static
-        - npm install
-        - cd ..
-      test_script:
-        # ESLint to check styles.
-        - ./static/node_modules/.bin/eslint ./static/js/
+#    # Run for node_js checks.
+#    - nodejs_version: "10"
+#      install:
+#        # Install the required npm packages.
+#        - cd ./static
+#        - npm install
+#        - cd ..
+#      test_script:
+#        # ESLint to check styles.
+#        - ./static/node_modules/.bin/eslint ./static/js/
 
 # Turn off build.
 build: off
