@@ -1,34 +1,58 @@
-language: python
+matrix:
+  include:
+    - language: python
+      python: "3.6"
+      install:
+        - python -m pip install --upgrade pip
+        - pip install -r dev_requirements.txt
 
-# command to install dependencies
-install:
-  - sudo apt-get update
-  # Get the newest mini conda and install anaconda.
-  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-  - bash miniconda.sh -b -p $HOME/miniconda
-  - export PATH="$HOME/miniconda/bin:$PATH"
-  - hash -r
-  - conda config --set always_yes yes --set changeps1 no
+      script:
+        - flake8
+        - pydocstyle
 
-  # installing anaconda
-  - conda install anaconda
+    - language: node_js
+      node_js: "10"
+      install:
+        - cd ./static
+        - npm install
+        - cd ..
 
-  # install project dependency
-  - pip install -r requirements.txt
-  - pip install -r dev_requirements.txt
+      script:
+        - ./static/node_modules/.bin/eslint ./static/js/
 
-  # install nodejs 10. Remember to change this when nodejs updated!
-  - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
-  - sudo apt-get install -y nodejs
 
-  # use npm to install all the dependencies (including dev)
-  - cd ./static
-  - npm install
-  - cd ..
-
-script:
-  # Test for python static analysis with flake8 and pydocstyle.
-  - flake8
-  - pydocstyle
-  # Test for JavaScript file styles.
-  - ./static/node_modules/.bin/eslint ./static/js/
+#
+#language: python
+#
+## command to install dependencies
+#install:
+#  - sudo apt-get update
+#  # Get the newest mini conda and install anaconda.
+#  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+#  - bash miniconda.sh -b -p $HOME/miniconda
+#  - export PATH="$HOME/miniconda/bin:$PATH"
+#  - hash -r
+#  - conda config --set always_yes yes --set changeps1 no
+#
+#  # installing anaconda
+#  - conda install anaconda
+#
+#  # install project dependency
+#  - pip install -r requirements.txt
+#  - pip install -r dev_requirements.txt
+#
+#  # install nodejs 10. Remember to change this when nodejs updated!
+#  - curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+#  - sudo apt-get install -y nodejs
+#
+#  # use npm to install all the dependencies (including dev)
+#  - cd ./static
+#  - npm install
+#  - cd ..
+#
+#script:
+#  # Test for python static analysis with flake8 and pydocstyle.
+#  - flake8
+#  - pydocstyle
+#  # Test for JavaScript file styles.
+#  - ./static/node_modules/.bin/eslint ./static/js/
