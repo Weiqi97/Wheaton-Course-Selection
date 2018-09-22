@@ -1,34 +1,47 @@
-install:
-  # Install anaconda
-  - choco install anaconda3
+# Set up environment for multiple languages.
+environment:
+  matrix:
+    # Run for both architecture for python 3.7.x
+    - PYTHON: "C:\\Python37"
+      PYTHON_ARCH: "32"
+      PYTHON_VERSION: "3.7"
+      init:
+        # Set python path.
+        - set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
+      install:
+        # Upgrade pip to the latest version and install dev requirement.
+        - python -m pip install --upgrade pip
+        - pip install -r dev_requirements.txt
+      test_script:
+        # Test for python styles.
+        - flake8
+        - pydocstyle
 
-  # Add anaconda to path
-  - SET PATH=C:\\tools\\Anaconda3\\scripts\\;C:\\tools\\Anaconda3\\;%PATH%
+    - PYTHON: "C:\\Python37-x64"
+      PYTHON_ARCH: "64"
+      PYTHON_VERSION: "3.7"
+      init:
+        # Set python path.
+        - set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
+      install:
+        # Upgrade pip to the latest version and install dev requirement.
+        - python -m pip install --upgrade pip
+        - pip install -r dev_requirements.txt
+      test_script:
+        # Test for python styles.
+        - flake8
+        - pydocstyle
 
-  # Log debug info
-  - conda info -a
+    # Run for node_js checks.
+    - nodejs_version: "10"
+      install:
+        # Install the required npm packages.
+        - cd ./static
+        - npm install
+        - cd ..
+      test_script:
+        # ESLint to check styles.
+        - ./static/node_modules/.bin/eslint ./static/js/
 
-  # Install dependency
-  - pip install -r ./requirements.txt
-  - pip install -r ./dev_requirements.txt
-
-  # Install npm
-  - choco install nodejs
-
-  # Use npm to install all the dependencies (including dev)
-  - cd ./static
-  - npm install
-  - cd ..
-
-branches:
-  only:
-    - master
-
-test_script:
-  # Test for python static analysis with flake8 and pydocstyle.
-  - flake8
-  - pydocstyle
-  # Test for JavaScript file styles.
-  - ./static/node_modules/.bin/eslint ./static/js/
-
+# Turn off build.
 build: off
