@@ -1,8 +1,8 @@
 # coding=utf-8
 """Run this file to update data base and selection drop downs."""
 
-from contents.data.data_fetcher import save_fetched_data
-from contents.data.data_processor import save_all_semesters
+from course_selection_app.model.data_fetcher import save_fetched_data
+from course_selection_app.model.data_processor import save_all_semesters
 
 # This line will update selection drop downs.
 save_fetched_data()

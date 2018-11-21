@@ -22,9 +22,9 @@ install:
   # Set up node js checks.
   - choco install nodejs
   # use npm to install all the dependencies.
-  - cd ./static
+  - cd ./course_selection_app/static
   - npm install
-  - cd ..
+  - cd ../..
 
 # Testing script.
 test_script:
@@ -32,6 +32,7 @@ test_script:
   - flake8
   - pydocstyle
   # Test for node js styles.
-  - ./static/node_modules/.bin/eslint ./static/js/
+  - cd ./course_selection_app/static
+  - ./node_modules/.bin/eslint ./js/
 
 build: off

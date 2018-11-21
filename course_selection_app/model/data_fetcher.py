@@ -3,7 +3,7 @@
 
 import pandas as pd
 import mechanicalsoup
-from contents.constants import URL, SEMESTER_NUMBER
+from course_selection_app.model.constants import URL, SEMESTER_NUMBER
 
 
 def fetch_web_content(subject: str, semester: str) -> str:
@@ -180,9 +180,9 @@ def fetch_current_semester() -> pd.Series:
 
 def save_fetched_data():
     """Fetch all the selection drop down data from the web and save them."""
-    fetch_areas().to_pickle("web_data/areas.pkl")
-    fetch_subjects().to_pickle("web_data/subjects.pkl")
-    fetch_divisions().to_pickle("web_data/divisions.pkl")
-    fetch_semesters().to_pickle("web_data/semesters.pkl")
-    fetch_foundations().to_pickle("web_data/foundations.pkl")
-    fetch_current_semester().to_pickle("web_data/current_semester.pkl")
+    fetch_areas().to_pickle("../data/areas.pkl")
+    fetch_subjects().to_pickle("../data/subjects.pkl")
+    fetch_divisions().to_pickle("../data/divisions.pkl")
+    fetch_semesters().to_pickle("../data/semesters.pkl")
+    fetch_foundations().to_pickle("../data/foundations.pkl")
+    fetch_current_semester().to_pickle("../data/current_semester.pkl")

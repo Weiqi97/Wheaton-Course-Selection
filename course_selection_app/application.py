@@ -1,8 +1,9 @@
 """This is the flask application that connects backend and frontend."""
 
 from flask import Flask, render_template, request
-from contents.data.data_reader import read_data, read_semesters, \
-    read_subjects, read_foundations, read_divisions, read_areas, \
+
+from course_selection_app.model.data_reader import read_data, read_areas, \
+    read_subjects, read_semesters, read_divisions, read_foundations, \
     read_current_semester
 
 app = Flask(__name__)
@@ -40,7 +41,3 @@ def get_all_class():
         semester=request.json["semester"],
         foundation=request.json["foundation"]
     )
-
-
-if __name__ == "__main__":
-    app.run(threaded=True)

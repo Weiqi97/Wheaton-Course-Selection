@@ -18,9 +18,8 @@ matrix:
       node_js: "10"
       # Install dependencies.
       install:
-        - cd ./static
+        - cd ./course_selection_app/static
         - npm install
-        - cd ..
       # ESLint to check all files.
       script:
-        - ./static/node_modules/.bin/eslint ./static/js/
+        - ./node_modules/.bin/eslint ./js/

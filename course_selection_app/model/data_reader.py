@@ -23,8 +23,7 @@ def read_data(area: str,
     :return: A pandas data frame that contains desired information.
     """
     # Get the data frame with all saved information.
-    data_frame = \
-        pd.read_pickle(f"contents/data/course_data/pickle_data/{semester}.pkl")
+    data_frame = pd.read_pickle(f"course_selection_app/data/{semester}.pkl")
 
     # If choose all subject, pass, otherwise select desired rows.
     if "%" in subjects or "" in subjects:
@@ -69,30 +68,30 @@ def read_data(area: str,
 
 def read_subjects() -> pd.Series:
     """Read data from saved pickle file."""
-    return pd.read_pickle("contents/data/web_data/subjects.pkl")
+    return pd.read_pickle("course_selection_app/data/subjects.pkl")
 
 
 def read_semesters() -> pd.Series:
     """Read data from saved pickle file."""
-    return pd.read_pickle("contents/data/web_data/semesters.pkl")
+    return pd.read_pickle("course_selection_app/data/semesters.pkl")
 
 
 def read_foundations() -> pd.Series:
     """Read data from saved pickle file."""
-    return pd.read_pickle("contents/data/web_data/foundations.pkl")
+    return pd.read_pickle("course_selection_app/data/foundations.pkl")
 
 
 def read_divisions() -> pd.Series:
     """Read data from saved pickle file."""
-    return pd.read_pickle("contents/data/web_data/divisions.pkl")
+    return pd.read_pickle("course_selection_app/data/divisions.pkl")
 
 
 def read_areas() -> pd.Series:
     """Read data from saved pickle file."""
-    return pd.read_pickle("contents/data/web_data/areas.pkl")
+    return pd.read_pickle("course_selection_app/data/areas.pkl")
 
 
 def read_current_semester() -> str:
     """Read data from saved pickle file."""
     # The list always contains only one element, grab it.
-    return pd.read_pickle("contents/data/web_data/current_semester.pkl")[0]
+    return pd.read_pickle("course_selection_app/data/current_semester.pkl")[0]
