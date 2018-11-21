@@ -4,10 +4,10 @@
 import pandas as pd
 from bs4 import BeautifulSoup
 from typing import List, Optional
-from contents.constants import BASE_URL, SKIP_BEGINNING, TIME_FILTER, \
-    TO_CALENDAR, SHOW_DETAIL
-from contents.data.data_fetcher import fetch_semesters, fetch_subjects, \
-    fetch_web_content
+from course_selection_app.model.constants import BASE_URL, SKIP_BEGINNING, \
+    TIME_FILTER, TO_CALENDAR, SHOW_DETAIL
+from course_selection_app.model.data_fetcher import fetch_semesters, \
+    fetch_subjects, fetch_web_content
 
 
 def extract_class_info(web_content: str) -> Optional[List[list]]:
@@ -368,7 +368,7 @@ def save_one_semester(semester_name: str, semester_value: str):
     semester_frame = pd.DataFrame(pd.concat(all_class, ignore_index=True))
 
     # Save it as a pickle file.
-    semester_frame.to_pickle(f"course_data/pickle_data/{semester_name}.pkl")
+    semester_frame.to_pickle(f"../data/{semester_name}.pkl")
 
 
 def save_all_semesters():

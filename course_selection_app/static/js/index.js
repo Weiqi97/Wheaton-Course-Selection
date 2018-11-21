@@ -6,7 +6,7 @@ import * as classTable from './class_table.js'
  * Get all class information.
  * @returns {void} This function has no return.
  */
-function getClassTable () {
+function getClassTable() {
   // Send the ajax request.
   utility.sendAjaxRequest('/course_table', utility.jsonifyForm())
     .done( // If no errors.

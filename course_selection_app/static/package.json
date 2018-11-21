@@ -1,0 +1,32 @@
+{
+  "name": "project_dependencies",
+  "version": "1.0.0",
+  "description": "Run npm install to install all needed denpendencies.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Weiqi97/Wheaton-Course-Selection"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "bootstrap": "^4.1.3",
+    "popper.js": "^1.14.5",
+    "browserify": "^16.2.3",
+    "fullcalendar": "^3.9.0",
+    "jquery-confirm": "^3.3.2",
+    "bootstrap-select": "^1.13.3",
+    "@fortawesome/fontawesome-free": "^5.5.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.26.0",
+    "webpack-cli": "^3.1.2",
+    "eslint": "^5.9.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-jsdoc": "^3.9.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-config-standard": "^12.0.0"
+  },
+  "author": "Weiqi",
+  "license": "ISC"
+}
